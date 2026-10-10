@@ -802,7 +802,7 @@
 
     <!-- JAVASCRIPT LOGIC -->
     <script>
-        const firebaseConfig = {
+             const firebaseConfig = {
   apiKey: "AIzaSyBrLxzZSbaAtAk0KblgMvXsjxyQ2aa7ySs",
   authDomain: "akk-trading-pos.firebaseapp.com",
   databaseURL: "https://akk-trading-pos-default-rtdb.asia-southeast1.firebasedatabase.app",
@@ -941,10 +941,11 @@
                     }
                 });
 
+                // Products Listener with safe Array/Object check
                 db.ref('products').on('value', (snapshot) => {
                     const data = snapshot.val();
                     if (data) {
-                        products = Object.values(data).filter(item => item !== null && item !== undefined);
+                        products = Array.isArray(data) ? data.filter(item => item !== null && item !== undefined) : Object.values(data).filter(item => item !== null && item !== undefined);
                     } else {
                         defaultProducts.forEach(p => db.ref('products/' + p.id.replace('#','')).set(p));
                         products = [...defaultProducts];
@@ -957,10 +958,11 @@
                     renderProductsTable();
                 });
 
+                // Other Goods Listener with safe Array/Object check
                 db.ref('otherGoods').on('value', (snapshot) => {
                     const data = snapshot.val();
                     if (data) {
-                        otherGoods = Object.values(data).filter(item => item !== null && item !== undefined);
+                        otherGoods = Array.isArray(data) ? data.filter(item => item !== null && item !== undefined) : Object.values(data).filter(item => item !== null && item !== undefined);
                     } else {
                         defaultOtherGoods.forEach(og => db.ref('otherGoods/' + og.id.replace('#','')).set(og));
                         otherGoods = [...defaultOtherGoods];
@@ -973,10 +975,11 @@
                     renderOtherGoodsTable();
                 });
 
+                // Sales History Listener with safe Array/Object check
                 db.ref('salesHistory').on('value', (snapshot) => {
                     const data = snapshot.val();
                     if (data) {
-                        salesHistory = Object.values(data).filter(item => item !== null && item !== undefined).reverse();
+                        salesHistory = Array.isArray(data) ? data.filter(item => item !== null && item !== undefined).reverse() : Object.values(data).filter(item => item !== null && item !== undefined).reverse();
                     } else {
                         salesHistory = [];
                     }
