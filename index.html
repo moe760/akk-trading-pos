@@ -332,25 +332,25 @@
                 </div>
 
                 <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-x-auto">
-                    <table class="w-full text-left border-collapse min-w-[700px]">
-                        <thead class="bg-slate-50 text-slate-600 text-xs uppercase font-semibold border-b border-slate-200">
-                            <tr>
-                                <th class="p-3 md:p-4 w-24">ID</th>
-                                <th class="p-3 md:p-4 w-24">ရက်စွဲ</th>
-                                <th class="p-3 md:p-4">ကုန်ပစ္စည်းအမည် / အမျိုးအစား</th>
-                                <th class="p-3 md:p-4 w-28">Color Code</th>
-                                <th class="p-3 md:p-4 w-28">Finish / Size</th>
-                                <th class="p-3 md:p-4 text-right w-24">ဝယ်ဈေး</th>
-                                <th class="p-3 md:p-4 text-right w-24">ရောင်းဈေး</th>
-                                <th class="p-3 md:p-4 text-center w-20">Stock</th>
-                                <th class="p-3 md:p-4 text-center w-40">Action</th>
-                            </tr>
-                        </thead>
-                        <tbody id="productsTableBody" class="divide-y divide-slate-100 text-xs md:text-sm align-middle">
-                            <!-- Paint products table row injected here -->
-                        </tbody>
-                    </table>
-                </div>
+    <table class="w-full text-left border-collapse min-w-[750px]">
+        <thead class="bg-slate-50 text-slate-600 text-xs uppercase font-semibold border-b border-slate-200">
+            <tr>
+                <th class="p-3 md:p-4 w-20 whitespace-nowrap">ID</th>
+                <th class="p-3 md:p-4 w-24 whitespace-nowrap">ရက်စွဲ</th>
+                <th class="p-3 md:p-4 min-w-[150px]">ကုန်ပစ္စည်းအမည် / အမျိုးအစား</th>
+                <th class="p-3 md:p-4 w-28 whitespace-nowrap">Color Code</th>
+                <th class="p-3 md:p-4 w-28 whitespace-nowrap">Finish / Size</th>
+                <th class="p-3 md:p-4 text-right w-24 whitespace-nowrap">ဝယ်ဈေး</th>
+                <th class="p-3 md:p-4 text-right w-24 whitespace-nowrap">ရောင်းဈေး</th>
+                <th class="p-3 md:p-4 text-center w-20 whitespace-nowrap">Stock</th>
+                <th class="p-3 md:p-4 text-center w-36 whitespace-nowrap">Action</th>
+            </tr>
+        </thead>
+        <tbody id="productsTableBody" class="divide-y divide-slate-100 text-xs md:text-sm align-middle">
+            <!-- Data rows -->
+        </tbody>
+    </table>
+</div>
             </section>
 
             <!-- TAB 3: OTHER GOODS MENU WITH DATE COLUMN -->
@@ -394,23 +394,23 @@
                 </div>
 
                 <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-x-auto">
-                    <table class="w-full text-left border-collapse min-w-[700px]">
-                        <thead class="bg-slate-50 text-slate-600 text-xs uppercase font-semibold border-b border-slate-200">
-                            <tr>
-                                <th class="p-3 md:p-4 w-24">ID</th>
-                                <th class="p-3 md:p-4 w-28">ရက်စွဲ</th>
-                                <th class="p-3 md:p-4">ကုန်ပစ္စည်းအမည် / အမျိုးအစား</th>
-                                <th class="p-3 md:p-4 text-right w-28">ဝယ်ဈေး</th>
-                                <th class="p-3 md:p-4 text-right w-28">ရောင်းဈေး</th>
-                                <th class="p-3 md:p-4 text-center w-24">Stock</th>
-                                <th class="p-3 md:p-4 text-center w-40">Action</th>
-                            </tr>
-                        </thead>
-                        <tbody id="otherGoodsTableBody" class="divide-y divide-slate-100 text-xs md:text-sm align-middle">
-                            <!-- Other goods table row with Date Column injected here -->
-                        </tbody>
-                    </table>
-                </div>
+    <table class="w-full text-left border-collapse min-w-[700px]">
+        <thead class="bg-slate-50 text-slate-600 text-xs uppercase font-semibold border-b border-slate-200">
+            <tr>
+                <th class="p-3 md:p-4 w-24 whitespace-nowrap">ID</th>
+                <th class="p-3 md:p-4 w-28 whitespace-nowrap">ရက်စွဲ</th>
+                <th class="p-3 md:p-4 min-w-[150px]">ကုန်ပစ္စည်းအမည် / အမျိုးအစား</th>
+                <th class="p-3 md:p-4 text-right w-28 whitespace-nowrap">ဝယ်ဈေး</th>
+                <th class="p-3 md:p-4 text-right w-28 whitespace-nowrap">ရောင်းဈေး</th>
+                <th class="p-3 md:p-4 text-center w-24 whitespace-nowrap">Stock</th>
+                <th class="p-3 md:p-4 text-center w-40 whitespace-nowrap">Action</th>
+            </tr>
+        </thead>
+        <tbody id="otherGoodsTableBody" class="divide-y divide-slate-100 text-xs md:text-sm align-middle">
+            <!-- Other goods table row with Date Column injected here -->
+        </tbody>
+    </table>
+</div>
             </section>
 
             <!-- TAB 4: SALES RECORD -->
@@ -1175,85 +1175,105 @@
         }
 
         function renderPosProducts() {
-            const grid = document.getElementById('posProductGrid');
-            const searchVal = document.getElementById('posSearchInput').value.toLowerCase();
-            const catVal = document.getElementById('posCategoryFilter').value;
+    const grid = document.getElementById('posProductGrid');
+    const searchVal = document.getElementById('posSearchInput').value.toLowerCase();
+    const catVal = document.getElementById('posCategoryFilter').value;
 
-            grid.innerHTML = '';
-            
-            const combinedList = [
-                ...products.map(p => ({ ...p, itemType: 'Paint' })),
-                ...otherGoods.map(og => ({ ...og, itemType: 'OtherGoods', category: 'အထွေထွေကုန်', brand: 'အခြား', finish: 'Standard', color: '-' }))
-            ];
+    grid.innerHTML = '';
+    
+    const combinedList = [
+        ...products.map(p => ({ ...p, itemType: 'Paint' })),
+        ...otherGoods.map(og => ({ ...og, itemType: 'OtherGoods', category: 'အထွေထွေကုန်', brand: 'အခြား', finish: 'Standard', color: '-' }))
+    ];
 
-            const filtered = combinedList.filter(p => {
-                const matchesSearch = p.name.toLowerCase().includes(searchVal) || p.id.toLowerCase().includes(searchVal);
-                const matchesCategory = catVal === 'All' || p.itemType === catVal;
-                return matchesSearch && matchesCategory;
-            });
+    const filtered = combinedList.filter(p => {
+        const matchesSearch = p.name.toLowerCase().includes(searchVal) || p.id.toLowerCase().includes(searchVal);
+        const matchesCategory = catVal === 'All' || p.itemType === catVal;
+        return matchesSearch && matchesCategory;
+    });
 
-            if(filtered.length === 0) {
-                grid.innerHTML = `<div class="col-span-full text-center py-8 text-slate-400 text-xs">ရှာဖွေမှုနှင့် ကိုက်ညီသော ကုန်ပစ္စည်းမရှိပါ</div>`;
-                return;
-            }
+    if(filtered.length === 0) {
+        grid.innerHTML = `<div class="col-span-full text-center py-8 text-slate-400 text-xs">ရှာဖွေမှုနှင့် ကိုက်ညီသော ကုန်ပစ္စည်းမရှိပါ</div>`;
+        return;
+    }
 
-            filtered.forEach(p => {
-                const isLow = p.stock <= 5;
-                const badgeColor = p.itemType === 'Paint' ? 'bg-emerald-100 text-emerald-700' : 'bg-blue-100 text-blue-700';
-                grid.innerHTML += `
-                    <div onclick="addToCart('${p.id}', '${p.itemType}')" class="bg-white p-2.5 md:p-3 rounded-xl shadow-sm border border-slate-200 hover:border-emerald-500 hover:shadow-md cursor-pointer transition flex flex-col justify-between h-full">
-                        <div>
-                            <div class="flex justify-between items-start gap-1 mb-1">
-                                <h3 class="font-bold text-slate-800 text-xs md:text-sm truncate leading-tight">${p.name}</h3>
-                                <span class="text-[9px] px-1.5 py-0.5 rounded-full font-semibold shrink-0 ${isLow ? 'bg-red-100 text-red-600' : 'bg-slate-100 text-slate-600'}">
-                                    Stock: ${p.stock}
-                                </span>
-                            </div>
-                            <div class="flex items-center gap-1.5 mb-1">
-                                <span class="text-[9px] font-bold text-slate-600">${p.id}</span>
-                                <span class="text-[8px] px-1 py-0.2 rounded font-bold ${badgeColor}">${p.itemType === 'Paint' ? 'ဆေး' : 'အခြား'}</span>
-                            </div>
-                            <p class="text-[10px] text-slate-500 truncate">${p.category || 'အထွေထွေ'} • <span class="font-medium text-slate-700">${p.size || ''}</span></p>
-                        </div>
-                        <div class="flex justify-between items-center pt-1.5 border-t border-slate-100 mt-auto">
-                            <span class="text-xs md:text-sm font-bold text-emerald-600">${p.sellPrice.toLocaleString()} Ks</span>
-                            <button class="p-1 bg-emerald-50 hover:bg-emerald-100 text-emerald-600 rounded-lg"><i data-lucide="plus" class="w-3.5 h-3.5"></i></button>
-                        </div>
+    filtered.forEach(p => {
+        const isLow = (parseInt(p.stock) || 0) <= 5;
+        const badgeColor = p.itemType === 'Paint' ? 'bg-emerald-100 text-emerald-700' : 'bg-blue-100 text-blue-700';
+        
+        // Escape quotes to prevent JS error in ID string
+        const safeId = p.id.replace(/'/g, "\\'");
+        
+        grid.innerHTML += `
+            <div onclick="addToCart('${safeId}', '${p.itemType}')" class="bg-white p-2.5 md:p-3 rounded-xl shadow-sm border border-slate-200 hover:border-emerald-500 hover:shadow-md cursor-pointer transition flex flex-col justify-between h-full select-none">
+                <div>
+                    <div class="flex justify-between items-start gap-1 mb-1">
+                        <h3 class="font-bold text-slate-800 text-xs md:text-sm truncate leading-tight">${p.name}</h3>
+                        <span class="text-[9px] px-1.5 py-0.5 rounded-full font-semibold shrink-0 ${isLow ? 'bg-red-100 text-red-600' : 'bg-slate-100 text-slate-600'}">
+                            Stock: ${p.stock}
+                        </span>
                     </div>
-                `;
-            });
-            lucide.createIcons();
-        }
+                    <div class="flex items-center gap-1.5 mb-1">
+                        <span class="text-[9px] font-bold text-slate-600">${p.id}</span>
+                        <span class="text-[8px] px-1 py-0.2 rounded font-bold ${badgeColor}">${p.itemType === 'Paint' ? 'ဆေး' : 'အခြား'}</span>
+                    </div>
+                    <p class="text-[10px] text-slate-500 truncate">${p.category || 'အထွေထွေ'} • <span class="font-medium text-slate-700">${p.size || ''}</span></p>
+                </div>
+                <div class="flex justify-between items-center pt-1.5 border-t border-slate-100 mt-auto">
+                    <span class="text-xs md:text-sm font-bold text-emerald-600">${(p.sellPrice || 0).toLocaleString()} Ks</span>
+                    <span class="p-1 bg-emerald-50 text-emerald-600 rounded-lg pointer-events-none"><i data-lucide="plus" class="w-3.5 h-3.5"></i></span>
+                </div>
+            </div>
+        `;
+    });
+    lucide.createIcons();
+}
 
         function filterPosProducts() { renderPosProducts(); }
 
         function addToCart(productId, itemType) {
-            let product = itemType === 'Paint' ? products.find(p => p.id === productId) : otherGoods.find(og => og.id === productId);
+    let product = itemType === 'Paint' ? products.find(p => p.id === productId) : otherGoods.find(og => og.id === productId);
 
-            if (!product || product.stock <= 0) {
-                showToast('ကုန်ပစ္စည်း လက်ကျန်မရှိတော့ပါ!', 'warning');
-                return;
-            }
+    // Parse stock as integer to prevent string comparison bugs
+    const currentStock = parseInt(product.stock) || 0;
 
-            const cartItem = cart.find(item => item.id === productId);
-            if (cartItem) {
-                if (cartItem.qty < product.stock) cartItem.qty++;
-            } else {
-                cart.push({ ...product, itemType, qty: 1 });
-            }
-            renderCart();
+    if (!product || currentStock <= 0) {
+        showToast('ကုန်ပစ္စည်း လက်ကျန်မရှိတော့ပါ!', 'warning');
+        return;
+    }
+
+    const cartItem = cart.find(item => item.id === productId);
+    if (cartItem) {
+        if (cartItem.qty < currentStock) {
+            cartItem.qty++;
+        } else {
+            showToast(`လက်ရှိ လက်ကျန် Stock (${currentStock} ခု) ထက် ပို၍ယူ၍ မရပါ!`, 'warning');
         }
+    } else {
+        cart.push({ ...product, stock: currentStock, itemType, qty: 1 });
+    }
+    renderCart();
+}
 
-        function updateCartQty(id, delta) {
-            const cartItem = cart.find(item => item.id === id);
-            if (cartItem) {
-                cartItem.qty += delta;
-                if (cartItem.qty <= 0) {
-                    cart = cart.filter(item => item.id !== id);
-                }
-            }
-            renderCart();
+function setCartQtyDirect(id, newQty) {
+    const cartItem = cart.find(item => item.id === id);
+    if (!cartItem) return;
+
+    let val = parseInt(newQty);
+    let maxStock = parseInt(cartItem.stock) || 0;
+
+    if (isNaN(val) || val <= 0) {
+        cart = cart.filter(item => item.id !== id);
+    } else {
+        if (val > maxStock) {
+            showToast(`လက်ရှိ လက်ကျန် Stock (${maxStock} ခု) ထက် ပို၍ မရနိုင်ပါ!`, 'warning');
+            cartItem.qty = maxStock; // Limit to max available stock
+        } else {
+            cartItem.qty = val;
         }
+    }
+    renderCart();
+}
 
         function setCartQtyDirect(id, newQty) {
             const cartItem = cart.find(item => item.id === id);
