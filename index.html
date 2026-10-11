@@ -130,7 +130,7 @@
             </div>
             
             <div id="sidebarFooter" class="p-4 border-t border-emerald-900 flex items-center justify-between overflow-hidden">
-                <span class="sidebar-text text-xs text-emerald-400 font-bold whitespace-nowrap">AKK Trading v5.8</span>
+                <span class="sidebar-text text-xs text-emerald-400 font-bold whitespace-nowrap">AKK Trading v5.9</span>
                 <button onclick="handleLogout()" title="Logout" class="p-1.5 hover:bg-red-900/50 hover:text-red-300 rounded-lg text-emerald-400 transition">
                     <i data-lucide="log-out" class="w-5 h-5"></i>
                 </button>
@@ -802,7 +802,7 @@
 
     <!-- JAVASCRIPT LOGIC -->
     <script>
-             const firebaseConfig = {
+        const firebaseConfig = {
   apiKey: "AIzaSyBrLxzZSbaAtAk0KblgMvXsjxyQ2aa7ySs",
   authDomain: "akk-trading-pos.firebaseapp.com",
   databaseURL: "https://akk-trading-pos-default-rtdb.asia-southeast1.firebasedatabase.app",
@@ -941,13 +941,14 @@
                     }
                 });
 
-                // Products Listener with safe Array/Object check
+                // Products Listener with safe String ID handling
                 db.ref('products').on('value', (snapshot) => {
                     const data = snapshot.val();
                     if (data) {
-                        products = Array.isArray(data) ? data.filter(item => item !== null && item !== undefined) : Object.values(data).filter(item => item !== null && item !== undefined);
+                        const rawArr = Array.isArray(data) ? data.filter(item => item !== null && item !== undefined) : Object.values(data).filter(item => item !== null && item !== undefined);
+                        products = rawArr.map(p => ({ ...p, id: String(p.id || '') }));
                     } else {
-                        defaultProducts.forEach(p => db.ref('products/' + p.id.replace('#','')).set(p));
+                        defaultProducts.forEach(p => db.ref('products/' + String(p.id).replace(/[^a-zA-Z0-9]/g, '_')).set(p));
                         products = [...defaultProducts];
                     }
                     renderPosProducts();
@@ -958,13 +959,14 @@
                     renderProductsTable();
                 });
 
-                // Other Goods Listener with safe Array/Object check
+                // Other Goods Listener with safe String ID handling
                 db.ref('otherGoods').on('value', (snapshot) => {
                     const data = snapshot.val();
                     if (data) {
-                        otherGoods = Array.isArray(data) ? data.filter(item => item !== null && item !== undefined) : Object.values(data).filter(item => item !== null && item !== undefined);
+                        const rawArr = Array.isArray(data) ? data.filter(item => item !== null && item !== undefined) : Object.values(data).filter(item => item !== null && item !== undefined);
+                        otherGoods = rawArr.map(og => ({ ...og, id: String(og.id || '') }));
                     } else {
-                        defaultOtherGoods.forEach(og => db.ref('otherGoods/' + og.id.replace('#','')).set(og));
+                        defaultOtherGoods.forEach(og => db.ref('otherGoods/' + String(og.id).replace(/[^a-zA-Z0-9]/g, '_')).set(og));
                         otherGoods = [...defaultOtherGoods];
                     }
                     renderPosProducts();
@@ -975,11 +977,12 @@
                     renderOtherGoodsTable();
                 });
 
-                // Sales History Listener with safe Array/Object check
+                // Sales History Listener with safe String ID handling
                 db.ref('salesHistory').on('value', (snapshot) => {
                     const data = snapshot.val();
                     if (data) {
-                        salesHistory = Array.isArray(data) ? data.filter(item => item !== null && item !== undefined).reverse() : Object.values(data).filter(item => item !== null && item !== undefined).reverse();
+                        const rawArr = Array.isArray(data) ? data.filter(item => item !== null && item !== undefined).reverse() : Object.values(data).filter(item => item !== null && item !== undefined).reverse();
+                        salesHistory = rawArr.map(s => ({ ...s, id: String(s.id || '') }));
                     } else {
                         salesHistory = [];
                     }
@@ -1188,7 +1191,7 @@
                     salesHistory.forEach(sale => {
                         if (sale.date && sale.date.startsWith(selectedMonth)) {
                             if (db) {
-                                db.ref('salesHistory/' + sale.id).remove();
+                                db.ref('salesHistory/' + String(sale.id)).remove();
                                 deletedCount++;
                             }
                         }
@@ -1216,7 +1219,7 @@
             ];
 
             const filtered = combinedList.filter(p => {
-                const matchesSearch = p.name.toLowerCase().includes(searchVal) || p.id.toLowerCase().includes(searchVal);
+                const matchesSearch = p.name.toLowerCase().includes(searchVal) || String(p.id).toLowerCase().includes(searchVal);
                 const matchesCategory = catVal === 'All' || p.itemType === catVal;
                 return matchesSearch && matchesCategory;
             });
@@ -1230,7 +1233,7 @@
                 const stockVal = parseInt(p.stock) || 0;
                 const isLow = stockVal <= 5;
                 const badgeColor = p.itemType === 'Paint' ? 'bg-emerald-100 text-emerald-700' : 'bg-blue-100 text-blue-700';
-                const safeId = p.id.replace(/'/g, "\\'");
+                const safeId = String(p.id).replace(/'/g, "\\'");
                 
                 grid.innerHTML += `
                     <div onclick="addToCart('${safeId}', '${p.itemType}')" class="bg-white p-2.5 md:p-3 rounded-xl shadow-sm border border-slate-200 hover:border-emerald-500 hover:shadow-md cursor-pointer transition flex flex-col justify-between h-full select-none">
@@ -1260,7 +1263,7 @@
         function filterPosProducts() { renderPosProducts(); }
 
         function addToCart(productId, itemType) {
-            let product = itemType === 'Paint' ? products.find(p => p.id === productId) : otherGoods.find(og => og.id === productId);
+            let product = itemType === 'Paint' ? products.find(p => String(p.id) === String(productId)) : otherGoods.find(og => String(og.id) === String(productId));
 
             const currentStock = parseInt(product?.stock) || 0;
             if (!product || currentStock <= 0) {
@@ -1268,7 +1271,7 @@
                 return;
             }
 
-            const cartItem = cart.find(item => item.id === productId);
+            const cartItem = cart.find(item => String(item.id) === String(productId));
             if (cartItem) {
                 if (cartItem.qty < currentStock) {
                     cartItem.qty++;
@@ -1282,11 +1285,11 @@
         }
 
         function updateCartQty(id, delta) {
-            const cartItem = cart.find(item => item.id === id);
+            const cartItem = cart.find(item => String(item.id) === String(id));
             if (cartItem) {
                 cartItem.qty += delta;
                 if (cartItem.qty <= 0) {
-                    cart = cart.filter(item => item.id !== id);
+                    cart = cart.filter(item => String(item.id) !== String(id));
                 } else if (cartItem.qty > cartItem.stock) {
                     cartItem.qty = cartItem.stock;
                     showToast(`လက်ရှိ လက်ကျန် Stock (${cartItem.stock}) ထက် ပို၍ မရနိုင်ပါ!`, 'warning');
@@ -1296,14 +1299,14 @@
         }
 
         function setCartQtyDirect(id, newQty) {
-            const cartItem = cart.find(item => item.id === id);
+            const cartItem = cart.find(item => String(item.id) === String(id));
             if (!cartItem) return;
 
             let val = parseInt(newQty);
             let maxStock = parseInt(cartItem.stock) || 0;
 
             if (isNaN(val) || val <= 0) {
-                cart = cart.filter(item => item.id !== id);
+                cart = cart.filter(item => String(item.id) !== String(id));
             } else {
                 if (val > maxStock) {
                     showToast(`လက်ရှိ လက်ကျန် Stock (${maxStock} ခု) ထက် ပို၍ မရနိုင်ပါ!`, 'warning');
@@ -1326,6 +1329,7 @@
                 </div>`;
             } else {
                 cart.forEach(item => {
+                    const safeId = String(item.id);
                     list.innerHTML += `
                         <div class="flex items-center justify-between p-2.5 bg-slate-50 rounded-xl border border-slate-100 text-xs">
                             <div class="flex-1 pr-2">
@@ -1334,11 +1338,11 @@
                             </div>
                             <div class="flex items-center gap-1.5">
                                 <div class="flex items-center border border-slate-300 rounded-lg bg-white overflow-hidden">
-                                    <button onclick="updateCartQty('${item.id}', -1)" class="p-1 hover:bg-slate-100 text-slate-600"><i data-lucide="minus" class="w-3 h-3"></i></button>
-                                    <input type="number" min="1" max="${item.stock}" value="${item.qty}" onchange="setCartQtyDirect('${item.id}', this.value)" class="w-10 text-center font-bold text-xs bg-transparent border-none outline-none p-0">
-                                    <button onclick="updateCartQty('${item.id}', 1)" class="p-1 hover:bg-slate-100 text-slate-600"><i data-lucide="plus" class="w-3 h-3"></i></button>
+                                    <button onclick="updateCartQty('${safeId}', -1)" class="p-1 hover:bg-slate-100 text-slate-600"><i data-lucide="minus" class="w-3 h-3"></i></button>
+                                    <input type="number" min="1" max="${item.stock}" value="${item.qty}" onchange="setCartQtyDirect('${safeId}', this.value)" class="w-10 text-center font-bold text-xs bg-transparent border-none outline-none p-0">
+                                    <button onclick="updateCartQty('${safeId}', 1)" class="p-1 hover:bg-slate-100 text-slate-600"><i data-lucide="plus" class="w-3 h-3"></i></button>
                                 </div>
-                                <button onclick="updateCartQty('${item.id}', -${item.qty})" class="text-red-500 hover:text-red-700 p-1"><i data-lucide="trash-2" class="w-3.5 h-3.5"></i></button>
+                                <button onclick="updateCartQty('${safeId}', -${item.qty})" class="text-red-500 hover:text-red-700 p-1"><i data-lucide="trash-2" class="w-3.5 h-3.5"></i></button>
                             </div>
                         </div>
                     `;
@@ -1429,7 +1433,7 @@
         }
 
         function reprintSingleVoucher(saleId) {
-            const sale = salesHistory.find(s => s.id === saleId);
+            const sale = salesHistory.find(s => String(s.id) === String(saleId));
             if (sale) {
                 isReprintMode = true;
                 pendingSaleData = sale;
@@ -1445,15 +1449,15 @@
 
             if (!isReprintMode) {
                 pendingSaleData.items.forEach(item => {
-                    const cleanKey = item.id.replace(/[^a-zA-Z0-9]/g, '_');
+                    const cleanKey = String(item.id).replace(/[^a-zA-Z0-9]/g, '_');
                     if (item.itemType === 'Paint') {
-                        const prod = products.find(p => p.id === item.id);
+                        const prod = products.find(p => String(p.id) === String(item.id));
                         if (prod) {
                             prod.stock = Math.max(0, (parseInt(prod.stock) || 0) - item.qty);
                             if (db) db.ref('products/' + cleanKey).set(prod);
                         }
                     } else {
-                        const og = otherGoods.find(g => g.id === item.id);
+                        const og = otherGoods.find(g => String(g.id) === String(item.id));
                         if (og) {
                             og.stock = Math.max(0, (parseInt(og.stock) || 0) - item.qty);
                             if (db) db.ref('otherGoods/' + cleanKey).set(og);
@@ -1462,7 +1466,7 @@
                 });
 
                 salesHistory.unshift(pendingSaleData);
-                if (db) db.ref('salesHistory/' + pendingSaleData.id).set(pendingSaleData);
+                if (db) db.ref('salesHistory/' + String(pendingSaleData.id)).set(pendingSaleData);
 
                 showToast('အရောင်းဘောက်ချာ စာရင်းသွင်းပြီးပါပြီ!', 'success');
             }
@@ -1507,7 +1511,7 @@
 
             tbody.innerHTML = '';
             const filtered = products.filter(p => {
-                const matchesSearch = p.name.toLowerCase().includes(searchVal) || p.id.toLowerCase().includes(searchVal);
+                const matchesSearch = p.name.toLowerCase().includes(searchVal) || String(p.id).toLowerCase().includes(searchVal);
                 const matchesCategory = catVal === 'All' || p.category === catVal;
                 return matchesSearch && matchesCategory;
             });
@@ -1519,6 +1523,7 @@
 
             filtered.forEach(p => {
                 const stockVal = parseInt(p.stock) || 0;
+                const safeId = String(p.id);
                 tbody.innerHTML += `
                     <tr class="hover:bg-slate-50">
                         <td class="p-3 md:p-4 font-bold text-emerald-700 whitespace-nowrap">${p.id}</td>
@@ -1534,9 +1539,9 @@
                         <td class="p-3 md:p-4 text-center whitespace-nowrap"><span class="px-2 py-0.5 rounded-full text-xs font-bold ${stockVal <= 5 ? 'bg-red-100 text-red-600' : 'bg-emerald-100 text-emerald-700'}">${stockVal}</span></td>
                         <td class="p-3 md:p-4 text-center whitespace-nowrap">
                             <div class="flex items-center justify-center gap-1 flex-nowrap">
-                                <button onclick="openRestockModal('${p.id}', 'Paint')" class="px-2 py-1 bg-emerald-50 hover:bg-emerald-100 text-emerald-600 rounded text-xs font-semibold shrink-0">+Stock</button>
-                                <button onclick="openEditProductModal('${p.id}')" class="px-2 py-1 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded text-xs font-semibold shrink-0">ပြင်</button>
-                                <button onclick="deleteProduct('${p.id}', 'Paint')" class="p-1 bg-red-50 text-red-500 hover:bg-red-100 rounded text-xs shrink-0" title="ဖျက်မည်"><i data-lucide="trash-2" class="w-3.5 h-3.5"></i></button>
+                                <button onclick="openRestockModal('${safeId}', 'Paint')" class="px-2 py-1 bg-emerald-50 hover:bg-emerald-100 text-emerald-600 rounded text-xs font-semibold shrink-0">+Stock</button>
+                                <button onclick="openEditProductModal('${safeId}')" class="px-2 py-1 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded text-xs font-semibold shrink-0">ပြင်</button>
+                                <button onclick="deleteProduct('${safeId}', 'Paint')" class="p-1 bg-red-50 text-red-500 hover:bg-red-100 rounded text-xs shrink-0" title="ဖျက်မည်"><i data-lucide="trash-2" class="w-3.5 h-3.5"></i></button>
                             </div>
                         </td>
                     </tr>
@@ -1550,7 +1555,7 @@
             const searchVal = document.getElementById('otherGoodsSearchInput').value.toLowerCase();
 
             tbody.innerHTML = '';
-            const filtered = otherGoods.filter(og => og.name.toLowerCase().includes(searchVal) || og.id.toLowerCase().includes(searchVal));
+            const filtered = otherGoods.filter(og => og.name.toLowerCase().includes(searchVal) || String(og.id).toLowerCase().includes(searchVal));
 
             if(filtered.length === 0) {
                 tbody.innerHTML = `<tr><td colspan="7" class="p-6 text-center text-slate-400 text-xs">အခြားကုန်ပစ္စည်း မရှိပါ။</td></tr>`;
@@ -1559,6 +1564,7 @@
 
             filtered.forEach(og => {
                 const stockVal = parseInt(og.stock) || 0;
+                const safeId = String(og.id);
                 tbody.innerHTML += `
                     <tr class="hover:bg-slate-50">
                         <td class="p-3 md:p-4 font-bold text-blue-700 whitespace-nowrap">${og.id}</td>
@@ -1569,9 +1575,9 @@
                         <td class="p-3 md:p-4 text-center whitespace-nowrap"><span class="px-2 py-0.5 rounded-full text-xs font-bold ${stockVal <= 5 ? 'bg-red-100 text-red-600' : 'bg-blue-100 text-blue-700'}">${stockVal}</span></td>
                         <td class="p-3 md:p-4 text-center whitespace-nowrap">
                             <div class="flex items-center justify-center gap-1.5 flex-nowrap">
-                                <button onclick="openRestockModal('${og.id}', 'OtherGoods')" class="px-2 py-1 bg-blue-50 hover:bg-blue-100 text-blue-600 rounded text-xs font-semibold shrink-0">+Stock</button>
-                                <button onclick="openEditOtherGoodsModal('${og.id}')" class="px-2 py-1 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded text-xs font-semibold shrink-0">ပြင်</button>
-                                <button onclick="deleteProduct('${og.id}', 'OtherGoods')" class="p-1 bg-red-50 text-red-500 hover:bg-red-100 rounded text-xs shrink-0" title="ဖျက်မည်"><i data-lucide="trash-2" class="w-3.5 h-3.5"></i></button>
+                                <button onclick="openRestockModal('${safeId}', 'OtherGoods')" class="px-2 py-1 bg-blue-50 hover:bg-blue-100 text-blue-600 rounded text-xs font-semibold shrink-0">+Stock</button>
+                                <button onclick="openEditOtherGoodsModal('${safeId}')" class="px-2 py-1 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded text-xs font-semibold shrink-0">ပြင်</button>
+                                <button onclick="deleteProduct('${safeId}', 'OtherGoods')" class="p-1 bg-red-50 text-red-500 hover:bg-red-100 rounded text-xs shrink-0" title="ဖျက်မည်"><i data-lucide="trash-2" class="w-3.5 h-3.5"></i></button>
                             </div>
                         </td>
                     </tr>
@@ -1598,7 +1604,7 @@
         }
 
         function openEditProductModal(productId) {
-            const p = products.find(item => item.id === productId);
+            const p = products.find(item => String(item.id) === String(productId));
             if (p) {
                 document.getElementById('pId').value = p.id;
                 document.getElementById('pName').value = p.name;
@@ -1618,7 +1624,7 @@
         }
 
         function openEditOtherGoodsModal(ogId) {
-            const og = otherGoods.find(item => item.id === ogId);
+            const og = otherGoods.find(item => String(item.id) === String(ogId));
             if (og) {
                 document.getElementById('ogId').value = og.id;
                 document.getElementById('ogName').value = og.name;
@@ -1638,7 +1644,7 @@
             const id = rawId ? (rawId.startsWith('#') ? rawId : '#' + rawId) : ('#' + Math.floor(10000 + Math.random() * 90000));
             
             const productData = {
-                id: id,
+                id: String(id),
                 name: document.getElementById('pName').value.trim(),
                 brand: document.getElementById('pBrand').value.trim(),
                 category: document.getElementById('pCategory').value,
@@ -1651,7 +1657,7 @@
                 createdDate: document.getElementById('pDate').value || new Date().toISOString().split('T')[0]
             };
 
-            const cleanKey = id.replace(/[^a-zA-Z0-9]/g, '_');
+            const cleanKey = String(id).replace(/[^a-zA-Z0-9]/g, '_');
             if (db) {
                 db.ref('products/' + cleanKey).set(productData).then(() => {
                     closeModal('addProductModal');
@@ -1668,7 +1674,7 @@
             const id = rawId ? (rawId.startsWith('#') ? rawId : '#' + rawId) : ('#' + Math.floor(10000 + Math.random() * 90000));
             
             const otherData = {
-                id: id,
+                id: String(id),
                 name: document.getElementById('ogName').value.trim(),
                 buyPrice: parseFloat(document.getElementById('ogBuyPrice').value) || 0,
                 sellPrice: parseFloat(document.getElementById('ogSellPrice').value) || 0,
@@ -1676,7 +1682,7 @@
                 createdDate: document.getElementById('ogDate').value || new Date().toISOString().split('T')[0]
             };
 
-            const cleanKey = id.replace(/[^a-zA-Z0-9]/g, '_');
+            const cleanKey = String(id).replace(/[^a-zA-Z0-9]/g, '_');
             if (db) {
                 db.ref('otherGoods/' + cleanKey).set(otherData).then(() => {
                     closeModal('addOtherGoodsModal');
@@ -1688,7 +1694,7 @@
         }
 
         function openRestockModal(productId, type) {
-            let product = type === 'Paint' ? products.find(p => p.id === productId) : otherGoods.find(og => og.id === productId);
+            let product = type === 'Paint' ? products.find(p => String(p.id) === String(productId)) : otherGoods.find(og => String(og.id) === String(productId));
             if (product) {
                 document.getElementById('restockProductId').value = product.id;
                 document.getElementById('restockProductType').value = type;
@@ -1703,16 +1709,16 @@
             const id = document.getElementById('restockProductId').value;
             const type = document.getElementById('restockProductType').value;
             const addQty = parseInt(document.getElementById('restockAddQty').value);
-            const cleanKey = id.replace(/[^a-zA-Z0-9]/g, '_');
+            const cleanKey = String(id).replace(/[^a-zA-Z0-9]/g, '_');
 
             if (type === 'Paint') {
-                const product = products.find(p => p.id === id);
+                const product = products.find(p => String(p.id) === String(id));
                 if (product && addQty > 0) {
                     product.stock = (parseInt(product.stock) || 0) + addQty;
                     if (db) db.ref('products/' + cleanKey).set(product);
                 }
             } else {
-                const og = otherGoods.find(g => g.id === id);
+                const og = otherGoods.find(g => String(g.id) === String(id));
                 if (og && addQty > 0) {
                     og.stock = (parseInt(og.stock) || 0) + addQty;
                     if (db) db.ref('otherGoods/' + cleanKey).set(og);
@@ -1724,7 +1730,7 @@
         }
 
         function deleteProduct(id, type) {
-            const cleanKey = id.replace(/[^a-zA-Z0-9]/g, '_');
+            const cleanKey = String(id).replace(/[^a-zA-Z0-9]/g, '_');
             showConfirm('ကုန်ပစ္စည်း ဖျက်ရန် သေချာပါသလား?', `(${id}) ကို စာရင်းထဲမှ လုံးဝ ဖျက်ပစ်ပါမည်။`, () => {
                 if (type === 'Paint') {
                     if (db) db.ref('products/' + cleanKey).remove();
@@ -1754,8 +1760,9 @@
             }
 
             filteredSales.forEach(s => {
+                const safeId = String(s.id);
                 const actionContent = s.due > 0 
-                    ? `<button onclick="openSalePaymentModal('${s.id}')" class="px-2 py-1 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-xs font-semibold shrink-0">အကြွေးဆပ်</button>`
+                    ? `<button onclick="openSalePaymentModal('${safeId}')" class="px-2 py-1 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-xs font-semibold shrink-0">အကြွေးဆပ်</button>`
                     : `<span class="text-xs text-emerald-600 font-bold inline-block min-w-[55px] text-center">ငွေကျေ</span>`;
 
                 tbody.innerHTML += `
@@ -1774,10 +1781,10 @@
                         <td class="p-3 md:p-4 text-center whitespace-nowrap">
                             <div class="flex items-center justify-center gap-1 flex-nowrap">
                                 ${actionContent}
-                                <button onclick="reprintSingleVoucher('${s.id}')" class="p-1.5 bg-blue-50 text-blue-600 hover:bg-blue-100 rounded-lg transition shrink-0" title="ဘောက်ချာ ပြန်ထုတ်မည်">
+                                <button onclick="reprintSingleVoucher('${safeId}')" class="p-1.5 bg-blue-50 text-blue-600 hover:bg-blue-100 rounded-lg transition shrink-0" title="ဘောက်ချာ ပြန်ထုတ်မည်">
                                     <i data-lucide="printer" class="w-3.5 h-3.5"></i>
                                 </button>
-                                <button onclick="deleteSaleRecord('${s.id}')" class="p-1.5 bg-red-50 text-red-500 hover:bg-red-100 rounded-lg transition shrink-0" title="ဖျက်မည်">
+                                <button onclick="deleteSaleRecord('${safeId}')" class="p-1.5 bg-red-50 text-red-500 hover:bg-red-100 rounded-lg transition shrink-0" title="ဖျက်မည်">
                                     <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
                                 </button>
                             </div>
@@ -1790,13 +1797,13 @@
 
         function deleteSaleRecord(saleId) {
             showConfirm('အရောင်းမှတ်တမ်း ဖျက်ရန် သေချာပါသလား?', `Invoice (${saleId}) ကို အရောင်းမှတ်တမ်းထဲမှ လုံးဝ ဖျက်ပစ်ပါမည်။`, () => {
-                if (db) db.ref('salesHistory/' + saleId).remove();
+                if (db) db.ref('salesHistory/' + String(saleId)).remove();
                 showToast(`Invoice (${saleId}) အား ဖျက်ပြီးပါပြီ!`, 'warning');
             });
         }
 
         function openSalePaymentModal(saleId) {
-            const sale = salesHistory.find(s => s.id === saleId);
+            const sale = salesHistory.find(s => String(s.id) === String(saleId));
             if (sale) {
                 document.getElementById('paySaleId').value = sale.id;
                 document.getElementById('paySaleInfo').value = `${sale.id} - ${sale.customerName}`;
@@ -1811,13 +1818,13 @@
             const saleId = document.getElementById('paySaleId').value;
             const payAmount = parseFloat(document.getElementById('payAmount').value) || 0;
 
-            const sale = salesHistory.find(s => s.id === saleId);
+            const sale = salesHistory.find(s => String(s.id) === String(saleId));
             if (sale && payAmount > 0) {
                 const actualPay = Math.min(payAmount, sale.due);
                 sale.paid += actualPay;
                 sale.due -= actualPay;
 
-                if (db) db.ref('salesHistory/' + sale.id).set(sale);
+                if (db) db.ref('salesHistory/' + String(sale.id)).set(sale);
 
                 renderSalesTable();
                 closeModal('salePaymentModal');
