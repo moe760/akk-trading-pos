@@ -27,7 +27,7 @@
         @media print {
             body { background: #fff !important; color: #000 !important; }
             body > *:not(#monthlyReportPrintArea):not(#receiptModal) { display: none !important; }
-            #mainApp, #toastContainer, #confirmModal, #loginScreen, #mobileNavBar, .summary-cards-container { display: none !important; }
+            #mainApp, #toastContainer, #confirmModal, #loginScreen, #mobileNavBar, .summary-cards-container, #loadingOverlay { display: none !important; }
             
             body.print-voucher #monthlyReportPrintArea { display: none !important; }
             body.print-voucher #receiptModal:not(.hidden) {
@@ -55,6 +55,15 @@
 </head>
 <body class="bg-slate-100 text-slate-800 h-screen flex flex-col overflow-hidden">
 
+    <!-- GLOBAL LOADING OVERLAY -->
+    <div id="loadingOverlay" class="fixed inset-0 bg-slate-900/70 backdrop-blur-sm z-[100] flex flex-col items-center justify-center text-white transition-opacity duration-300">
+        <div class="relative flex items-center justify-center">
+            <div class="w-16 h-16 border-4 border-emerald-500/35 border-t-emerald-400 rounded-full animate-spin"></div>
+            <i data-lucide="refresh-cw" class="w-6 h-6 text-emerald-400 absolute animate-spin"></i>
+        </div>
+        <p id="loadingText" class="mt-4 font-bold text-sm tracking-wide text-emerald-300 animate-pulse">ဒေတာများ ရယူနေပါသည်...</p>
+    </div>
+
     <!-- CUSTOM TOAST NOTIFICATION CONTAINER -->
     <div id="toastContainer" class="fixed top-3 right-3 left-3 md:left-auto z-50 flex flex-col gap-2 pointer-events-none"></div>
 
@@ -62,22 +71,23 @@
     <div id="loginScreen" class="fixed inset-0 bg-slate-900 z-50 flex items-center justify-center p-4">
         <div id="loginCard" class="bg-white rounded-2xl w-full max-w-sm md:max-w-md shadow-2xl overflow-hidden border border-slate-100">
             <div class="bg-emerald-950 p-6 text-center text-white space-y-2">
-                <div class="inline-flex p-3 bg-emerald-900/60 rounded-2xl text-emerald-400 mb-1 border border-emerald-800">
-                    <i data-lucide="shield-check" class="w-8 h-8"></i>
+                <div class="inline-flex p-2 bg-white/10 rounded-2xl mb-1 border border-emerald-800">
+                    <!-- LOGIN SCREEN LOGO -->
+                    <img src="logo.png" alt="AKK Logo" class="w-12 h-12 object-contain" onerror="this.onerror=null; this.src='https://via.placeholder.com/48?text=AKK';">
                 </div>
                 <h2 class="text-3xl font-extrabold tracking-wide text-emerald-400">AKK Trading</h2>
                 <p class="text-xs text-emerald-200">Cloud & Mobile POS System</p>
             </div>
             <form onsubmit="handleLogin(event)" class="p-6 space-y-4">
                 <div>
-                    <label class="text-xs font-semibold text-slate-600 block mb-1">အသုံးပြုသူ အမည် (Username)</label>
+                    <label class="text-xs font-semibold text-slate-600 block mb-1">အသုံးပြုသူ အမည်</label>
                     <div class="relative">
                         <i data-lucide="user" class="w-4 h-4 absolute left-3 top-3 text-slate-400"></i>
                         <input type="text" id="loginUser" required placeholder="Username ရိုက်ထည့်ပါ" class="w-full pl-9 pr-3 py-2.5 border rounded-xl text-sm border-slate-300 outline-none focus:ring-2 focus:ring-emerald-600">
                     </div>
                 </div>
                 <div>
-                    <label class="text-xs font-semibold text-slate-600 block mb-1">လျှို့ဝှက်နံပါတ် (Password)</label>
+                    <label class="text-xs font-semibold text-slate-600 block mb-1">လျှို့ဝှက်နံပါတ်</label>
                     <div class="relative">
                         <i data-lucide="lock" class="w-4 h-4 absolute left-3 top-3 text-slate-400"></i>
                         <input type="password" id="loginPass" required placeholder="••••••••" class="w-full pl-9 pr-3 py-2.5 border rounded-xl text-sm border-slate-300 outline-none focus:ring-2 focus:ring-emerald-600">
@@ -97,7 +107,9 @@
         <aside id="sidebarNav" class="hidden md:flex w-64 bg-emerald-950 text-emerald-100 flex-col justify-between shrink-0 transition-all duration-300">
             <div>
                 <div id="sidebarHeader" class="p-4 text-white font-bold text-lg flex items-center justify-between border-b border-emerald-900 min-h-[70px]">
-                    <div class="flex items-center gap-2 overflow-hidden">
+                    <div class="flex items-center gap-2.5 overflow-hidden">
+                        <!-- DESKTOP SIDEBAR LOGO -->
+                        <img src="logo.png" alt="AKK Logo" class="w-8 h-8 rounded-lg object-contain bg-white/10 p-1 border border-emerald-500/30 shrink-0" onerror="this.onerror=null; this.src='https://via.placeholder.com/32?text=AKK';">
                         <span id="brandLogoText" class="sidebar-text font-black text-2xl tracking-wide whitespace-nowrap text-emerald-400 leading-none">AKK Trading</span>
                     </div>
                     <button onclick="toggleSidebar()" class="p-1.5 hover:bg-emerald-900 rounded-lg text-emerald-300 hover:text-white shrink-0 transition">
@@ -124,7 +136,7 @@
                     </button>
                     <button onclick="openSettingsModal()" class="w-full flex items-center gap-3.5 px-3.5 py-3 rounded-xl font-semibold hover:bg-emerald-900 transition overflow-hidden text-emerald-300 hover:text-white">
                         <i data-lucide="settings" class="w-5 h-5 shrink-0"></i> 
-                        <span class="sidebar-text whitespace-nowrap text-sm">ဆက်တင် (Settings)</span>
+                        <span class="sidebar-text whitespace-nowrap text-sm">ဆက်တင်များ</span>
                     </button>
                 </nav>
             </div>
@@ -142,6 +154,8 @@
 
             <div class="md:hidden bg-emerald-950 text-white p-3 flex justify-between items-center border-b border-emerald-900 shrink-0">
                 <div class="flex items-center gap-2">
+                    <!-- MOBILE HEADER LOGO -->
+                    <img src="logo.png" alt="AKK Logo" class="w-7 h-7 rounded-md object-contain bg-white/10 p-0.5" onerror="this.onerror=null; this.src='https://via.placeholder.com/28?text=AKK';">
                     <span class="font-extrabold text-xl text-emerald-400 tracking-wide">AKK Trading</span>
                     <span id="cloudStatusMobile" class="text-[10px] bg-emerald-900 text-emerald-300 px-2 py-0.5 rounded-full font-bold flex items-center gap-1">
                         <span id="connectionDot" class="w-1.5 h-1.5 bg-emerald-400 rounded-full animate-pulse"></span> <span id="connectionText">Cloud</span>
@@ -512,7 +526,9 @@
 
     <!-- PRINT AREA FOR MONTHLY SALES REPORT -->
     <div id="monthlyReportPrintArea" class="hidden p-8 text-xs font-sans">
-        <div class="text-center border-b pb-4 mb-4">
+        <div class="text-center border-b pb-4 mb-4 flex flex-col items-center">
+            <!-- REPORT PRINT LOGO -->
+            <img src="logo.png" alt="AKK Logo" class="w-12 h-12 mb-1 object-contain" onerror="this.style.display='none';">
             <h1 class="text-2xl font-bold text-slate-900">AKK Trading</h1>
             <p class="text-sm font-semibold text-slate-600">လအလိုက် အရောင်းစာရင်းနှင့် အကြွေးစာရင်း အစီရင်ခံစာ</p>
             <p class="text-xs text-slate-500 mt-1">အစီရင်ခံစာလ: <span id="reportPrintMonth" class="font-bold text-slate-800"></span> | အခြေအနေ: <span id="reportPrintFilterCategory" class="font-bold text-emerald-700"></span></p>
@@ -782,7 +798,9 @@
     <div id="receiptModal" class="fixed inset-0 bg-slate-900/50 backdrop-blur-sm hidden flex items-center justify-center p-3 z-50">
         <div class="bg-white rounded-2xl w-full max-w-xs shadow-xl overflow-hidden p-4 text-center space-y-3">
             <div id="printableArea" class="text-left bg-slate-50 p-3 rounded-xl text-xs space-y-2 border border-slate-200">
-                <div class="text-center pb-2 border-b border-slate-200">
+                <div class="text-center pb-2 border-b border-slate-200 flex flex-col items-center">
+                    <!-- RECEIPT VOUCHER LOGO -->
+                    <img src="logo.png" alt="AKK Logo" class="w-10 h-10 mb-1 object-contain" onerror="this.style.display='none';">
                     <h2 class="text-sm font-bold text-slate-900">AKK Trading</h2>
                     <p class="text-[9px] text-slate-500">Paint & Hardware Materials Store</p>
                 </div>
@@ -813,6 +831,7 @@
   measurementId: "G-GFZG6ZY3QW"
 };
 
+
         let db = null;
         try {
             firebase.initializeApp(firebaseConfig);
@@ -829,6 +848,10 @@
         let selectedPaymentType = 'Cash';
         let pendingSaleData = null;
         let isReprintMode = false;
+
+        // Loading tracker for multiple firebase listeners
+        let loadedCount = 0;
+        const totalListeners = 3;
 
         const defaultProducts = [
             { id: '#48219', name: 'Nippon Weatherbond', brand: 'Nippon', category: 'Exterior Paint', color: 'PB-120', finish: 'Gloss', size: '1 Gallon', buyPrice: 45000, sellPrice: 52000, stock: 25, createdDate: '2026-10-01' },
@@ -853,9 +876,37 @@
                 document.getElementById('loginScreen').classList.add('hidden');
                 document.getElementById('mainApp').classList.remove('hidden');
                 initApp();
+            } else {
+                hideLoading();
             }
             lucide.createIcons();
         });
+
+        function showLoading(msg = "ဒေတာများ ရယူနေပါသည်...") {
+            const overlay = document.getElementById('loadingOverlay');
+            const textEl = document.getElementById('loadingText');
+            if (overlay) {
+                if (textEl) textEl.innerText = msg;
+                overlay.classList.remove('hidden', 'opacity-0', 'pointer-events-none');
+            }
+        }
+
+        function hideLoading() {
+            const overlay = document.getElementById('loadingOverlay');
+            if (overlay) {
+                overlay.classList.add('opacity-0', 'pointer-events-none');
+                setTimeout(() => {
+                    overlay.classList.add('hidden');
+                }, 300);
+            }
+        }
+
+        function checkAllLoaded() {
+            loadedCount++;
+            if (loadedCount >= totalListeners) {
+                hideLoading();
+            }
+        }
 
         function handleLogin(e) {
             e.preventDefault();
@@ -920,6 +971,9 @@
         }
 
         function initApp() {
+            showLoading("Cloud မှ အချက်အလက်များ ရယူနေပါသည်...");
+            loadedCount = 0;
+
             if (db) {
                 db.ref(".info/connected").on("value", (snap) => {
                     const dot = document.getElementById("connectionDot");
@@ -953,10 +1007,12 @@
                     }
                     renderPosProducts();
                     renderProductsTable();
+                    checkAllLoaded();
                 }, (error) => {
                     products = [...defaultProducts];
                     renderPosProducts();
                     renderProductsTable();
+                    checkAllLoaded();
                 });
 
                 // Other Goods Listener with safe String ID handling
@@ -971,10 +1027,12 @@
                     }
                     renderPosProducts();
                     renderOtherGoodsTable();
+                    checkAllLoaded();
                 }, (error) => {
                     otherGoods = [...defaultOtherGoods];
                     renderPosProducts();
                     renderOtherGoodsTable();
+                    checkAllLoaded();
                 });
 
                 // Sales History Listener with safe String ID handling
@@ -988,10 +1046,12 @@
                     }
                     renderSalesTable();
                     updateSummaryCards();
+                    checkAllLoaded();
                 }, (error) => {
                     salesHistory = [];
                     renderSalesTable();
                     updateSummaryCards();
+                    checkAllLoaded();
                 });
             } else {
                 products = [...defaultProducts];
@@ -1002,6 +1062,7 @@
                 renderOtherGoodsTable();
                 renderSalesTable();
                 updateSummaryCards();
+                hideLoading();
             }
             renderCart();
             lucide.createIcons();
