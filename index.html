@@ -13,12 +13,16 @@
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-database-compat.js"></script>
 
+    <!-- ဖုန်းများတွင် Shortcut တင်သည့်အခါ ပေါ်မည့် ပုံ (Icon) -->
+<link rel="apple-touch-icon" href="logo.png">
+<link rel="icon" type="image/png" href="logo.png">
+
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Padauk:wght@400;700&display=swap');
         body { font-family: 'Padauk', sans-serif; -webkit-tap-highlight-color: transparent; }
         
         .glass-panel {
-            background: rgba(255, 255, 255, 0.92);
+            background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(25px);
             -webkit-backdrop-filter: blur(25px);
             border: 1px solid rgba(255, 255, 255, 0.7);
@@ -159,15 +163,12 @@
     <!-- CUSTOM TOAST NOTIFICATION CONTAINER -->
     <div id="toastContainer" class="fixed top-3 right-3 left-3 md:left-auto z-50 flex flex-col gap-2 pointer-events-none"></div>
 
-    <!-- REDESIGNED MODERN LOGIN SCREEN MODAL -->
+    <!-- LOGIN SCREEN MODAL -->
     <div id="loginScreen" class="fixed inset-0 bg-gradient-to-br from-emerald-950 via-slate-900 to-slate-950 z-50 flex items-center justify-center p-4 overflow-y-auto">
-        
-        <!-- Background Ambient Glow Orbs -->
         <div class="absolute -top-32 -left-32 w-96 h-96 bg-emerald-500/10 rounded-full blur-[120px] pointer-events-none"></div>
         <div class="absolute -bottom-32 -right-32 w-96 h-96 bg-teal-500/10 rounded-full blur-[120px] pointer-events-none"></div>
 
         <div id="loginCard" class="login-glass-card rounded-3xl w-full max-w-sm md:max-w-md overflow-hidden relative z-10 transition-all duration-300 my-auto">
-            <!-- Header Section -->
             <div class="p-6 md:p-8 text-center space-y-3 relative border-b border-white/10 bg-emerald-950/40">
                 <div class="inline-flex p-3 bg-emerald-500/10 rounded-2xl border border-emerald-400/30 shadow-lg shadow-emerald-500/10 backdrop-blur-md mb-1">
                     <img src="logo.png" alt="AKK Logo" class="w-12 h-12 object-contain" onerror="this.onerror=null; this.src='https://via.placeholder.com/48?text=AKK';">
@@ -178,7 +179,6 @@
                 </div>
             </div>
 
-            <!-- Login Form -->
             <form onsubmit="handleLogin(event)" class="p-6 md:p-8 space-y-5">
                 <div>
                     <label class="text-xs font-bold text-emerald-300 uppercase tracking-wider block mb-1.5">Username</label>
@@ -186,7 +186,7 @@
                         <span class="absolute left-3.5 text-emerald-400 flex items-center pointer-events-none z-10">
                             <i data-lucide="user" class="w-4 h-4"></i>
                         </span>
-                        <input type="text" id="loginUser" required placeholder="admin1, admin2, admin3" class="w-full pl-10 pr-4 py-3 login-input rounded-2xl text-xs md:text-sm font-semibold outline-none">
+                        <input type="text" id="loginUser" required placeholder="username" class="w-full pl-10 pr-4 py-3 login-input rounded-2xl text-xs md:text-sm font-semibold outline-none">
                     </div>
                 </div>
 
@@ -267,7 +267,7 @@
         </aside>
 
         <!-- MAIN CONTENT AREA -->
-        <main class="flex-1 flex flex-col h-full overflow-hidden pb-16 md:pb-0 relative">
+        <main class="flex-1 flex flex-col h-full overflow-hidden pb-24 md:pb-0 relative">
 
             <!-- MOBILE TOP HEADER -->
             <div id="mobileHeader" class="md:hidden glass-sidebar text-white p-3 flex justify-between items-center shrink-0 border-b border-emerald-800/30 z-30">
@@ -292,7 +292,7 @@
             <section id="view-pos" class="tab-content flex-1 flex flex-col md:flex-row h-full overflow-hidden relative">
                 <div class="flex-1 p-3 md:p-6 flex flex-col h-full overflow-hidden">
                     
-                    <!-- SUMMARY CARD (Fixed Horizontal Alignment & Realtime Network Status) -->
+                    <!-- SUMMARY CARD -->
                     <div class="wallet-card mb-3 p-4 rounded-3xl text-white shadow-xl relative overflow-hidden shrink-0">
                         <div class="absolute -right-6 -bottom-6 w-32 h-32 bg-white/10 rounded-full blur-2xl pointer-events-none"></div>
                         
@@ -308,7 +308,6 @@
                             <h2 class="summaryRevText text-2xl md:text-3xl font-black tracking-tight">0 Ks</h2>
                         </div>
 
-                        <!-- Horizontal Layout for Paid and Due -->
                         <div class="pt-2 border-t border-white/20 flex flex-row items-center justify-between gap-2 text-xs">
                             <div class="flex items-center gap-1.5">
                                 <span class="text-emerald-200 text-[11px]">ရရှိပြီးငွေ (Paid):</span> 
@@ -352,81 +351,82 @@
                     </button>
                 </div>
 
-                <!-- CURRENT ORDER MODAL / SECTION (Fixed Positioning between top and bottom nav bars on mobile) -->
-                <div id="cartSection" class="absolute top-[57px] bottom-[64px] left-0 right-0 z-40 glass-panel md:border-t-0 md:border-l border-white/50 hidden md:flex flex-col md:static md:w-[380px] lg:w-[400px] md:h-full shadow-2xl transition-all duration-300 transform translate-y-[100%] opacity-0 pointer-events-none md:opacity-100 md:translate-y-0 md:pointer-events-auto shrink-0 bg-white/95 backdrop-blur-3xl">
-                    
-                    <div class="p-3 md:p-4 border-b border-white/30 flex justify-between items-center bg-emerald-500/10 shrink-0">
-                        <div class="flex items-center gap-2 font-bold text-base md:text-lg text-emerald-950">
-                            <i data-lucide="shopping-bag" class="text-emerald-600"></i> Current Order
+                <!-- CURRENT ORDER MODAL / SECTION -->
+                <div id="cartSection" class="fixed md:static inset-x-2 top-[5px] bottom-[5px] md:inset-auto md:w-[380px] lg:w-[400px] md:h-full z-40  md:bg-transparent backdrop-blur-sm md:backdrop-blur-none hidden md:flex items-center justify-center p-0 shrink-0">
+                    <div class="glass-panel rounded-3xl md:rounded-none w-full h-full flex flex-col shadow-2xl overflow-hidden border border-white/50 relative">
+                        
+                        <div class="p-3 md:p-4 border-b border-white/30 flex justify-between items-center bg-emerald-500/10 shrink-0">
+                            <div class="flex items-center gap-2 font-bold text-base md:text-lg text-emerald-950">
+                                <i data-lucide="shopping-bag" class="text-emerald-600"></i> Current Order
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <span id="cartItemCount" class="bg-emerald-100 text-emerald-800 px-2.5 py-0.5 rounded-full text-xs font-semibold">0 ခု</span>
+                                <button onclick="toggleMobileCart()" class="md:hidden text-slate-500 hover:text-slate-800 p-1 bg-white/50 rounded-xl"><i data-lucide="x" class="w-5 h-5"></i></button>
+                            </div>
                         </div>
-                        <div class="flex items-center gap-2">
-                            <span id="cartItemCount" class="bg-emerald-100 text-emerald-800 px-2.5 py-0.5 rounded-full text-xs font-semibold">0 ခု</span>
-                            <button onclick="toggleMobileCart()" class="md:hidden text-slate-500 hover:text-slate-800 p-1 bg-white/50 rounded-xl"><i data-lucide="x" class="w-5 h-5"></i></button>
-                        </div>
-                    </div>
 
-                    <div class="p-3 md:p-4 border-b border-white/20 bg-white/40 space-y-2 text-xs shrink-0">
-                        <div>
-                            <label class="font-semibold text-slate-600 block mb-0.5">အရောင်းရက်စွဲ</label>
-                            <input type="date" id="posSaleDate" class="w-full p-2 glass-input rounded-xl text-xs outline-none">
-                        </div>
-                        <div class="grid grid-cols-2 gap-2">
+                        <div class="p-3 md:p-4 border-b border-white/20 bg-white/40 space-y-2 text-xs shrink-0">
                             <div>
-                                <label class="font-semibold text-slate-600 block mb-0.5">ဝယ်သူ အမည် *</label>
-                                <input type="text" id="posCustomerName" placeholder="ဦးကျော်ဇော" class="w-full p-2 glass-input rounded-xl text-xs outline-none">
+                                <label class="font-semibold text-slate-600 block mb-0.5">အရောင်းရက်စွဲ</label>
+                                <input type="date" id="posSaleDate" class="w-full p-2 glass-input rounded-xl text-xs outline-none">
+                            </div>
+                            <div class="grid grid-cols-2 gap-2">
+                                <div>
+                                    <label class="font-semibold text-slate-600 block mb-0.5">ဝယ်သူ အမည် *</label>
+                                    <input type="text" id="posCustomerName" placeholder="ဦးကျော်ဇော" class="w-full p-2 glass-input rounded-xl text-xs outline-none">
+                                </div>
+                                <div>
+                                    <label class="font-semibold text-slate-600 block mb-0.5">ဖုန်းနံပါတ်</label>
+                                    <input type="text" id="posCustomerPhone" placeholder="09-xxxxxxxxx" class="w-full p-2 glass-input rounded-xl text-xs outline-none">
+                                </div>
                             </div>
                             <div>
-                                <label class="font-semibold text-slate-600 block mb-0.5">ဖုန်းနံပါတ်</label>
-                                <input type="text" id="posCustomerPhone" placeholder="09-xxxxxxxxx" class="w-full p-2 glass-input rounded-xl text-xs outline-none">
+                                <label class="font-semibold text-slate-600 block mb-0.5">နေရပ်လိပ်စာ (Address)</label>
+                                <input type="text" id="posCustomerAddress" placeholder="အမှတ် (၁၂)၊ လမ်း ၅၀၊ ရန်ကုန်" class="w-full p-2 glass-input rounded-xl text-xs outline-none">
                             </div>
                         </div>
-                        <div>
-                            <label class="font-semibold text-slate-600 block mb-0.5">နေရပ်လိပ်စာ (Address)</label>
-                            <input type="text" id="posCustomerAddress" placeholder="အမှတ် (၁၂)၊ လမ်း ၅၀၊ ရန်ကုန်" class="w-full p-2 glass-input rounded-xl text-xs outline-none">
+
+                        <div id="cartItemsList" class="flex-1 overflow-y-auto p-3 md:p-4 space-y-2">
+                            <!-- Cart items injected here -->
                         </div>
-                    </div>
 
-                    <div id="cartItemsList" class="flex-1 overflow-y-auto p-3 md:p-4 space-y-2">
-                        <!-- Cart items injected here -->
-                    </div>
+                        <div class="p-3 md:p-4 border-t border-white/40 bg-white/50 space-y-2.5 shrink-0">
+                            <div class="space-y-1 text-xs md:text-sm">
+                                <div class="flex justify-between font-bold text-sm md:text-base text-slate-800">
+                                    <span>စုစုပေါင်း ကျသင့်ငွေ</span>
+                                    <span id="cartTotalDisplay">0 Ks</span>
+                                </div>
 
-                    <div class="p-3 md:p-4 border-t border-white/40 bg-white/50 space-y-2.5 shrink-0">
-                        <div class="space-y-1 text-xs md:text-sm">
-                            <div class="flex justify-between font-bold text-sm md:text-base text-slate-800">
-                                <span>စုစုပေါင်း ကျသင့်ငွေ</span>
-                                <span id="cartTotalDisplay">0 Ks</span>
-                            </div>
+                                <div class="pt-1">
+                                    <label class="text-[11px] font-semibold text-slate-600 mb-1 block">ငွေပေးချေမှု ပုံစံ</label>
+                                    <div class="grid grid-cols-3 gap-1.5">
+                                        <button type="button" onclick="setPaymentType('Cash')" id="payBtnCash" class="pay-type-btn py-1.5 text-xs font-semibold rounded-xl border liquid-btn text-white border-emerald-600">Cash</button>
+                                        <button type="button" onclick="setPaymentType('KBZPay')" id="payBtnKPay" class="pay-type-btn py-1.5 text-xs font-semibold rounded-xl border bg-white/70 text-slate-700 border-white/50">KBZPay</button>
+                                        <button type="button" onclick="setPaymentType('Credit')" id="payBtnCredit" class="pay-type-btn py-1.5 text-xs font-semibold rounded-xl border bg-white/70 text-slate-700 border-white/50">အကြွေး</button>
+                                    </div>
+                                </div>
 
-                            <div class="pt-1">
-                                <label class="text-[11px] font-semibold text-slate-600 mb-1 block">ငွေပေးချေမှု ပုံစံ</label>
-                                <div class="grid grid-cols-3 gap-1.5">
-                                    <button type="button" onclick="setPaymentType('Cash')" id="payBtnCash" class="pay-type-btn py-1.5 text-xs font-semibold rounded-xl border liquid-btn text-white border-emerald-600">Cash</button>
-                                    <button type="button" onclick="setPaymentType('KBZPay')" id="payBtnKPay" class="pay-type-btn py-1.5 text-xs font-semibold rounded-xl border bg-white/70 text-slate-700 border-white/50">KBZPay</button>
-                                    <button type="button" onclick="setPaymentType('Credit')" id="payBtnCredit" class="pay-type-btn py-1.5 text-xs font-semibold rounded-xl border bg-white/70 text-slate-700 border-white/50">အကြွေး</button>
+                                <div class="pt-1">
+                                    <label class="text-[11px] font-semibold text-slate-600 block mb-0.5">ပေးချေငွေ (Paid Amount)</label>
+                                    <input type="number" id="paidAmountInput" oninput="calculateBilling()" placeholder="0" class="w-full p-2 glass-input rounded-xl text-right font-bold text-slate-800 outline-none">
+                                </div>
+
+                                <div class="flex justify-between items-center pt-1 text-sm md:text-base font-bold">
+                                    <span class="text-slate-700">ကျန်ငွေ (Due)</span>
+                                    <span id="dueAmountDisplay" class="text-emerald-600">0 Ks</span>
                                 </div>
                             </div>
 
-                            <div class="pt-1">
-                                <label class="text-[11px] font-semibold text-slate-600 block mb-0.5">ပေးချေငွေ (Paid Amount)</label>
-                                <input type="number" id="paidAmountInput" oninput="calculateBilling()" placeholder="0" class="w-full p-2 glass-input rounded-xl text-right font-bold text-slate-800 outline-none">
-                            </div>
-
-                            <div class="flex justify-between items-center pt-1 text-sm md:text-base font-bold">
-                                <span class="text-slate-700">ကျန်ငွေ (Due)</span>
-                                <span id="dueAmountDisplay" class="text-emerald-600">0 Ks</span>
-                            </div>
+                            <button onclick="openVoucherPreview()" class="w-full py-2.5 md:py-3 liquid-btn text-white font-bold rounded-xl shadow-md transition flex items-center justify-center gap-2 text-xs md:text-sm">
+                                <i data-lucide="printer" class="w-4 h-4"></i> ဘောက်ချာစစ်ဆေး စာထုတ်မည်
+                            </button>
                         </div>
-
-                        <button onclick="openVoucherPreview()" class="w-full py-2.5 md:py-3 liquid-btn text-white font-bold rounded-xl shadow-md transition flex items-center justify-center gap-2 text-xs md:text-sm">
-                            <i data-lucide="printer" class="w-4 h-4"></i> ဘောက်ချာစစ်ဆေး စာထုတ်မည်
-                        </button>
                     </div>
                 </div>
             </section>
 
             <!-- TAB 2: PAINT PRODUCTS MANAGEMENT -->
             <section id="view-products" class="tab-content flex-1 p-3 md:p-6 overflow-y-auto hidden space-y-4 md:space-y-6">
-                <!-- SUMMARY CARD -->
                 <div class="wallet-card p-4 rounded-3xl text-white shadow-xl relative overflow-hidden shrink-0">
                     <div class="absolute -right-6 -bottom-6 w-32 h-32 bg-white/10 rounded-full blur-2xl pointer-events-none"></div>
                     <div class="flex justify-between items-center mb-1">
@@ -486,16 +486,13 @@
                                 <th class="p-3 md:p-4 text-center w-36 whitespace-nowrap">Action</th>
                             </tr>
                         </thead>
-                        <tbody id="productsTableBody" class="divide-y divide-slate-100/70 text-xs md:text-sm align-middle">
-                            <!-- Paint products table row injected here -->
-                        </tbody>
+                        <tbody id="productsTableBody" class="divide-y divide-slate-100/70 text-xs md:text-sm align-middle"></tbody>
                     </table>
                 </div>
             </section>
 
             <!-- TAB 3: OTHER GOODS MENU -->
             <section id="view-othergoods" class="tab-content flex-1 p-3 md:p-6 overflow-y-auto hidden space-y-4 md:space-y-6">
-                <!-- SUMMARY CARD -->
                 <div class="wallet-card p-4 rounded-3xl text-white shadow-xl relative overflow-hidden shrink-0">
                     <div class="absolute -right-6 -bottom-6 w-32 h-32 bg-white/10 rounded-full blur-2xl pointer-events-none"></div>
                     <div class="flex justify-between items-center mb-1">
@@ -547,16 +544,13 @@
                                 <th class="p-3 md:p-4 text-center w-40 whitespace-nowrap">Action</th>
                             </tr>
                         </thead>
-                        <tbody id="otherGoodsTableBody" class="divide-y divide-slate-100/70 text-xs md:text-sm align-middle">
-                            <!-- Other goods table row injected here -->
-                        </tbody>
+                        <tbody id="otherGoodsTableBody" class="divide-y divide-slate-100/70 text-xs md:text-sm align-middle"></tbody>
                     </table>
                 </div>
             </section>
 
             <!-- TAB 4: SALES RECORD -->
             <section id="view-sales" class="tab-content flex-1 p-3 md:p-6 overflow-y-auto hidden space-y-4 md:space-y-6">
-                <!-- SUMMARY CARD -->
                 <div class="wallet-card p-4 rounded-3xl text-white shadow-xl relative overflow-hidden shrink-0">
                     <div class="absolute -right-6 -bottom-6 w-32 h-32 bg-white/10 rounded-full blur-2xl pointer-events-none"></div>
                     <div class="flex justify-between items-center mb-1">
@@ -598,7 +592,7 @@
                         </div>
                         
                         <button onclick="printMonthlyReport()" class="px-3 py-2 liquid-btn text-white text-xs font-bold rounded-xl shadow-sm flex items-center gap-1.5 transition">
-                            <i data-lucide="printer" class="w-3.5 h-3.5"></i> အစီရင်ခံစာ ထုတ်မည်
+                            <i data-lucide="printer" class="w-3.5 h-3.5"></i> လချုပ်စာရင်း ထုတ်မည်
                         </button>
                     </div>
                 </div>
@@ -617,16 +611,13 @@
                                 <th class="p-3 md:p-4 text-center min-w-[180px]">Action</th>
                             </tr>
                         </thead>
-                        <tbody id="salesTableBody" class="divide-y divide-slate-100/70 text-xs md:text-sm align-middle">
-                            <!-- Sales history injected here -->
-                        </tbody>
+                        <tbody id="salesTableBody" class="divide-y divide-slate-100/70 text-xs md:text-sm align-middle"></tbody>
                     </table>
                 </div>
             </section>
 
             <!-- TAB 5: ADMIN LOGS -->
             <section id="view-logs" class="tab-content flex-1 p-3 md:p-6 overflow-y-auto hidden space-y-4 md:space-y-6">
-                <!-- SUMMARY CARD -->
                 <div class="wallet-card p-4 rounded-3xl text-white shadow-xl relative overflow-hidden shrink-0">
                     <div class="absolute -right-6 -bottom-6 w-32 h-32 bg-white/10 rounded-full blur-2xl pointer-events-none"></div>
                     <div class="flex justify-between items-center mb-1">
@@ -652,9 +643,9 @@
                 </div>
 
                 <div class="flex justify-between items-center">
-                    <h1 class="text-lg md:text-2xl font-bold text-slate-800">Admin Activity Logs (ပြုလုပ်ချက်များ မှတ်တမ်း)</h1>
+                    <h1 class="text-lg md:text-2xl font-bold text-slate-800">Admin Activity Logs</h1>
                     <button onclick="clearLogsPrompt()" class="px-3 py-2 bg-red-600 hover:bg-red-700 text-white text-xs font-bold rounded-xl shadow-sm flex items-center gap-1.5">
-                        <i data-lucide="trash-2" class="w-3.5 h-3.5"></i> Logs အဟောင်းများ ဖျက်မည်
+                        <i data-lucide="trash-2" class="w-3.5 h-3.5"></i> Logs များ ဖျက်မည်
                     </button>
                 </div>
 
@@ -668,9 +659,7 @@
                                 <th class="p-3 md:p-4">ပြုလုပ်ခဲ့သော လုပ်ဆောင်ချက်များ</th>
                             </tr>
                         </thead>
-                        <tbody id="logsTableBody" class="divide-y divide-slate-100/70 text-xs md:text-sm align-middle">
-                            <!-- Logs injected here -->
-                        </tbody>
+                        <tbody id="logsTableBody" class="divide-y divide-slate-100/70 text-xs md:text-sm align-middle"></tbody>
                     </table>
                 </div>
             </section>
@@ -678,7 +667,7 @@
         </main>
 
         <!-- MOBILE BOTTOM NAVIGATION BAR -->
-        <nav id="mobileNavBar" class="md:hidden fixed bottom-0 left-0 right-0 glass-sidebar border-t border-emerald-800/40 flex justify-around p-2 z-50 text-emerald-300 shadow-2xl">
+        <nav id="mobileNavBar" class="md:hidden fixed bottom-0 left-0 right-0 glass-sidebar border-t border-emerald-800/40 flex justify-around p-2 z-40 text-emerald-300 shadow-2xl">
             <button onclick="switchTab('pos')" id="m-tab-pos" class="mobile-nav-btn flex flex-col items-center justify-center gap-1 p-1.5 text-emerald-400 font-bold transition-all duration-300 w-full scale-105">
                 <div class="p-1.5 rounded-xl bg-emerald-500/25 border border-emerald-400/50 shadow-md ring-2 ring-emerald-400/20"><i data-lucide="shopping-cart" class="w-5 h-5"></i></div>
                 <span class="text-[10px] leading-tight">POS</span>
@@ -1041,7 +1030,6 @@
             document.getElementById('ogDate').value = today;
             document.getElementById('salesMonthFilter').value = currentMonth;
 
-            // Setup Realtime Connection State Listener (.info/connected)
             if (db) {
                 db.ref('.info/connected').on('value', (snap) => {
                     const isConnected = snap.val();
@@ -1297,21 +1285,7 @@
 
         function toggleMobileCart() {
             const cartSec = document.getElementById('cartSection');
-            const isHidden = cartSec.classList.contains('hidden');
-            
-            if (isHidden) {
-                cartSec.classList.remove('hidden');
-                setTimeout(() => {
-                    cartSec.classList.remove('translate-y-[100%]', 'opacity-0', 'pointer-events-none');
-                    cartSec.classList.add('translate-y-0', 'opacity-100', 'pointer-events-auto');
-                }, 10);
-            } else {
-                cartSec.classList.add('translate-y-[100%]', 'opacity-0', 'pointer-events-none');
-                cartSec.classList.remove('translate-y-0', 'opacity-100', 'pointer-events-auto');
-                setTimeout(() => {
-                    cartSec.classList.add('hidden');
-                }, 300);
-            }
+            cartSec.classList.toggle('hidden');
         }
 
         function switchTab(tabName) {
@@ -2030,7 +2004,7 @@
                         <td class="p-3 md:p-4 text-right font-bold whitespace-nowrap ${(s.due || 0) > 0 ? 'text-red-600' : 'text-slate-400'}">${(s.due || 0).toLocaleString()} Ks</td>
                         <td class="p-3 md:p-4 text-center whitespace-nowrap">
                             <div class="flex items-center justify-center gap-1.5 flex-nowrap">
-                                ${actionContent}
+                                <span class="inline-block min-w-[75px] text-center">${actionContent}</span>
                                 <button onclick="reprintSingleVoucher('${safeId}')" class="p-1.5 bg-blue-500/20 text-blue-700 hover:bg-blue-500/30 rounded-lg transition shrink-0 border border-blue-500/30" title="ဘောက်ချာ ပြန်ထုတ်မည်">
                                     <i data-lucide="printer" class="w-3.5 h-3.5"></i>
                                 </button>
