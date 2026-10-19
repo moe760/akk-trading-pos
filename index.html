@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>AKK Trading - Premium Liquid Glass POS System</title>
+    <title>AKK Trading - POS System</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Lucide Icons -->
@@ -182,7 +182,7 @@
                         <span class="absolute left-3.5 text-emerald-600 flex items-center pointer-events-none z-10">
                             <i data-lucide="user" class="w-4 h-4"></i>
                         </span>
-                        <input type="text" id="loginUser" required placeholder="admin1, admin2, admin3" class="w-full pl-10 pr-4 py-3 login-input rounded-2xl text-xs md:text-sm font-semibold outline-none">
+                        <input type="text" id="loginUser" required placeholder="username" class="w-full pl-10 pr-4 py-3 login-input rounded-2xl text-xs md:text-sm font-semibold outline-none">
                     </div>
                 </div>
 
@@ -249,7 +249,7 @@
                     </button>
                     <button onclick="openSettingsModal()" class="w-full flex items-center gap-3.5 px-3.5 py-3 rounded-2xl font-semibold hover:bg-white/10 transition overflow-hidden text-emerald-300 hover:text-white">
                         <i data-lucide="settings" class="w-5 h-5 shrink-0"></i> 
-                        <span class="sidebar-text whitespace-nowrap text-sm">ဆက်တင် (Settings)</span>
+                        <span class="sidebar-text whitespace-nowrap text-sm">Settings</span>
                     </button>
                 </nav>
             </div>
@@ -343,7 +343,6 @@
                 <div class="md:hidden fixed bottom-16 right-4 z-40">
                     <button onclick="openMobileCart()" class="liquid-btn text-white p-3.5 shadow-2xl flex items-center gap-2 font-bold text-xs border border-white/40 active:scale-95 transition-transform rounded-2xl">
                         <i data-lucide="shopping-bag" class="w-5 h-5"></i>
-                        <span>Order စာရင်း</span>
                         <span id="mobileCartCount" class="bg-white text-emerald-800 px-2 py-0.5 rounded-full font-extrabold text-xs">0</span>
                     </button>
                 </div>
@@ -585,7 +584,7 @@
                         </div>
                         
                         <button onclick="printMonthlyReport()" class="px-3 py-2 liquid-btn text-white text-xs font-bold rounded-xl shadow-sm flex items-center gap-1.5 transition">
-                            <i data-lucide="printer" class="w-3.5 h-3.5"></i> အစီရင်ခံစာ ထုတ်မည်
+                            <i data-lucide="printer" class="w-3.5 h-3.5"></i> လချုပ်စာရင်းထုတ်မည်
                         </button>
                     </div>
                 </div>
@@ -636,9 +635,9 @@
                 </div>
 
                 <div class="flex justify-between items-center">
-                    <h1 class="text-lg md:text-2xl font-bold text-slate-800">Admin Activity Logs (ပြုလုပ်ချက်များ မှတ်တမ်း)</h1>
+                    <h1 class="text-lg md:text-2xl font-bold text-slate-800">Admin Activity Logs</h1>
                     <button onclick="clearLogsPrompt()" class="px-3 py-2 bg-red-600 hover:bg-red-700 text-white text-xs font-bold rounded-xl shadow-sm flex items-center gap-1.5">
-                        <i data-lucide="trash-2" class="w-3.5 h-3.5"></i> Logs အဟောင်းများ ဖျက်မည်
+                        <i data-lucide="trash-2" class="w-3.5 h-3.5"></i> Delete Logs
                     </button>
                 </div>
 
@@ -685,78 +684,80 @@
 
     </div>
 
-    <!-- RE-ENGINEERED DEDICATED FULLSCREEN MOBILE CART MODAL (Outside main container to guarantee 100% full coverage) -->
-    <div id="mobileCartModal" class="fixed inset-0 bg-slate-900 z-[999999] hidden flex-col w-full h-full overflow-hidden">
-        <!-- Header -->
-        <div class="p-3.5 bg-emerald-800 text-white flex justify-between items-center shrink-0 border-b border-emerald-700">
-            <div class="flex items-center gap-2 font-bold text-base">
-                <button onclick="closeMobileCart()" class="p-1 bg-white/10 rounded-xl active:scale-95 transition flex items-center gap-1 text-xs">
-                    <i data-lucide="arrow-left" class="w-5 h-5"></i> နောက်သို့
+    <!-- RE-ENGINEERED DEDICATED FULLSCREEN MOBILE CART MODAL WITH SMOOTH TRANSITION -->
+    <div id="mobileCartModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md z-[999999] hidden flex-col w-full h-full overflow-hidden transition-all duration-300 opacity-0 pointer-events-none">
+        <div id="mobileCartInner" class="flex flex-col w-full h-full bg-slate-100 transform translate-y-full transition-transform duration-300 ease-out">
+            <!-- Header -->
+            <div class="p-3.5 bg-emerald-800 text-white flex justify-between items-center shrink-0 border-b border-emerald-700 shadow-md">
+                <div class="flex items-center gap-2 font-bold text-base">
+                    <button onclick="closeMobileCart()" class="p-1 bg-white/10 rounded-xl active:scale-95 transition flex items-center gap-1 text-xs">
+                        <i data-lucide="arrow-left" class="w-5 h-5"></i> နောက်သို့
+                    </button>
+                    <span>Current Order (ဈေးဝယ်ခြင်းတောင်း)</span>
+                </div>
+                <button onclick="closeMobileCart()" class="p-1 bg-white/10 rounded-xl active:scale-95 transition">
+                    <i data-lucide="x" class="w-6 h-6"></i>
                 </button>
-                <span>Current Order (ဈေးဝယ်ခြင်းတောင်း)</span>
             </div>
-            <button onclick="closeMobileCart()" class="p-1 bg-white/10 rounded-xl active:scale-95 transition">
-                <i data-lucide="x" class="w-6 h-6"></i>
-            </button>
-        </div>
 
-        <!-- Scrollable Content Body -->
-        <div class="flex-1 overflow-y-auto p-3 space-y-3 bg-slate-100">
-            <!-- Customer Details Form -->
-            <div class="p-3 bg-white rounded-2xl shadow-sm space-y-2 text-xs">
-                <h4 class="font-bold text-slate-700 border-b pb-1">ဝယ်သူ အချက်အလက်များ</h4>
-                <div>
-                    <label class="font-semibold text-slate-600 block mb-0.5">အရောင်းရက်စွဲ</label>
-                    <input type="date" id="mPosSaleDate" class="w-full p-2 border rounded-xl outline-none">
-                </div>
-                <div class="grid grid-cols-2 gap-2">
+            <!-- Scrollable Content Body -->
+            <div class="flex-1 overflow-y-auto p-3 space-y-3 bg-slate-100">
+                <!-- Customer Details Form -->
+                <div class="p-3 bg-white rounded-2xl shadow-sm space-y-2 text-xs">
+                    <h4 class="font-bold text-slate-700 border-b pb-1">ဝယ်သူ အချက်အလက်များ</h4>
                     <div>
-                        <label class="font-semibold text-slate-600 block mb-0.5">ဝယ်သူ အမည် *</label>
-                        <input type="text" id="mPosCustomerName" placeholder="ဦးကျော်ဇော" class="w-full p-2 border rounded-xl outline-none">
+                        <label class="font-semibold text-slate-600 block mb-0.5">အရောင်းရက်စွဲ</label>
+                        <input type="date" id="mPosSaleDate" class="w-full p-2 border rounded-xl outline-none">
+                    </div>
+                    <div class="grid grid-cols-2 gap-2">
+                        <div>
+                            <label class="font-semibold text-slate-600 block mb-0.5">ဝယ်သူ အမည် *</label>
+                            <input type="text" id="mPosCustomerName" placeholder="ဦးကျော်ဇော" class="w-full p-2 border rounded-xl outline-none">
+                        </div>
+                        <div>
+                            <label class="font-semibold text-slate-600 block mb-0.5">ဖုန်းနံပါတ်</label>
+                            <input type="text" id="mPosCustomerPhone" placeholder="09-xxxxxxxxx" class="w-full p-2 border rounded-xl outline-none">
+                        </div>
                     </div>
                     <div>
-                        <label class="font-semibold text-slate-600 block mb-0.5">ဖုန်းနံပါတ်</label>
-                        <input type="text" id="mPosCustomerPhone" placeholder="09-xxxxxxxxx" class="w-full p-2 border rounded-xl outline-none">
+                        <label class="font-semibold text-slate-600 block mb-0.5">နေရပ်လိပ်စာ (Address)</label>
+                        <input type="text" id="mPosCustomerAddress" placeholder="အမှတ် (၁၂)၊ လမ်း ၅၀၊ ရန်ကုန်" class="w-full p-2 border rounded-xl outline-none">
                     </div>
                 </div>
-                <div>
-                    <label class="font-semibold text-slate-600 block mb-0.5">နေရပ်လိပ်စာ (Address)</label>
-                    <input type="text" id="mPosCustomerAddress" placeholder="အမှတ် (၁၂)၊ လမ်း ၅၀၊ ရန်ကုန်" class="w-full p-2 border rounded-xl outline-none">
+
+                <!-- Cart Items Container -->
+                <div id="mobileCartItemsList" class="space-y-2">
+                    <!-- Items injected dynamically -->
                 </div>
             </div>
 
-            <!-- Cart Items Container -->
-            <div id="mobileCartItemsList" class="space-y-2">
-                <!-- Items injected dynamically -->
-            </div>
-        </div>
+            <!-- Footer Payment Section -->
+            <div class="p-3.5 bg-white border-t border-slate-200 shrink-0 space-y-2.5 shadow-2xl">
+                <div class="flex justify-between font-extrabold text-base text-slate-800">
+                    <span>စုစုပေါင်း ကျသင့်ငွေ</span>
+                    <span id="mCartTotalDisplay" class="text-emerald-700">0 Ks</span>
+                </div>
 
-        <!-- Footer Payment Section -->
-        <div class="p-3.5 bg-white border-t border-slate-200 shrink-0 space-y-2.5 shadow-2xl">
-            <div class="flex justify-between font-extrabold text-base text-slate-800">
-                <span>စုစုပေါင်း ကျသင့်ငွေ</span>
-                <span id="mCartTotalDisplay" class="text-emerald-700">0 Ks</span>
-            </div>
+                <div class="grid grid-cols-3 gap-1.5">
+                    <button type="button" onclick="setPaymentType('Cash')" class="m-pay-type-btn pay-type-btn py-2 text-xs font-semibold rounded-xl border liquid-btn text-white">Cash</button>
+                    <button type="button" onclick="setPaymentType('KBZPay')" class="m-pay-type-btn pay-type-btn py-2 text-xs font-semibold rounded-xl border bg-slate-100 text-slate-700">KBZPay</button>
+                    <button type="button" onclick="setPaymentType('Credit')" class="m-pay-type-btn pay-type-btn py-2 text-xs font-semibold rounded-xl border bg-slate-100 text-slate-700">အကြွေး</button>
+                </div>
 
-            <div class="grid grid-cols-3 gap-1.5">
-                <button type="button" onclick="setPaymentType('Cash')" class="m-pay-type-btn pay-type-btn py-2 text-xs font-semibold rounded-xl border liquid-btn text-white">Cash</button>
-                <button type="button" onclick="setPaymentType('KBZPay')" class="m-pay-type-btn pay-type-btn py-2 text-xs font-semibold rounded-xl border bg-slate-100 text-slate-700">KBZPay</button>
-                <button type="button" onclick="setPaymentType('Credit')" class="m-pay-type-btn pay-type-btn py-2 text-xs font-semibold rounded-xl border bg-slate-100 text-slate-700">အကြွေး</button>
-            </div>
+                <div class="flex justify-between items-center text-xs font-bold">
+                    <span class="text-slate-700">ပေးချေငွေ (Paid):</span>
+                    <input type="number" id="mPaidAmountInput" oninput="syncPaidAmount(this.value)" placeholder="0" class="w-36 p-2 border rounded-xl text-right font-bold text-slate-800 outline-none">
+                </div>
 
-            <div class="flex justify-between items-center text-xs font-bold">
-                <span class="text-slate-700">ပေးချေငွေ (Paid):</span>
-                <input type="number" id="mPaidAmountInput" oninput="syncPaidAmount(this.value)" placeholder="0" class="w-36 p-2 border rounded-xl text-right font-bold text-slate-800 outline-none">
-            </div>
+                <div class="flex justify-between items-center text-sm font-bold">
+                    <span class="text-slate-700">ကျန်ငွေ (Due):</span>
+                    <span id="mDueAmountDisplay" class="text-emerald-600">0 Ks</span>
+                </div>
 
-            <div class="flex justify-between items-center text-sm font-bold">
-                <span class="text-slate-700">ကျန်ငွေ (Due):</span>
-                <span id="mDueAmountDisplay" class="text-emerald-600">0 Ks</span>
+                <button onclick="openVoucherPreview()" class="w-full py-3 liquid-btn text-white font-bold rounded-xl shadow-lg flex items-center justify-center gap-2 text-sm">
+                    <i data-lucide="printer" class="w-4 h-4"></i> ဘောက်ချာစစ်ဆေး စာထုတ်မည်
+                </button>
             </div>
-
-            <button onclick="openVoucherPreview()" class="w-full py-3 liquid-btn text-white font-bold rounded-xl shadow-lg flex items-center justify-center gap-2 text-sm">
-                <i data-lucide="printer" class="w-4 h-4"></i> ဘောက်ချာစစ်ဆေး စာထုတ်မည်
-            </button>
         </div>
     </div>
 
@@ -1384,11 +1385,11 @@
             document.querySelectorAll('.sidebar-text').forEach(t => t.classList.toggle('hidden'));
         }
 
-        /* MOBILE FULLSCREEN CART MODAL FUNCTIONS */
+        /* MOBILE FULLSCREEN CART MODAL WITH SMOOTH TRANSITION */
         function openMobileCart() {
             const modal = document.getElementById('mobileCartModal');
-            if (modal) {
-                // Sync values before opening
+            const inner = document.getElementById('mobileCartInner');
+            if (modal && inner) {
                 document.getElementById('mPosSaleDate').value = document.getElementById('posSaleDate').value;
                 document.getElementById('mPosCustomerName').value = document.getElementById('posCustomerName').value;
                 document.getElementById('mPosCustomerPhone').value = document.getElementById('posCustomerPhone').value;
@@ -1396,23 +1397,31 @@
                 document.getElementById('mPaidAmountInput').value = document.getElementById('paidAmountInput').value;
 
                 modal.classList.remove('hidden');
-                modal.classList.add('flex');
+                modal.classList.remove('pointer-events-none');
+                setTimeout(() => {
+                    modal.classList.add('opacity-100');
+                    inner.classList.remove('translate-y-full');
+                }, 10);
                 document.body.style.overflow = 'hidden';
             }
         }
 
         function closeMobileCart() {
             const modal = document.getElementById('mobileCartModal');
-            if (modal) {
-                // Sync values back
+            const inner = document.getElementById('mobileCartInner');
+            if (modal && inner) {
                 document.getElementById('posSaleDate').value = document.getElementById('mPosSaleDate').value;
                 document.getElementById('posCustomerName').value = document.getElementById('mPosCustomerName').value;
                 document.getElementById('posCustomerPhone').value = document.getElementById('mPosCustomerPhone').value;
                 document.getElementById('posCustomerAddress').value = document.getElementById('mPosCustomerAddress').value;
 
-                modal.classList.add('hidden');
-                modal.classList.remove('flex');
-                document.body.style.overflow = '';
+                modal.classList.remove('opacity-100');
+                inner.classList.add('translate-y-full');
+                modal.classList.add('pointer-events-none');
+                setTimeout(() => {
+                    modal.classList.add('hidden');
+                    document.body.style.overflow = '';
+                }, 300);
             }
         }
 
