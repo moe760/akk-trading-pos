@@ -124,6 +124,13 @@
             opacity: 1;
         }
 
+        #mobileCartModal {
+            transition: opacity 0.3s ease-in-out;
+        }
+        #mobileCartInner {
+            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
         .tab-content {
             animation: fadeInScale 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
@@ -282,7 +289,7 @@
         </aside>
 
         <!-- MAIN CONTENT AREA -->
-        <main class="flex-1 flex flex-col h-full overflow-hidden pb-20 md:pb-0 relative">
+        <main class="flex-1 flex flex-col h-full overflow-hidden pb-32 md:pb-0 relative">
 
             <!-- MOBILE TOP HEADER -->
             <div id="mobileHeader" class="md:hidden glass-sidebar text-white p-3 flex justify-between items-center shrink-0 border-b border-emerald-800/30 z-30">
@@ -353,7 +360,7 @@
                         </div>
                     </div>
 
-                    <!-- POS GRID: UNIQUE PRODUCTS GROUPED (DUPLICATES REMOVED) -->
+                    <!-- POS GRID -->
                     <div id="posProductGrid" class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-2.5 md:gap-4 overflow-y-auto pr-1 flex-1 auto-rows-[160px] md:auto-rows-[180px]">
                         <!-- Products injected here -->
                     </div>
@@ -363,7 +370,6 @@
                 <div class="md:hidden fixed bottom-16 right-4 z-40">
                     <button onclick="openMobileCart()" class="liquid-btn text-white p-3.5 shadow-2xl flex items-center gap-2 font-bold text-xs border border-white/40 active:scale-95 transition-transform rounded-2xl">
                         <i data-lucide="shopping-bag" class="w-5 h-5"></i>
-                        <span>Order စာရင်း</span>
                         <span id="mobileCartCount" class="bg-white text-emerald-800 px-2 py-0.5 rounded-full font-extrabold text-xs">0</span>
                     </button>
                 </div>
@@ -616,7 +622,7 @@
                             <tr>
                                 <th class="p-3 md:p-4">Invoice ID</th>
                                 <th class="p-3 md:p-4">ရက်စွဲ</th>
-                                <th class="p-3 md:p-4">ဝယ်သူ / လိပ်စာ</th>
+                                <th class="p-3 md:p-4">ဝယ်သူ / ဖုန်း / လိပ်စာ</th>
                                 <th class="p-3 md:p-4">ပေးချေမှု</th>
                                 <th class="p-3 md:p-4 text-right">ကျသင့်ငွေ</th>
                                 <th class="p-3 md:p-4 text-right">ပေးငွေ</th>
@@ -710,9 +716,7 @@
         <div id="mobileCartInner" class="flex flex-col w-full h-full bg-slate-100 transform translate-y-full transition-transform duration-300 ease-out">
             <div class="p-3.5 bg-emerald-800 text-white flex justify-between items-center shrink-0 border-b border-emerald-700 shadow-md">
                 <div class="flex items-center gap-2 font-bold text-base">
-                    <button onclick="closeMobileCart()" class="p-1 bg-white/10 rounded-xl active:scale-95 transition flex items-center gap-1 text-xs">
-                        <i data-lucide="arrow-left" class="w-5 h-5"></i> Back
-                    </button>
+                    <span>Current Order</span>
                 </div>
                 <button onclick="closeMobileCart()" class="p-1 bg-white/10 rounded-xl active:scale-95 transition">
                     <i data-lucide="x" class="w-6 h-6"></i>
@@ -1132,6 +1136,7 @@
   appId: "1:1096596475208:web:9905c303b1e117367f777d",
   measurementId: "G-GFZG6ZY3QW"
 };
+
         let db = null;
         try {
             firebase.initializeApp(firebaseConfig);
@@ -1457,10 +1462,12 @@
 
                 modal.classList.remove('hidden');
                 modal.classList.remove('pointer-events-none');
-                setTimeout(() => {
+                
+                requestAnimationFrame(() => {
                     modal.classList.add('opacity-100');
                     inner.classList.remove('translate-y-full');
-                }, 10);
+                });
+                
                 document.body.style.overflow = 'hidden';
             }
         }
@@ -1477,6 +1484,7 @@
                 modal.classList.remove('opacity-100');
                 inner.classList.add('translate-y-full');
                 modal.classList.add('pointer-events-none');
+                
                 setTimeout(() => {
                     modal.classList.add('hidden');
                     document.body.style.overflow = '';
@@ -1636,7 +1644,6 @@
             document.body.classList.remove('print-report');
         }
 
-        /* GROUP UNIQUE PRODUCTS BY NAME & SIZE FOR POS GRID TO AVOID DUPLICATES */
         function renderPosProducts() {
             const grid = document.getElementById('posProductGrid');
             const searchVal = document.getElementById('posSearchInput').value.toLowerCase();
@@ -1649,7 +1656,6 @@
                 ...otherGoods.map(og => ({ ...og, itemType: 'OtherGoods', category: 'အထွေထွေကုန်', brand: 'အခြား', finish: 'Standard', color: '-' }))
             ];
 
-            // GROUPING LOGIC: Combine items having same name and size into single grid card
             const groupedMap = new Map();
             rawCombined.forEach(item => {
                 const groupKey = `${item.name.trim().toLowerCase()}_${(item.size || '').trim().toLowerCase()}`;
@@ -1663,7 +1669,6 @@
                     const existing = groupedMap.get(groupKey);
                     existing.stock += parseInt(item.stock) || 0;
                     existing.allIds.push(item.id);
-                    // Keep newest sellPrice or highest
                 }
             });
 
@@ -1675,7 +1680,6 @@
                 return matchesSearch && matchesCategory;
             });
 
-            // SORT: Stock > 0 first, Stock === 0 at the bottom.
             filtered.sort((a, b) => {
                 const stockA = parseInt(a.stock) || 0;
                 const stockB = parseInt(b.stock) || 0;
@@ -2305,13 +2309,19 @@
                     ? `<button onclick="openSalePaymentModal('${safeId}')" class="px-2.5 py-1 liquid-btn text-white rounded-lg text-xs font-semibold shrink-0">အကြွေးဆပ်</button>`
                     : `<span class="text-xs text-emerald-600 font-bold inline-block min-w-[55px] text-center">ငွေကျေ</span>`;
 
+                // ဝယ်သူ အမည်၊ ဖုန်းနံပါတ် နှင့် လိပ်စာများကို အလျားလိုက် (Inline flex) ဖြင့် ပြသခြင်း
                 tbody.innerHTML += `
                     <tr class="hover:bg-white/50 transition">
                         <td class="p-3 md:p-4 font-bold text-slate-800 whitespace-nowrap">${s.id}</td>
                         <td class="p-3 md:p-4 text-slate-500 text-xs whitespace-nowrap">${s.date}</td>
                         <td class="p-3 md:p-4">
-                            <div class="font-bold text-slate-800">${s.customerName}</div>
-                            <div class="text-[10px] text-slate-400">${s.customerPhone}</div>
+                            <div class="flex flex-wrap items-center gap-x-2 gap-y-0.5">
+                                <span class="font-bold text-slate-800">${s.customerName}</span>
+                                <span class="text-slate-400">•</span>
+                                <span class="text-xs text-slate-500 font-medium">${s.customerPhone || '-'}</span>
+                                <span class="text-slate-400">•</span>
+                                <span class="text-xs text-slate-600">${s.customerAddress || '-'}</span>
+                            </div>
                         </td>
                         <td class="p-3 md:p-4 whitespace-nowrap"><span class="px-2.5 py-0.5 rounded-full text-[11px] font-semibold ${s.paymentType === 'Credit' ? 'bg-amber-500/20 text-amber-800 border border-amber-500/30' : 'bg-slate-200/70 text-slate-700'}">${s.paymentType}</span></td>
                         <td class="p-3 md:p-4 text-right font-bold text-slate-800 whitespace-nowrap">${(s.total || 0).toLocaleString()} Ks</td>
