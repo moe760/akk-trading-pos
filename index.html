@@ -105,6 +105,26 @@
             filter: brightness(1.05);
         }
 
+        /* GENERAL TRANSITION UTILITY CLASSES FOR ALL MODALS */
+        .custom-modal-backdrop {
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease-in-out;
+        }
+        .custom-modal-backdrop.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        .custom-modal-content {
+            transform: scale(0.92) translateY(12px);
+            opacity: 0;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .custom-modal-backdrop.active .custom-modal-content {
+            transform: scale(1) translateY(0);
+            opacity: 1;
+        }
+
         .tab-content {
             animation: fadeInScale 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
@@ -127,13 +147,13 @@
             #mainApp, #toastContainer, #confirmModal, #loginScreen, #mobileNavBar, .summary-cards-container, #loadingOverlay, #mobileCartModal { display: none !important; }
             
             body.print-voucher #monthlyReportPrintArea { display: none !important; }
-            body.print-voucher #receiptModal:not(.hidden) {
+            body.print-voucher #receiptModal.active {
                 position: absolute !important; left: 0 !important; top: 0 !important;
                 width: 100% !important; background: transparent !important;
                 box-shadow: none !important; border: none !important;
                 padding: 0 !important;
             }
-            body.print-voucher #receiptModal:not(.hidden) #printableArea { 
+            body.print-voucher #receiptModal.active #printableArea { 
                 visibility: visible !important; width: 100% !important; border: none !important; background: white !important; padding: 0 !important;
             }
             body.print-voucher #receiptModal .no-print { display: none !important; }
@@ -201,7 +221,7 @@
                 </button>
 
                 <div class="text-center pt-2">
-                    <span class="text-[10px] text-slate-400 font-medium">AKK Trading Store POS • Version 6.8</span>
+                    <span class="text-[10px] text-slate-400 font-medium">AKK Trading Store POS • Version 6.9</span>
                 </div>
             </form>
         </div>
@@ -255,7 +275,7 @@
             </div>
             
             <div id="sidebarFooter" class="p-4 border-t border-emerald-800/40 flex items-center justify-between overflow-hidden">
-                <span class="sidebar-text text-xs text-emerald-400 font-bold whitespace-nowrap">AKK Trading v6.8</span>
+                <span class="sidebar-text text-xs text-emerald-400 font-bold whitespace-nowrap">AKK Trading v6.9</span>
                 <button onclick="handleLogout()" title="Logout" class="p-1.5 hover:bg-red-500/20 hover:text-red-300 rounded-xl text-emerald-400 transition">
                     <i data-lucide="log-out" class="w-5 h-5"></i>
                 </button>
@@ -570,8 +590,9 @@
                 <div class="flex flex-col sm:flex-row justify-between items-stretch sm:items-center gap-3">
                     <h1 class="text-lg md:text-2xl font-bold text-slate-800">အရောင်းမှတ်တမ်းများ</h1>
 
-                    <div class="flex flex-wrap items-center gap-2">
-                        <div class="flex items-center gap-1 glass-panel p-1.5 rounded-xl border border-white/50 text-xs">
+                    <!-- HORIZONTAL ALIGNED CONTROLS FOR BOTH MOBILE & DESKTOP -->
+                    <div class="flex flex-row items-center gap-2 overflow-x-auto pb-1 shrink-0">
+                        <div class="flex items-center gap-1 glass-panel p-1.5 rounded-xl border border-white/50 text-xs shrink-0">
                             <select id="salesStatusFilter" onchange="renderSalesTable()" class="font-bold border-none bg-transparent outline-none">
                                 <option value="All">အားလုံး</option>
                                 <option value="Due">အကြွေးကျန်သူများ</option>
@@ -579,11 +600,11 @@
                             </select>
                         </div>
 
-                        <div class="flex items-center gap-1 glass-panel p-1.5 rounded-xl border border-white/50 text-xs">
+                        <div class="flex items-center gap-1 glass-panel p-1.5 rounded-xl border border-white/50 text-xs shrink-0">
                             <input type="month" id="salesMonthFilter" onchange="renderSalesTable()" class="font-bold border-none bg-transparent outline-none">
                         </div>
                         
-                        <button onclick="printMonthlyReport()" class="px-3 py-2 liquid-btn text-white text-xs font-bold rounded-xl shadow-sm flex items-center gap-1.5 transition">
+                        <button onclick="printMonthlyReport()" class="px-3 py-2 liquid-btn text-white text-xs font-bold rounded-xl shadow-sm flex items-center gap-1.5 transition shrink-0 whitespace-nowrap">
                             <i data-lucide="printer" class="w-3.5 h-3.5"></i> လချုပ်စာရင်းထုတ်မည်
                         </button>
                     </div>
@@ -635,7 +656,7 @@
                 </div>
 
                 <div class="flex justify-between items-center">
-                    <h1 class="text-lg md:text-2xl font-bold text-slate-800">Admin Activity Logs</h1>
+                    <h1 class="text-lg md:text-2xl font-bold text-slate-800">Activity Logs</h1>
                     <button onclick="clearLogsPrompt()" class="px-3 py-2 bg-red-600 hover:bg-red-700 text-white text-xs font-bold rounded-xl shadow-sm flex items-center gap-1.5">
                         <i data-lucide="trash-2" class="w-3.5 h-3.5"></i> Delete Logs
                     </button>
@@ -690,10 +711,7 @@
             <!-- Header -->
             <div class="p-3.5 bg-emerald-800 text-white flex justify-between items-center shrink-0 border-b border-emerald-700 shadow-md">
                 <div class="flex items-center gap-2 font-bold text-base">
-                    <button onclick="closeMobileCart()" class="p-1 bg-white/10 rounded-xl active:scale-95 transition flex items-center gap-1 text-xs">
-                        <i data-lucide="arrow-left" class="w-5 h-5"></i> နောက်သို့
-                    </button>
-                    <span>Current Order (ဈေးဝယ်ခြင်းတောင်း)</span>
+                    <span>Current Order</span>
                 </div>
                 <button onclick="closeMobileCart()" class="p-1 bg-white/10 rounded-xl active:scale-95 transition">
                     <i data-lucide="x" class="w-6 h-6"></i>
@@ -806,9 +824,9 @@
         </div>
     </div>
 
-    <!-- MODAL: SETTINGS -->
-    <div id="settingsModal" class="fixed inset-0 bg-slate-950/70 backdrop-blur-md hidden flex items-center justify-center p-3 z-[99999]">
-        <div class="glass-panel rounded-3xl w-full max-w-sm shadow-2xl overflow-hidden border border-white/40">
+    <!-- MODAL: SETTINGS WITH TRANSITION -->
+    <div id="settingsModal" class="fixed inset-0 bg-slate-950/70 backdrop-blur-md custom-modal-backdrop flex items-center justify-center p-3 z-[99999]">
+        <div class="glass-panel custom-modal-content rounded-3xl w-full max-w-sm shadow-2xl overflow-hidden border border-white/40">
             <div class="p-4 border-b border-white/30 flex justify-between items-center bg-white/50">
                 <div class="flex items-center gap-2 font-bold text-base text-slate-800">
                     <i data-lucide="settings" class="w-4 h-4 text-emerald-600"></i> Admin အကောင့် ဆက်တင်များ
@@ -840,9 +858,9 @@
         </div>
     </div>
 
-    <!-- CUSTOM CONFIRMATION MODAL -->
-    <div id="confirmModal" class="fixed inset-0 bg-slate-950/70 backdrop-blur-md hidden flex items-center justify-center p-4 z-[99999]">
-        <div class="glass-panel rounded-3xl w-full max-w-xs sm:max-w-sm shadow-2xl overflow-hidden p-5 text-center space-y-4 border border-white/40">
+    <!-- CUSTOM CONFIRMATION MODAL WITH TRANSITION -->
+    <div id="confirmModal" class="fixed inset-0 bg-slate-950/70 backdrop-blur-md custom-modal-backdrop flex items-center justify-center p-4 z-[99999]">
+        <div class="glass-panel custom-modal-content rounded-3xl w-full max-w-xs sm:max-w-sm shadow-2xl overflow-hidden p-5 text-center space-y-4 border border-white/40">
             <div class="w-10 h-10 bg-red-500/15 text-red-600 rounded-full flex items-center justify-center mx-auto border border-red-500/30">
                 <i data-lucide="trash-2" class="w-5 h-5"></i>
             </div>
@@ -857,9 +875,9 @@
         </div>
     </div>
 
-    <!-- MODAL: ADD / EDIT PAINT PRODUCT -->
-    <div id="addProductModal" class="fixed inset-0 bg-slate-950/70 backdrop-blur-md hidden flex items-center justify-center p-3 z-[99999]">
-        <div class="glass-panel rounded-3xl w-full max-w-lg shadow-2xl overflow-hidden max-h-[90vh] flex flex-col border border-white/40">
+    <!-- MODAL: ADD / EDIT PAINT PRODUCT WITH TRANSITION -->
+    <div id="addProductModal" class="fixed inset-0 bg-slate-950/70 backdrop-blur-md custom-modal-backdrop flex items-center justify-center p-3 z-[99999]">
+        <div class="glass-panel custom-modal-content rounded-3xl w-full max-w-lg shadow-2xl overflow-hidden max-h-[90vh] flex flex-col border border-white/40">
             <div class="p-4 border-b border-white/30 flex justify-between items-center bg-white/50">
                 <h3 id="productModalTitle" class="font-bold text-base text-slate-800">ဆေးပစ္စည်း ထည့်သွင်း / ပြင်ဆင်ရန်</h3>
                 <button onclick="closeModal('addProductModal')" class="text-slate-400 hover:text-slate-600"><i data-lucide="x"></i></button>
@@ -932,9 +950,9 @@
         </div>
     </div>
 
-    <!-- MODAL: ADD / EDIT OTHER GOODS -->
-    <div id="addOtherGoodsModal" class="fixed inset-0 bg-slate-950/70 backdrop-blur-md hidden flex items-center justify-center p-3 z-[99999]">
-        <div class="glass-panel rounded-3xl w-full max-w-md shadow-2xl overflow-hidden max-h-[90vh] flex flex-col border border-white/40">
+    <!-- MODAL: ADD / EDIT OTHER GOODS WITH TRANSITION -->
+    <div id="addOtherGoodsModal" class="fixed inset-0 bg-slate-950/70 backdrop-blur-md custom-modal-backdrop flex items-center justify-center p-3 z-[99999]">
+        <div class="glass-panel custom-modal-content rounded-3xl w-full max-w-md shadow-2xl overflow-hidden max-h-[90vh] flex flex-col border border-white/40">
             <div class="p-4 border-b border-white/30 flex justify-between items-center bg-white/50">
                 <h3 id="otherGoodsModalTitle" class="font-bold text-base text-slate-800">အခြားကုန်ပစ္စည်း ထည့်သွင်း / ပြင်ဆင်ရန်</h3>
                 <button onclick="closeModal('addOtherGoodsModal')" class="text-slate-400 hover:text-slate-600"><i data-lucide="x"></i></button>
@@ -973,9 +991,9 @@
         </div>
     </div>
 
-    <!-- MODAL: RESTOCK (FIFO Batch Addition) -->
-    <div id="restockModal" class="fixed inset-0 bg-slate-950/70 backdrop-blur-md hidden flex items-center justify-center p-3 z-[99999]">
-        <div class="glass-panel rounded-3xl w-full max-w-sm shadow-2xl overflow-hidden border border-white/40">
+    <!-- MODAL: RESTOCK (FIFO Batch Addition) WITH TRANSITION -->
+    <div id="restockModal" class="fixed inset-0 bg-slate-950/70 backdrop-blur-md custom-modal-backdrop flex items-center justify-center p-3 z-[99999]">
+        <div class="glass-panel custom-modal-content rounded-3xl w-full max-w-sm shadow-2xl overflow-hidden border border-white/40">
             <div class="p-4 border-b border-white/30 flex justify-between items-center bg-white/50">
                 <h3 class="font-bold text-base text-slate-800">Stock အသစ်ဖြည့်သွင်းရန် (FIFO Batch)</h3>
                 <button onclick="closeModal('restockModal')" class="text-slate-400 hover:text-slate-600"><i data-lucide="x"></i></button>
@@ -1009,9 +1027,9 @@
         </div>
     </div>
 
-    <!-- MODAL: SALE PAYMENT -->
-    <div id="salePaymentModal" class="fixed inset-0 bg-slate-950/70 backdrop-blur-md hidden flex items-center justify-center p-3 z-[99999]">
-        <div class="glass-panel rounded-3xl w-full max-w-sm shadow-2xl overflow-hidden border border-white/40">
+    <!-- MODAL: SALE PAYMENT WITH TRANSITION -->
+    <div id="salePaymentModal" class="fixed inset-0 bg-slate-950/70 backdrop-blur-md custom-modal-backdrop flex items-center justify-center p-3 z-[99999]">
+        <div class="glass-panel custom-modal-content rounded-3xl w-full max-w-sm shadow-2xl overflow-hidden border border-white/40">
             <div class="p-4 border-b border-white/30 flex justify-between items-center bg-white/50">
                 <h3 class="font-bold text-base text-slate-800">အကြွေး လာဆပ်ခြင်း မှတ်တမ်းတင်ရန်</h3>
                 <button onclick="closeModal('salePaymentModal')" class="text-slate-400 hover:text-slate-600"><i data-lucide="x"></i></button>
@@ -1038,9 +1056,9 @@
         </div>
     </div>
 
-    <!-- MODAL: RECEIPT PREVIEW & PRINT -->
-    <div id="receiptModal" class="fixed inset-0 bg-slate-950/70 backdrop-blur-md hidden flex items-center justify-center p-3 z-[9999999]">
-        <div class="bg-white rounded-3xl w-full max-w-xs shadow-2xl overflow-hidden p-4 text-center space-y-3 border border-white/60">
+    <!-- MODAL: RECEIPT PREVIEW & PRINT WITH TRANSITION -->
+    <div id="receiptModal" class="fixed inset-0 bg-slate-950/70 backdrop-blur-md custom-modal-backdrop flex items-center justify-center p-3 z-[9999999]">
+        <div class="bg-white custom-modal-content rounded-3xl w-full max-w-xs shadow-2xl overflow-hidden p-4 text-center space-y-3 border border-white/60">
             <div id="printableArea" class="text-left bg-slate-50 p-3 rounded-2xl text-xs space-y-2 border border-slate-200">
                 <div class="text-center pb-2 border-b border-slate-200 flex flex-col items-center">
                     <img src="logo.png" alt="AKK Logo" class="w-10 h-10 mb-1 object-contain" onerror="this.style.display='none';">
@@ -1061,7 +1079,7 @@
 
     <!-- JAVASCRIPT LOGIC -->
     <script>
-        const firebaseConfig = {
+       const firebaseConfig = {
   apiKey: "AIzaSyBrLxzZSbaAtAk0KblgMvXsjxyQ2aa7ySs",
   authDomain: "akk-trading-pos.firebaseapp.com",
   databaseURL: "https://akk-trading-pos-default-rtdb.asia-southeast1.firebasedatabase.app",
@@ -1364,12 +1382,12 @@
             document.getElementById('confirmModalTitle').innerText = title;
             document.getElementById('confirmModalMessage').innerText = message;
             
-            modal.classList.remove('hidden');
+            modal.classList.add('active');
             const okBtn = document.getElementById('confirmOkBtn');
             const cancelBtn = document.getElementById('confirmCancelBtn');
 
             const cleanup = () => {
-                modal.classList.add('hidden');
+                modal.classList.remove('active');
                 okBtn.onclick = null;
                 cancelBtn.onclick = null;
             };
@@ -1478,8 +1496,14 @@
             lucide.createIcons();
         }
 
-        function openModal(id) { document.getElementById(id).classList.remove('hidden'); }
-        function closeModal(id) { document.getElementById(id).classList.add('hidden'); }
+        function openModal(id) { 
+            const modal = document.getElementById(id);
+            if(modal) modal.classList.add('active'); 
+        }
+        function closeModal(id) { 
+            const modal = document.getElementById(id);
+            if(modal) modal.classList.remove('active'); 
+        }
 
         function renderLogsTable() {
             const tbody = document.getElementById('logsTableBody');
