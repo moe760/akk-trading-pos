@@ -49,13 +49,19 @@
             border: 1px solid rgba(255, 255, 255, 0.3);
         }
 
+        /* POS Terminal Hover & Glow Effect restored */
         .glass-card {
             background: rgba(255, 255, 255, 0.85);
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.8);
             box-shadow: 0 6px 20px -4px rgba(6, 78, 59, 0.08);
-            transition: all 0.3s ease;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .glass-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 25px -5px rgba(16, 185, 129, 0.25);
+            border-color: rgba(16, 185, 129, 0.5);
         }
 
         .glass-sidebar {
@@ -270,7 +276,7 @@
             </div>
         </aside>
 
-        <!-- MAIN CONTENT AREA (pb-24 calibrated for mobile navigation bar) -->
+        <!-- MAIN CONTENT AREA -->
         <main class="flex-1 flex flex-col h-full overflow-hidden pb-24 md:pb-0 relative">
 
             <!-- MOBILE TOP HEADER -->
@@ -600,17 +606,18 @@
                 </div>
 
                 <div class="glass-panel rounded-2xl shadow-sm overflow-x-auto border border-white/50">
-                    <table class="w-full text-left border-collapse min-w-[780px]">
+                    <!-- min-w increased to give customer column more room -->
+                    <table class="w-full text-left border-collapse min-w-[920px]">
                         <thead class="bg-white/50 text-slate-700 text-xs uppercase font-bold border-b border-white/40">
                             <tr>
-                                <th class="p-3 md:p-4">Invoice ID</th>
-                                <th class="p-3 md:p-4">ရက်စွဲ</th>
-                                <th class="p-3 md:p-4">ဝယ်သူ / ဖုန်း / လိပ်စာ</th>
-                                <th class="p-3 md:p-4">ပေးချေမှု</th>
-                                <th class="p-3 md:p-4 text-right">ကျသင့်ငွေ</th>
-                                <th class="p-3 md:p-4 text-right">ပေးငွေ</th>
-                                <th class="p-3 md:p-4 text-right">အကြွေးကျန်</th>
-                                <th class="p-3 md:p-4 text-center min-w-[200px]">Action</th>
+                                <th class="p-3 md:p-4 w-28">Invoice ID</th>
+                                <th class="p-3 md:p-4 w-28">ရက်စွဲ</th>
+                                <th class="p-3 md:p-4 min-w-[300px]">ဝယ်သူ / ဖုန်း / လိပ်စာ</th>
+                                <th class="p-3 md:p-4 w-28">ပေးချေမှု</th>
+                                <th class="p-3 md:p-4 text-right w-32">ကျသင့်ငွေ</th>
+                                <th class="p-3 md:p-4 text-right w-28">ပေးငွေ</th>
+                                <th class="p-3 md:p-4 text-right w-28">အကြွေးကျန်</th>
+                                <th class="p-3 md:p-4 text-center min-w-[210px]">Action</th>
                             </tr>
                         </thead>
                         <tbody id="salesTableBody" class="divide-y divide-slate-100/70 text-xs md:text-sm align-middle"></tbody>
@@ -1444,7 +1451,6 @@
                 document.getElementById('mPaidAmountInput').value = document.getElementById('paidAmountInput').value;
 
                 modal.classList.remove('hidden');
-                // Force layout reflow to eliminate flash / flicker effect
                 void modal.offsetWidth;
                 modal.classList.add('active-modal');
                 document.body.style.overflow = 'hidden';
@@ -2285,14 +2291,14 @@
                     ? `<button onclick="openSalePaymentModal('${safeId}')" class="px-2.5 py-1 liquid-btn text-white rounded-lg text-xs font-semibold shrink-0">အကြွေးဆပ်</button>`
                     : `<span class="text-xs text-emerald-600 font-bold inline-block min-w-[55px] text-center">ငွေကျေ</span>`;
 
-                /* ဝယ်သူ အမည်၊ ဖုန်းနံပါတ် နှင့် လိပ်စာများအား အလျားလိုက် (Horizontal Inline) ပြသခြင်း */
+                /* ဝယ်သူ အမည်၊ ဖုန်းနံပါတ် နှင့် လိပ်စာများအား အလျားလိုက် (Horizontal Inline) ကျယ်ဝန်းစွာ ပြသခြင်း */
                 tbody.innerHTML += `
                     <tr class="hover:bg-white/50 transition">
                         <td class="p-3 md:p-4 font-bold text-slate-800 whitespace-nowrap">${s.id}</td>
                         <td class="p-3 md:p-4 text-slate-500 text-xs whitespace-nowrap">${s.date}</td>
-                        <td class="p-3 md:p-4">
+                        <td class="p-3 md:p-4 min-w-[300px]">
                             <div class="flex flex-wrap items-center gap-x-2 gap-y-0.5 whitespace-nowrap">
-                                <span class="font-bold text-slate-800">${s.customerName}</span>
+                                <span class="font-bold text-slate-800 text-xs md:text-sm">${s.customerName}</span>
                                 <span class="text-slate-400">•</span>
                                 <span class="text-xs text-slate-500 font-medium">${s.customerPhone || '-'}</span>
                                 <span class="text-slate-400">•</span>
