@@ -99,11 +99,22 @@
             opacity: 1;
         }
 
+        /* Anti-Flash Mobile Cart Styles */
         #mobileCartModal {
-            transition: opacity 0.25s ease-in-out;
+            visibility: hidden;
+            opacity: 0;
+            transition: opacity 0.25s ease, visibility 0.25s ease;
+        }
+        #mobileCartModal.active-modal {
+            visibility: visible;
+            opacity: 1;
         }
         #mobileCartInner {
+            transform: translateY(100%);
             transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        #mobileCartModal.active-modal #mobileCartInner {
+            transform: translateY(0);
         }
 
         .tab-content {
@@ -179,7 +190,6 @@
                         <span class="absolute left-3.5 text-emerald-600 flex items-center pointer-events-none z-10">
                             <i data-lucide="user" class="w-4 h-4"></i>
                         </span>
-                        <!-- Prevent auto-zoom on mobile by using text-base -->
                         <input type="text" id="loginUser" required placeholder="admin1, admin2, admin3" class="w-full pl-10 pr-4 py-3 login-input rounded-2xl text-base md:text-sm font-semibold outline-none">
                     </div>
                 </div>
@@ -260,8 +270,8 @@
             </div>
         </aside>
 
-        <!-- MAIN CONTENT AREA (pb-20 optimized instead of pb-32) -->
-        <main class="flex-1 flex flex-col h-full overflow-hidden pb-20 md:pb-0 relative">
+        <!-- MAIN CONTENT AREA (pb-24 calibrated for mobile navigation bar) -->
+        <main class="flex-1 flex flex-col h-full overflow-hidden pb-24 md:pb-0 relative">
 
             <!-- MOBILE TOP HEADER -->
             <div id="mobileHeader" class="md:hidden glass-sidebar text-white p-3 flex justify-between items-center shrink-0 border-b border-emerald-800/30 z-30">
@@ -685,8 +695,8 @@
     </div>
 
     <!-- MOBILE CART MODAL -->
-    <div id="mobileCartModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md z-[999999] hidden flex-col w-full h-full overflow-hidden transition-all duration-250 opacity-0 pointer-events-none">
-        <div id="mobileCartInner" class="flex flex-col w-full h-full bg-slate-100 transform translate-y-full transition-transform duration-250 ease-out">
+    <div id="mobileCartModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md z-[999999] hidden flex-col w-full h-full overflow-hidden">
+        <div id="mobileCartInner" class="flex flex-col w-full h-full bg-slate-100">
             <div class="p-3.5 bg-emerald-800 text-white flex justify-between items-center shrink-0 border-b border-emerald-700 shadow-md">
                 <div class="flex items-center gap-2 font-bold text-base">
                     <span>Current Order (ဈေးဝယ်ခြင်းတောင်း)</span>
@@ -1423,10 +1433,10 @@
             document.querySelectorAll('.sidebar-text').forEach(t => t.classList.toggle('hidden'));
         }
 
+        /* Anti-Flash Mobile Cart Modal Logic */
         function openMobileCart() {
             const modal = document.getElementById('mobileCartModal');
-            const inner = document.getElementById('mobileCartInner');
-            if (modal && inner) {
+            if (modal) {
                 document.getElementById('mPosSaleDate').value = document.getElementById('posSaleDate').value;
                 document.getElementById('mPosCustomerName').value = document.getElementById('posCustomerName').value;
                 document.getElementById('mPosCustomerPhone').value = document.getElementById('posCustomerPhone').value;
@@ -1434,29 +1444,22 @@
                 document.getElementById('mPaidAmountInput').value = document.getElementById('paidAmountInput').value;
 
                 modal.classList.remove('hidden');
-                modal.classList.remove('pointer-events-none');
-                
-                requestAnimationFrame(() => {
-                    modal.classList.add('opacity-100');
-                    inner.classList.remove('translate-y-full');
-                });
-                
+                // Force layout reflow to eliminate flash / flicker effect
+                void modal.offsetWidth;
+                modal.classList.add('active-modal');
                 document.body.style.overflow = 'hidden';
             }
         }
 
         function closeMobileCart() {
             const modal = document.getElementById('mobileCartModal');
-            const inner = document.getElementById('mobileCartInner');
-            if (modal && inner) {
+            if (modal) {
                 document.getElementById('posSaleDate').value = document.getElementById('mPosSaleDate').value;
                 document.getElementById('posCustomerName').value = document.getElementById('mPosCustomerName').value;
                 document.getElementById('posCustomerPhone').value = document.getElementById('mPosCustomerPhone').value;
                 document.getElementById('posCustomerAddress').value = document.getElementById('mPosCustomerAddress').value;
 
-                modal.classList.remove('opacity-100');
-                inner.classList.add('translate-y-full');
-                modal.classList.add('pointer-events-none');
+                modal.classList.remove('active-modal');
                 
                 setTimeout(() => {
                     modal.classList.add('hidden');
@@ -2282,12 +2285,13 @@
                     ? `<button onclick="openSalePaymentModal('${safeId}')" class="px-2.5 py-1 liquid-btn text-white rounded-lg text-xs font-semibold shrink-0">အကြွေးဆပ်</button>`
                     : `<span class="text-xs text-emerald-600 font-bold inline-block min-w-[55px] text-center">ငွေကျေ</span>`;
 
+                /* ဝယ်သူ အမည်၊ ဖုန်းနံပါတ် နှင့် လိပ်စာများအား အလျားလိုက် (Horizontal Inline) ပြသခြင်း */
                 tbody.innerHTML += `
                     <tr class="hover:bg-white/50 transition">
                         <td class="p-3 md:p-4 font-bold text-slate-800 whitespace-nowrap">${s.id}</td>
                         <td class="p-3 md:p-4 text-slate-500 text-xs whitespace-nowrap">${s.date}</td>
                         <td class="p-3 md:p-4">
-                            <div class="flex flex-wrap items-center gap-x-2 gap-y-0.5">
+                            <div class="flex flex-wrap items-center gap-x-2 gap-y-0.5 whitespace-nowrap">
                                 <span class="font-bold text-slate-800">${s.customerName}</span>
                                 <span class="text-slate-400">•</span>
                                 <span class="text-xs text-slate-500 font-medium">${s.customerPhone || '-'}</span>
