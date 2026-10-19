@@ -13,10 +13,6 @@
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-database-compat.js"></script>
 
-    <!-- ဖုန်းများတွင် Shortcut တင်သည့်အခါ ပေါ်မည့် ပုံ (Icon) -->
-<link rel="apple-touch-icon" href="logo.png">
-<link rel="icon" type="image/png" href="logo.png">
-
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Padauk:wght@400;700&display=swap');
         body { font-family: 'Padauk', sans-serif; -webkit-tap-highlight-color: transparent; }
@@ -30,28 +26,28 @@
         }
 
         .login-glass-card {
-            background: rgba(15, 23, 42, 0.75);
+            background: rgba(255, 255, 255, 0.90);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(16, 185, 129, 0.3);
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), 0 0 30px rgba(16, 185, 129, 0.15);
+            border: 1px solid rgba(16, 185, 129, 0.2);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.1), 0 0 30px rgba(16, 185, 129, 0.08);
         }
 
         .login-input {
-            background: rgba(255, 255, 255, 0.08);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            color: #ffffff;
+            background: rgba(255, 255, 255, 0.8);
+            border: 1px solid rgba(16, 185, 129, 0.25);
+            color: #0f172a;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .login-input::placeholder {
-            color: rgba(255, 255, 255, 0.4);
+            color: rgba(100, 116, 139, 0.5);
         }
 
         .login-input:focus {
-            background: rgba(255, 255, 255, 0.15);
+            background: rgba(255, 255, 255, 1);
             border-color: #10b981;
-            box-shadow: 0 0 18px rgba(16, 185, 129, 0.35);
+            box-shadow: 0 0 18px rgba(16, 185, 129, 0.25);
         }
 
         .wallet-card {
@@ -163,27 +159,27 @@
     <!-- CUSTOM TOAST NOTIFICATION CONTAINER -->
     <div id="toastContainer" class="fixed top-3 right-3 left-3 md:left-auto z-50 flex flex-col gap-2 pointer-events-none"></div>
 
-    <!-- LOGIN SCREEN MODAL -->
-    <div id="loginScreen" class="fixed inset-0 bg-gradient-to-br from-emerald-950 via-slate-900 to-slate-950 z-50 flex items-center justify-center p-4 overflow-y-auto">
+    <!-- LOGIN SCREEN MODAL (LIGHT THEME) -->
+    <div id="loginScreen" class="fixed inset-0 bg-gradient-to-br from-emerald-100 via-teal-50 to-slate-200 z-50 flex items-center justify-center p-4 overflow-y-auto">
         <div class="absolute -top-32 -left-32 w-96 h-96 bg-emerald-500/10 rounded-full blur-[120px] pointer-events-none"></div>
         <div class="absolute -bottom-32 -right-32 w-96 h-96 bg-teal-500/10 rounded-full blur-[120px] pointer-events-none"></div>
 
-        <div id="loginCard" class="login-glass-card rounded-3xl w-full max-w-sm md:max-w-md overflow-hidden relative z-10 transition-all duration-300 my-auto">
-            <div class="p-6 md:p-8 text-center space-y-3 relative border-b border-white/10 bg-emerald-950/40">
+        <div id="loginCard" class="login-glass-card rounded-3xl w-full max-w-sm md:max-w-md overflow-hidden relative z-10 transition-all duration-300 my-auto border border-white/80">
+            <div class="p-6 md:p-8 text-center space-y-3 relative border-b border-slate-200/60 bg-white/50">
                 <div class="inline-flex p-3 bg-emerald-500/10 rounded-2xl border border-emerald-400/30 shadow-lg shadow-emerald-500/10 backdrop-blur-md mb-1">
                     <img src="logo.png" alt="AKK Logo" class="w-12 h-12 object-contain" onerror="this.onerror=null; this.src='https://via.placeholder.com/48?text=AKK';">
                 </div>
                 <div>
-                    <h2 class="text-2xl md:text-3xl font-black tracking-wider text-white drop-shadow-md">AKK Trading</h2>
-                    <p class="text-xs text-emerald-400 font-bold tracking-widest uppercase mt-1">POS Management System</p>
+                    <h2 class="text-2xl md:text-3xl font-black tracking-wider text-slate-800 drop-shadow-sm">AKK Trading</h2>
+                    <p class="text-xs text-emerald-600 font-bold tracking-widest uppercase mt-1">POS Management System</p>
                 </div>
             </div>
 
             <form onsubmit="handleLogin(event)" class="p-6 md:p-8 space-y-5">
                 <div>
-                    <label class="text-xs font-bold text-emerald-300 uppercase tracking-wider block mb-1.5">Username</label>
+                    <label class="text-xs font-bold text-slate-700 uppercase tracking-wider block mb-1.5">Username</label>
                     <div class="relative flex items-center">
-                        <span class="absolute left-3.5 text-emerald-400 flex items-center pointer-events-none z-10">
+                        <span class="absolute left-3.5 text-emerald-600 flex items-center pointer-events-none z-10">
                             <i data-lucide="user" class="w-4 h-4"></i>
                         </span>
                         <input type="text" id="loginUser" required placeholder="username" class="w-full pl-10 pr-4 py-3 login-input rounded-2xl text-xs md:text-sm font-semibold outline-none">
@@ -191,21 +187,21 @@
                 </div>
 
                 <div>
-                    <label class="text-xs font-bold text-emerald-300 uppercase tracking-wider block mb-1.5">Password</label>
+                    <label class="text-xs font-bold text-slate-700 uppercase tracking-wider block mb-1.5">Password</label>
                     <div class="relative flex items-center">
-                        <span class="absolute left-3.5 text-emerald-400 flex items-center pointer-events-none z-10">
+                        <span class="absolute left-3.5 text-emerald-600 flex items-center pointer-events-none z-10">
                             <i data-lucide="lock" class="w-4 h-4"></i>
                         </span>
                         <input type="password" id="loginPass" required placeholder="••••••••" class="w-full pl-10 pr-4 py-3 login-input rounded-2xl text-xs md:text-sm font-semibold outline-none">
                     </div>
                 </div>
 
-                <button type="submit" class="w-full py-3.5 liquid-btn text-white font-bold rounded-2xl shadow-xl shadow-emerald-900/50 flex items-center justify-center gap-2 text-xs md:text-sm mt-2 transition-all duration-300">
+                <button type="submit" class="w-full py-3.5 liquid-btn text-white font-bold rounded-2xl shadow-xl shadow-emerald-900/20 flex items-center justify-center gap-2 text-xs md:text-sm mt-2 transition-all duration-300">
                     <i data-lucide="log-in" class="w-4 h-4"></i> စနစ်အတွင်းသို့ ဝင်မည်
                 </button>
 
                 <div class="text-center pt-2">
-                    <span class="text-[10px] text-slate-400 font-medium">AKK Trading Store POS • Version 6.7</span>
+                    <span class="text-[10px] text-slate-400 font-medium">AKK Trading Store POS • Version 6.8</span>
                 </div>
             </form>
         </div>
@@ -259,7 +255,7 @@
             </div>
             
             <div id="sidebarFooter" class="p-4 border-t border-emerald-800/40 flex items-center justify-between overflow-hidden">
-                <span class="sidebar-text text-xs text-emerald-400 font-bold whitespace-nowrap">AKK Trading v6.7</span>
+                <span class="sidebar-text text-xs text-emerald-400 font-bold whitespace-nowrap">AKK Trading v6.8</span>
                 <button onclick="handleLogout()" title="Logout" class="p-1.5 hover:bg-red-500/20 hover:text-red-300 rounded-xl text-emerald-400 transition">
                     <i data-lucide="log-out" class="w-5 h-5"></i>
                 </button>
@@ -267,7 +263,7 @@
         </aside>
 
         <!-- MAIN CONTENT AREA -->
-        <main class="flex-1 flex flex-col h-full overflow-hidden pb-24 md:pb-0 relative">
+        <main class="flex-1 flex flex-col h-full overflow-hidden pb-20 md:pb-0 relative">
 
             <!-- MOBILE TOP HEADER -->
             <div id="mobileHeader" class="md:hidden glass-sidebar text-white p-3 flex justify-between items-center shrink-0 border-b border-emerald-800/30 z-30">
@@ -343,17 +339,17 @@
                     </div>
                 </div>
 
-                <!-- Floating Cart Button for Mobile -->
-                <div class="md:hidden fixed bottom-20 right-4 z-40">
-                    <button onclick="toggleMobileCart()" class="liquid-btn text-white p-3.5 rounded-full shadow-2xl flex items-center gap-2 font-bold text-xs border border-white/40 active:scale-95 transition-transform">
+                <!-- Floating Cart Button for Mobile (Adjusted to bottom-12) -->
+                <div class="md:hidden fixed bottom-12 right-4 z-40">
+                    <button onclick="toggleMobileCart()" class="liquid-btn text-white p-3 shadow-2xl flex items-center gap-2 font-bold text-xs border border-white/40 active:scale-95 transition-transform rounded-2xl">
                         <i data-lucide="shopping-bag" class="w-5 h-5"></i>
                         <span id="mobileCartCount" class="bg-white text-emerald-800 px-2 py-0.5 rounded-full font-bold">0</span>
                     </button>
                 </div>
 
                 <!-- CURRENT ORDER MODAL / SECTION -->
-                <div id="cartSection" class="fixed md:static inset-x-2 top-[5px] bottom-[5px] md:inset-auto md:w-[380px] lg:w-[400px] md:h-full z-40  md:bg-transparent backdrop-blur-sm md:backdrop-blur-none hidden md:flex items-center justify-center p-0 shrink-0">
-                    <div class="glass-panel rounded-3xl md:rounded-none w-full h-full flex flex-col shadow-2xl overflow-hidden border border-white/50 relative">
+                <div id="cartSection" class="fixed md:static inset-x-2 top-[5px] bottom-[5px] md:inset-auto md:w-[380px] lg:w-[400px] md:h-full z-40 bg-slate-950/40 md:bg-transparent backdrop-blur-sm md:backdrop-blur-none hidden md:flex items-center justify-center p-0 shrink-0">
+                    <div class="glass-panel rounded-2xl md:rounded-none w-full h-full flex flex-col shadow-2xl overflow-hidden border border-white/50 relative">
                         
                         <div class="p-3 md:p-4 border-b border-white/30 flex justify-between items-center bg-emerald-500/10 shrink-0">
                             <div class="flex items-center gap-2 font-bold text-base md:text-lg text-emerald-950">
@@ -452,7 +448,7 @@
                 </div>
 
                 <div class="flex flex-col sm:flex-row justify-between items-stretch sm:items-center gap-2">
-                    <h1 class="text-lg md:text-2xl font-bold text-slate-800">ဆေးပစ္စည်းများ စီမံရန်</h1>
+                    <h1 class="text-lg md:text-2xl font-bold text-slate-800">ဆေးပစ္စည်းများ စီမံရန် (FIFO Costing)</h1>
                     
                     <div class="flex items-center gap-2">
                         <select id="prodListCategoryFilter" onchange="renderProductsTable()" class="p-2 glass-input rounded-xl text-xs font-semibold outline-none">
@@ -480,7 +476,7 @@
                                 <th class="p-3 md:p-4 min-w-[150px]">ကုန်ပစ္စည်းအမည် / အမျိုးအစား</th>
                                 <th class="p-3 md:p-4 w-28 whitespace-nowrap">Color Code</th>
                                 <th class="p-3 md:p-4 w-28 whitespace-nowrap">Finish / Size</th>
-                                <th class="p-3 md:p-4 text-right w-24 whitespace-nowrap">ဝယ်ဈေး</th>
+                                <th class="p-3 md:p-4 text-right w-28 whitespace-nowrap">လက်ရှိဝယ်စျေး (FIFO)</th>
                                 <th class="p-3 md:p-4 text-right w-24 whitespace-nowrap">ရောင်းဈေး</th>
                                 <th class="p-3 md:p-4 text-center w-20 whitespace-nowrap">Stock</th>
                                 <th class="p-3 md:p-4 text-center w-36 whitespace-nowrap">Action</th>
@@ -518,7 +514,7 @@
                 </div>
 
                 <div class="flex flex-col sm:flex-row justify-between items-stretch sm:items-center gap-2">
-                    <h1 class="text-lg md:text-2xl font-bold text-slate-800">အခြားကုန်ပစ္စည်းများ စီမံရန်</h1>
+                    <h1 class="text-lg md:text-2xl font-bold text-slate-800">အခြားကုန်ပစ္စည်းများ စီမံရန် (FIFO Costing)</h1>
                     
                     <div class="flex items-center gap-2">
                         <div class="relative flex-1 sm:w-56">
@@ -538,7 +534,7 @@
                                 <th class="p-3 md:p-4 w-24 whitespace-nowrap">ID</th>
                                 <th class="p-3 md:p-4 w-28 whitespace-nowrap">ရက်စွဲ</th>
                                 <th class="p-3 md:p-4 min-w-[150px]">ကုန်ပစ္စည်းအမည် / အမျိုးအစား</th>
-                                <th class="p-3 md:p-4 text-right w-28 whitespace-nowrap">ဝယ်ဈေး</th>
+                                <th class="p-3 md:p-4 text-right w-32 whitespace-nowrap">လက်ရှိဝယ်စျေး (FIFO)</th>
                                 <th class="p-3 md:p-4 text-right w-28 whitespace-nowrap">ရောင်းဈေး</th>
                                 <th class="p-3 md:p-4 text-center w-24 whitespace-nowrap">Stock</th>
                                 <th class="p-3 md:p-4 text-center w-40 whitespace-nowrap">Action</th>
@@ -643,9 +639,9 @@
                 </div>
 
                 <div class="flex justify-between items-center">
-                    <h1 class="text-lg md:text-2xl font-bold text-slate-800">Admin Activity Logs</h1>
+                    <h1 class="text-lg md:text-2xl font-bold text-slate-800">Activity Logs</h1>
                     <button onclick="clearLogsPrompt()" class="px-3 py-2 bg-red-600 hover:bg-red-700 text-white text-xs font-bold rounded-xl shadow-sm flex items-center gap-1.5">
-                        <i data-lucide="trash-2" class="w-3.5 h-3.5"></i> Logs များ ဖျက်မည်
+                        <i data-lucide="trash-2" class="w-3.5 h-3.5"></i> Logs Delete
                     </button>
                 </div>
 
@@ -851,7 +847,7 @@
                         <input type="number" id="pStock" required placeholder="20" class="w-full p-2 glass-input rounded-xl text-xs outline-none">
                     </div>
                     <div>
-                        <label class="text-xs font-semibold text-slate-600 mb-1 block">ထည့်သွင်း ရက်စွဲ *</label>
+                        <label class="text-xs font-semibold text-slate-600 mb-1 block">ဝယ်ယူသည့် ရက်စွဲ *</label>
                         <input type="date" id="pDate" required class="w-full p-2 glass-input rounded-xl text-xs outline-none">
                     </div>
                 </div>
@@ -892,7 +888,7 @@
                         <input type="number" id="ogStock" required placeholder="15" class="w-full p-2 glass-input rounded-xl text-xs outline-none">
                     </div>
                     <div>
-                        <label class="text-xs font-semibold text-slate-600 mb-1 block">ရက်စွဲ *</label>
+                        <label class="text-xs font-semibold text-slate-600 mb-1 block">ဝယ်ယူသည့် ရက်စွဲ *</label>
                         <input type="date" id="ogDate" required class="w-full p-2 glass-input rounded-xl text-xs outline-none">
                     </div>
                 </div>
@@ -904,11 +900,11 @@
         </div>
     </div>
 
-    <!-- MODAL: RESTOCK -->
+    <!-- MODAL: RESTOCK (FIFO Batch Addition) -->
     <div id="restockModal" class="fixed inset-0 bg-slate-950/70 backdrop-blur-md hidden flex items-center justify-center p-3 z-50">
-        <div class="glass-panel rounded-3xl w-full max-w-xs shadow-2xl overflow-hidden border border-white/40">
+        <div class="glass-panel rounded-3xl w-full max-w-sm shadow-2xl overflow-hidden border border-white/40">
             <div class="p-4 border-b border-white/30 flex justify-between items-center bg-white/50">
-                <h3 class="font-bold text-base text-slate-800">Stock အသစ်ဖြည့်သွင်းရန်</h3>
+                <h3 class="font-bold text-base text-slate-800">Stock အသစ်ဖြည့်သွင်းရန် (FIFO Batch)</h3>
                 <button onclick="closeModal('restockModal')" class="text-slate-400 hover:text-slate-600"><i data-lucide="x"></i></button>
             </div>
             <form onsubmit="handleRestockSubmit(event)" class="p-4 space-y-3">
@@ -918,13 +914,23 @@
                     <label class="text-xs font-semibold text-slate-600 mb-1 block">ကုန်ပစ္စည်းအမည်</label>
                     <input type="text" id="restockProductName" readonly class="w-full p-2 bg-white/50 border border-white/50 rounded-xl text-xs font-semibold">
                 </div>
+                <div class="grid grid-cols-2 gap-2">
+                    <div>
+                        <label class="text-xs font-semibold text-slate-600 mb-1 block">ဝယ်စျေးအသစ် (Ks) *</label>
+                        <input type="number" id="restockNewBuyPrice" required placeholder="48000" class="w-full p-2 glass-input rounded-xl text-xs outline-none font-bold text-emerald-600">
+                    </div>
+                    <div>
+                        <label class="text-xs font-semibold text-slate-600 mb-1 block">အရေအတွက် *</label>
+                        <input type="number" id="restockAddQty" min="1" required placeholder="10" class="w-full p-2 glass-input rounded-xl text-xs outline-none font-bold text-emerald-600">
+                    </div>
+                </div>
                 <div>
-                    <label class="text-xs font-semibold text-slate-600 mb-1 block">ထပ်မံဖြည့်တင်းမည့် အရေအတွက် *</label>
-                    <input type="number" id="restockAddQty" min="1" required placeholder="10" class="w-full p-2 glass-input rounded-xl text-xs outline-none font-bold text-emerald-600">
+                    <label class="text-xs font-semibold text-slate-600 mb-1 block">ဝယ်ယူသည့် ရက်စွဲ *</label>
+                    <input type="date" id="restockDate" required class="w-full p-2 glass-input rounded-xl text-xs outline-none">
                 </div>
                 <div class="pt-2 flex justify-end gap-2">
                     <button type="button" onclick="closeModal('restockModal')" class="px-3 py-2 bg-white/60 hover:bg-white/90 text-slate-600 font-semibold text-xs rounded-xl">မလုပ်တော့ပါ</button>
-                    <button type="submit" class="px-4 py-2 liquid-btn text-white font-semibold rounded-xl text-xs">Stock ဖြည့်မည်</button>
+                    <button type="submit" class="px-4 py-2 liquid-btn text-white font-semibold rounded-xl text-xs">Batch အသစ်ဖြည့်မည်</button>
                 </div>
             </form>
         </div>
@@ -1028,6 +1034,7 @@
             document.getElementById('posSaleDate').value = today;
             document.getElementById('pDate').value = today;
             document.getElementById('ogDate').value = today;
+            document.getElementById('restockDate').value = today;
             document.getElementById('salesMonthFilter').value = currentMonth;
 
             if (db) {
@@ -1187,7 +1194,7 @@
         }
 
         function initApp() {
-            showLoading("Cloud မှ အချက်အလက်များ ဆွဲထုတ်နေပါသည်...");
+            showLoading("Cloud မှ အချက်အလက်များ ရယူနေပါသည်...");
             loadedCount = 0;
 
             if (db) {
@@ -1195,7 +1202,7 @@
                     const data = snapshot.val();
                     if (data) {
                         const rawArr = Array.isArray(data) ? data.filter(i => i !== null) : Object.values(data).filter(i => i !== null);
-                        products = rawArr.map(p => ({ ...p, id: String(p.id || '') }));
+                        products = rawArr.map(p => migrateToFifoBatch(p));
                     } else { products = []; }
                     renderPosProducts();
                     renderProductsTable();
@@ -1206,7 +1213,7 @@
                     const data = snapshot.val();
                     if (data) {
                         const rawArr = Array.isArray(data) ? data.filter(i => i !== null) : Object.values(data).filter(i => i !== null);
-                        otherGoods = rawArr.map(og => ({ ...og, id: String(og.id || '') }));
+                        otherGoods = rawArr.map(og => migrateToFifoBatch(og));
                     } else { otherGoods = []; }
                     renderPosProducts();
                     renderOtherGoodsTable();
@@ -1237,6 +1244,27 @@
             }
             renderCart();
             lucide.createIcons();
+        }
+
+        function migrateToFifoBatch(item) {
+            let batches = item.batches;
+            if (!batches || !Array.isArray(batches) || batches.length === 0) {
+                batches = [{
+                    buyPrice: item.buyPrice || 0,
+                    qty: item.stock || 0,
+                    date: item.createdDate || new Date().toISOString().split('T')[0]
+                }];
+            }
+            let totalStock = batches.reduce((sum, b) => sum + (b.qty || 0), 0);
+            return { ...item, id: String(item.id || ''), batches, stock: totalStock };
+        }
+
+        function getEffectiveBuyPrice(item) {
+            if (item.batches && item.batches.length > 0) {
+                const activeBatch = item.batches.find(b => b.qty > 0);
+                return activeBatch ? activeBatch.buyPrice : item.batches[item.batches.length - 1].buyPrice;
+            }
+            return item.buyPrice || 0;
         }
 
         function showToast(message, type = 'success') {
@@ -1662,6 +1690,24 @@
             }
         }
 
+        function deductFifoBatches(batches, qtyToSell) {
+            batches.sort((a, b) => new Date(a.date || '2026-01-01') - new Date(b.date || '2026-01-01'));
+            let remainingToSell = qtyToSell;
+            for (let batch of batches) {
+                if (remainingToSell <= 0) break;
+                if (batch.qty > 0) {
+                    if (batch.qty >= remainingToSell) {
+                        batch.qty -= remainingToSell;
+                        remainingToSell = 0;
+                    } else {
+                        remainingToSell -= batch.qty;
+                        batch.qty = 0;
+                    }
+                }
+            }
+            return batches.filter(b => b.qty > 0 || batches.indexOf(b) === batches.length - 1);
+        }
+
         function confirmAndPrintVoucher() {
             if (!pendingSaleData) return;
 
@@ -1671,13 +1717,15 @@
                     if (item.itemType === 'Paint') {
                         const prod = products.find(p => String(p.id) === String(item.id));
                         if (prod) {
-                            prod.stock = Math.max(0, (parseInt(prod.stock) || 0) - item.qty);
+                            prod.batches = deductFifoBatches(prod.batches || [], item.qty);
+                            prod.stock = prod.batches.reduce((sum, b) => sum + (b.qty || 0), 0);
                             if (db) db.ref('products/' + cleanKey).set(prod);
                         }
                     } else {
                         const og = otherGoods.find(g => String(g.id) === String(item.id));
                         if (og) {
-                            og.stock = Math.max(0, (parseInt(og.stock) || 0) - item.qty);
+                            og.batches = deductFifoBatches(og.batches || [], item.qty);
+                            og.stock = og.batches.reduce((sum, b) => sum + (b.qty || 0), 0);
                             if (db) db.ref('otherGoods/' + cleanKey).set(og);
                         }
                     }
@@ -1686,7 +1734,7 @@
                 salesHistory.unshift(pendingSaleData);
                 if (db) db.ref('salesHistory/' + String(pendingSaleData.id)).set(pendingSaleData);
 
-                logActivity('POS Sale', `ဘောက်ချာ [${pendingSaleData.id}] (ကျသင့်ငွေ: ${pendingSaleData.total.toLocaleString()} Ks) ထုတ်ရောင်းခဲ့သည်။`);
+                logActivity('POS Sale', `ဘောက်ချာ [${pendingSaleData.id}] (ကျသင့်ငွေ: ${pendingSaleData.total.toLocaleString()} Ks) ထုတ်ရောင်းခဲ့သည်။ (FIFO System Applied)`);
                 showToast('အရောင်းဘောက်ချာ စာရင်းသွင်းပြီးပါပြီ!', 'success');
             } else {
                 logActivity('Print Voucher', `အရောင်းဘောက်ချာ [${pendingSaleData.id}] အား ပြန်လည် Print ထုတ်ခဲ့သည်။`);
@@ -1747,6 +1795,7 @@
 
             filtered.forEach(p => {
                 const stockVal = parseInt(p.stock) || 0;
+                const effectiveBuyPrice = getEffectiveBuyPrice(p);
                 const safeId = String(p.id);
                 tbody.innerHTML += `
                     <tr class="hover:bg-white/50 transition">
@@ -1758,7 +1807,7 @@
                         </td>
                         <td class="p-3 md:p-4 whitespace-nowrap"><span class="bg-white/80 border border-white/80 text-slate-700 px-2 py-0.5 rounded-md text-xs font-semibold">${p.color || '-'}</span></td>
                         <td class="p-3 md:p-4 text-xs text-slate-600 whitespace-nowrap">${p.finish} / ${p.size}</td>
-                        <td class="p-3 md:p-4 text-right text-slate-600 whitespace-nowrap">${(p.buyPrice || 0).toLocaleString()} Ks</td>
+                        <td class="p-3 md:p-4 text-right text-slate-700 font-bold whitespace-nowrap">${effectiveBuyPrice.toLocaleString()} Ks <span class="block text-[9px] text-emerald-600 font-normal">FIFO Active</span></td>
                         <td class="p-3 md:p-4 text-right font-bold text-emerald-600 whitespace-nowrap">${(p.sellPrice || 0).toLocaleString()} Ks</td>
                         <td class="p-3 md:p-4 text-center whitespace-nowrap"><span class="px-2.5 py-0.5 rounded-full text-xs font-bold ${stockVal <= 5 ? 'bg-red-500/20 text-red-600 border border-red-500/30' : 'bg-emerald-500/20 text-emerald-800 border border-emerald-500/30'}">${stockVal}</span></td>
                         <td class="p-3 md:p-4 text-center whitespace-nowrap">
@@ -1788,13 +1837,14 @@
 
             filtered.forEach(og => {
                 const stockVal = parseInt(og.stock) || 0;
+                const effectiveBuyPrice = getEffectiveBuyPrice(og);
                 const safeId = String(og.id);
                 tbody.innerHTML += `
                     <tr class="hover:bg-white/50 transition">
                         <td class="p-3 md:p-4 font-bold text-blue-700 whitespace-nowrap">${og.id}</td>
                         <td class="p-3 md:p-4 text-slate-500 text-xs font-semibold whitespace-nowrap">${og.createdDate || '-'}</td>
                         <td class="p-3 md:p-4 font-bold text-slate-800">${og.name}</td>
-                        <td class="p-3 md:p-4 text-right text-slate-600 whitespace-nowrap">${(og.buyPrice || 0).toLocaleString()} Ks</td>
+                        <td class="p-3 md:p-4 text-right text-slate-700 font-bold whitespace-nowrap">${effectiveBuyPrice.toLocaleString()} Ks <span class="block text-[9px] text-blue-600 font-normal">FIFO Active</span></td>
                         <td class="p-3 md:p-4 text-right font-bold text-blue-600 whitespace-nowrap">${(og.sellPrice || 0).toLocaleString()} Ks</td>
                         <td class="p-3 md:p-4 text-center whitespace-nowrap"><span class="px-2.5 py-0.5 rounded-full text-xs font-bold ${stockVal <= 5 ? 'bg-red-500/20 text-red-600 border border-red-500/30' : 'bg-blue-500/20 text-blue-800 border border-blue-500/30'}">${stockVal}</span></td>
                         <td class="p-3 md:p-4 text-center whitespace-nowrap">
@@ -1837,7 +1887,7 @@
                 document.getElementById('pColor').value = p.color;
                 document.getElementById('pFinish').value = p.finish;
                 document.getElementById('pSize').value = p.size;
-                document.getElementById('pBuyPrice').value = p.buyPrice;
+                document.getElementById('pBuyPrice').value = getEffectiveBuyPrice(p);
                 document.getElementById('pSellPrice').value = p.sellPrice;
                 document.getElementById('pStock').value = p.stock;
                 document.getElementById('pDate').value = p.createdDate || new Date().toISOString().split('T')[0];
@@ -1852,7 +1902,7 @@
             if (og) {
                 document.getElementById('ogId').value = og.id;
                 document.getElementById('ogName').value = og.name;
-                document.getElementById('ogBuyPrice').value = og.buyPrice;
+                document.getElementById('ogBuyPrice').value = getEffectiveBuyPrice(og);
                 document.getElementById('ogSellPrice').value = og.sellPrice;
                 document.getElementById('ogStock').value = og.stock;
                 document.getElementById('ogDate').value = og.createdDate || new Date().toISOString().split('T')[0];
@@ -1867,6 +1917,10 @@
             const rawId = document.getElementById('pId').value.trim();
             const id = rawId ? (rawId.startsWith('#') ? rawId : '#' + rawId) : ('#' + Math.floor(10000 + Math.random() * 90000));
             
+            const buyPrice = parseFloat(document.getElementById('pBuyPrice').value) || 0;
+            const stockQty = parseInt(document.getElementById('pStock').value) || 0;
+            const entryDate = document.getElementById('pDate').value || new Date().toISOString().split('T')[0];
+
             const productData = {
                 id: String(id),
                 name: document.getElementById('pName').value.trim(),
@@ -1875,16 +1929,16 @@
                 color: document.getElementById('pColor').value.trim(),
                 finish: document.getElementById('pFinish').value,
                 size: document.getElementById('pSize').value.trim(),
-                buyPrice: parseFloat(document.getElementById('pBuyPrice').value) || 0,
                 sellPrice: parseFloat(document.getElementById('pSellPrice').value) || 0,
-                stock: parseInt(document.getElementById('pStock').value) || 0,
-                createdDate: document.getElementById('pDate').value || new Date().toISOString().split('T')[0]
+                createdDate: entryDate,
+                batches: [{ buyPrice: buyPrice, qty: stockQty, date: entryDate }],
+                stock: stockQty
             };
 
             const cleanKey = String(id).replace(/[^a-zA-Z0-9]/g, '_');
             if (db) {
                 db.ref('products/' + cleanKey).set(productData).then(() => {
-                    logActivity('Inventory', `ဆေးပစ္စည်း [${productData.name}] (ID: ${id}) ကို ထည့်သွင်း/ပြင်ဆင်ခဲ့သည်။`);
+                    logActivity('Inventory', `ဆေးပစ္စည်း [${productData.name}] (ID: ${id}) ကို FIFO စနစ်ဖြင့် ထည့်သွင်း/ပြင်ဆင်ခဲ့သည်။`);
                     closeModal('addProductModal');
                     showToast('ဆေးပစ္စည်း အချက်အလက် သိမ်းဆည်းပြီးပါပြီ!', 'success');
                 });
@@ -1896,19 +1950,23 @@
             const rawId = document.getElementById('ogId').value.trim();
             const id = rawId ? (rawId.startsWith('#') ? rawId : '#' + rawId) : ('#' + Math.floor(10000 + Math.random() * 90000));
             
+            const buyPrice = parseFloat(document.getElementById('ogBuyPrice').value) || 0;
+            const stockQty = parseInt(document.getElementById('ogStock').value) || 0;
+            const entryDate = document.getElementById('ogDate').value || new Date().toISOString().split('T')[0];
+
             const otherData = {
                 id: String(id),
                 name: document.getElementById('ogName').value.trim(),
-                buyPrice: parseFloat(document.getElementById('ogBuyPrice').value) || 0,
                 sellPrice: parseFloat(document.getElementById('ogSellPrice').value) || 0,
-                stock: parseInt(document.getElementById('ogStock').value) || 0,
-                createdDate: document.getElementById('ogDate').value || new Date().toISOString().split('T')[0]
+                createdDate: entryDate,
+                batches: [{ buyPrice: buyPrice, qty: stockQty, date: entryDate }],
+                stock: stockQty
             };
 
             const cleanKey = String(id).replace(/[^a-zA-Z0-9]/g, '_');
             if (db) {
                 db.ref('otherGoods/' + cleanKey).set(otherData).then(() => {
-                    logActivity('Inventory', `အခြားကုန်ပစ္စည်း [${otherData.name}] (ID: ${id}) ကို ထည့်သွင်း/ပြင်ဆင်ခဲ့သည်။`);
+                    logActivity('Inventory', `အခြားကုန်ပစ္စည်း [${otherData.name}] (ID: ${id}) ကို FIFO စနစ်ဖြင့် ထည့်သွင်း/ပြင်ဆင်ခဲ့သည်။`);
                     closeModal('addOtherGoodsModal');
                     showToast('အခြားကုန်ပစ္စည်း အချက်အလက် သိမ်းဆည်းပြီးပါပြီ!', 'success');
                 });
@@ -1921,7 +1979,9 @@
                 document.getElementById('restockProductId').value = product.id;
                 document.getElementById('restockProductType').value = type;
                 document.getElementById('restockProductName').value = `${product.name} [${product.id}]`;
+                document.getElementById('restockNewBuyPrice').value = '';
                 document.getElementById('restockAddQty').value = '';
+                document.getElementById('restockDate').value = new Date().toISOString().split('T')[0];
                 openModal('restockModal');
             }
         }
@@ -1930,27 +1990,33 @@
             e.preventDefault();
             const id = document.getElementById('restockProductId').value;
             const type = document.getElementById('restockProductType').value;
-            const addQty = parseInt(document.getElementById('restockAddQty').value);
+            const newBuyPrice = parseFloat(document.getElementById('restockNewBuyPrice').value) || 0;
+            const addQty = parseInt(document.getElementById('restockAddQty').value) || 0;
+            const restockDate = document.getElementById('restockDate').value || new Date().toISOString().split('T')[0];
             const cleanKey = String(id).replace(/[^a-zA-Z0-9]/g, '_');
 
             if (type === 'Paint') {
                 const product = products.find(p => String(p.id) === String(id));
                 if (product && addQty > 0) {
-                    product.stock = (parseInt(product.stock) || 0) + addQty;
+                    if (!product.batches) product.batches = [];
+                    product.batches.push({ buyPrice: newBuyPrice, qty: addQty, date: restockDate });
+                    product.stock = product.batches.reduce((sum, b) => sum + (b.qty || 0), 0);
                     if (db) db.ref('products/' + cleanKey).set(product);
-                    logActivity('Stock Restock', `ဆေးပစ္စည်း [${product.name}] (ID: ${id}) သို့ Stock +${addQty} ဖြည့်သွင်းခဲ့သည်။`);
+                    logActivity('Stock Restock', `ဆေးပစ္စည်း [${product.name}] (ID: ${id}) သို့ ဝယ်စျေး ${newBuyPrice} ဖြင့် Stock +${addQty} (FIFO Batch) ဖြည့်သွင်းခဲ့သည်။`);
                 }
             } else {
                 const og = otherGoods.find(g => String(g.id) === String(id));
                 if (og && addQty > 0) {
-                    og.stock = (parseInt(og.stock) || 0) + addQty;
+                    if (!og.batches) og.batches = [];
+                    og.batches.push({ buyPrice: newBuyPrice, qty: addQty, date: restockDate });
+                    og.stock = og.batches.reduce((sum, b) => sum + (b.qty || 0), 0);
                     if (db) db.ref('otherGoods/' + cleanKey).set(og);
-                    logActivity('Stock Restock', `အခြားကုန်ပစ္စည်း [${og.name}] (ID: ${id}) သို့ Stock +${addQty} ဖြည့်သွင်းခဲ့သည်။`);
+                    logActivity('Stock Restock', `အခြားကုန်ပစ္စည်း [${og.name}] (ID: ${id}) သို့ ဝယ်စျေး ${newBuyPrice} ဖြင့် Stock +${addQty} (FIFO Batch) ဖြည့်သွင်းခဲ့သည်။`);
                 }
             }
 
             closeModal('restockModal');
-            showToast(`Stock +${addQty} အသစ်ဖြည့်သွင်းပြီးပါပြီ!`, 'success');
+            showToast(`Stock +${addQty} (FIFO Batch) အသစ်ဖြည့်သွင်းပြီးပါပြီ!`, 'success');
         }
 
         function deleteProduct(id, type) {
