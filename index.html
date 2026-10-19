@@ -157,7 +157,7 @@
     </div>
 
     <!-- CUSTOM TOAST NOTIFICATION CONTAINER -->
-    <div id="toastContainer" class="fixed top-3 right-3 left-3 md:left-auto z-50 flex flex-col gap-2 pointer-events-none"></div>
+    <div id="toastContainer" class="fixed top-3 right-3 left-3 md:left-auto z-[99999] flex flex-col gap-2 pointer-events-none"></div>
 
     <!-- LOGIN SCREEN MODAL (LIGHT THEME) -->
     <div id="loginScreen" class="fixed inset-0 bg-gradient-to-br from-emerald-100 via-teal-50 to-slate-200 z-50 flex items-center justify-center p-4 overflow-y-auto">
@@ -340,27 +340,34 @@
                 </div>
 
                 <!-- Floating Cart Button for Mobile -->
-                <div class="md:hidden fixed bottom-12 right-4 z-40">
-                    <button onclick="toggleMobileCart()" class="liquid-btn text-white p-3 shadow-2xl flex items-center gap-2 font-bold text-xs border border-white/40 active:scale-95 transition-transform rounded-2xl">
+                <div class="md:hidden fixed bottom-16 right-4 z-40">
+                    <button onclick="toggleMobileCart()" class="liquid-btn text-white p-3.5 shadow-2xl flex items-center gap-2 font-bold text-xs border border-white/40 active:scale-95 transition-transform rounded-2xl">
                         <i data-lucide="shopping-bag" class="w-5 h-5"></i>
-                        <span id="mobileCartCount" class="bg-white text-emerald-800 px-2 py-0.5 rounded-full font-bold">0</span>
+                        <span id="mobileCartCount" class="bg-white text-emerald-800 px-2.5 py-0.5 rounded-full font-bold">0</span>
                     </button>
                 </div>
 
-                <!-- CURRENT ORDER MODAL / SECTION (FULL SCREEN ON MOBILE) -->
-                <div id="cartSection" class="fixed md:static inset-0 md:inset-auto w-full md:w-[380px] lg:w-[400px] h-full z-50 md:z-40 bg-slate-100 md:bg-transparent hidden md:flex flex-col shrink-0">
-                    <div class="glass-panel w-full h-full flex flex-col shadow-2xl overflow-hidden border-none md:border border-white/50 relative rounded-none md:rounded-none">
+                <!-- CURRENT ORDER MODAL / SECTION (ABSOLUTE FULL SCREEN OVERLAYING EVERYTHING) -->
+                <div id="cartSection" class="fixed md:static inset-0 md:inset-auto w-full md:w-[380px] lg:w-[400px] h-full z-[99999] bg-slate-100 md:bg-transparent hidden md:flex flex-col shrink-0">
+                    <div class="glass-panel w-full h-full flex flex-col shadow-2xl overflow-hidden border-none md:border border-white/50 relative rounded-none">
                         
-                        <div class="p-3.5 md:p-4 border-b border-white/30 flex justify-between items-center bg-emerald-600 text-white md:text-emerald-950 md:bg-emerald-500/10 shrink-0">
+                        <!-- TOP HEADER WITH BACK & CLOSE BUTTONS -->
+                        <div class="p-3.5 md:p-4 border-b border-white/30 flex justify-between items-center bg-emerald-700 text-white md:text-emerald-950 md:bg-emerald-500/10 shrink-0">
                             <div class="flex items-center gap-2 font-bold text-base md:text-lg">
+                                <button onclick="toggleMobileCart()" class="md:hidden text-white/90 hover:text-white p-1 bg-white/10 rounded-lg active:scale-95 transition mr-1">
+                                    <i data-lucide="arrow-left" class="w-5 h-5"></i>
+                                </button>
                                 <i data-lucide="shopping-bag" class="text-white md:text-emerald-600"></i> Current Order
                             </div>
                             <div class="flex items-center gap-2">
                                 <span id="cartItemCount" class="bg-white/20 md:bg-emerald-100 text-white md:text-emerald-800 px-2.5 py-0.5 rounded-full text-xs font-semibold">0 ခု</span>
-                                <button onclick="toggleMobileCart()" class="md:hidden text-white/80 hover:text-white p-1.5 bg-white/10 rounded-xl active:scale-95 transition"><i data-lucide="x" class="w-6 h-6"></i></button>
+                                <button onclick="toggleMobileCart()" class="md:hidden text-white/90 hover:text-white p-1 bg-white/10 rounded-lg active:scale-95 transition">
+                                    <i data-lucide="x" class="w-6 h-6"></i>
+                                </button>
                             </div>
                         </div>
 
+                        <!-- CUSTOMER DETAILS FORM -->
                         <div class="p-3 md:p-4 border-b border-white/20 bg-white/40 space-y-2 text-xs shrink-0">
                             <div>
                                 <label class="font-semibold text-slate-600 block mb-0.5">အရောင်းရက်စွဲ</label>
@@ -382,29 +389,31 @@
                             </div>
                         </div>
 
-                        <div id="cartItemsList" class="flex-1 overflow-y-auto p-3 md:p-4 space-y-2.5">
+                        <!-- CART ITEMS LIST (EXPANDED AREA) -->
+                        <div id="cartItemsList" class="flex-1 overflow-y-auto p-3 md:p-4 space-y-2.5 bg-slate-50/50">
                             <!-- Cart items injected here -->
                         </div>
 
-                        <div class="p-3 md:p-4 border-t border-white/40 bg-white/50 space-y-2.5 shrink-0">
-                            <div class="space-y-1 text-xs md:text-sm">
-                                <div class="flex justify-between font-bold text-sm md:text-base text-slate-800">
+                        <!-- FOOTER BILLING & PAYMENT -->
+                        <div class="p-3.5 md:p-4 border-t border-white/40 bg-white/80 backdrop-blur-md space-y-2.5 shrink-0 shadow-lg">
+                            <div class="space-y-1.5 text-xs md:text-sm">
+                                <div class="flex justify-between font-extrabold text-base md:text-lg text-slate-800">
                                     <span>စုစုပေါင်း ကျသင့်ငွေ</span>
-                                    <span id="cartTotalDisplay">0 Ks</span>
+                                    <span id="cartTotalDisplay" class="text-emerald-700">0 Ks</span>
                                 </div>
 
                                 <div class="pt-1">
                                     <label class="text-[11px] font-semibold text-slate-600 mb-1 block">ငွေပေးချေမှု ပုံစံ</label>
                                     <div class="grid grid-cols-3 gap-1.5">
-                                        <button type="button" onclick="setPaymentType('Cash')" id="payBtnCash" class="pay-type-btn py-1.5 text-xs font-semibold rounded-xl border liquid-btn text-white border-emerald-600">Cash</button>
-                                        <button type="button" onclick="setPaymentType('KBZPay')" id="payBtnKPay" class="pay-type-btn py-1.5 text-xs font-semibold rounded-xl border bg-white/70 text-slate-700 border-white/50">KBZPay</button>
-                                        <button type="button" onclick="setPaymentType('Credit')" id="payBtnCredit" class="pay-type-btn py-1.5 text-xs font-semibold rounded-xl border bg-white/70 text-slate-700 border-white/50">အကြွေး</button>
+                                        <button type="button" onclick="setPaymentType('Cash')" id="payBtnCash" class="pay-type-btn py-2 text-xs font-semibold rounded-xl border liquid-btn text-white border-emerald-600">Cash</button>
+                                        <button type="button" onclick="setPaymentType('KBZPay')" id="payBtnKPay" class="pay-type-btn py-2 text-xs font-semibold rounded-xl border bg-white/70 text-slate-700 border-white/50">KBZPay</button>
+                                        <button type="button" onclick="setPaymentType('Credit')" id="payBtnCredit" class="pay-type-btn py-2 text-xs font-semibold rounded-xl border bg-white/70 text-slate-700 border-white/50">အကြွေး</button>
                                     </div>
                                 </div>
 
                                 <div class="pt-1">
                                     <label class="text-[11px] font-semibold text-slate-600 block mb-0.5">ပေးချေငွေ (Paid Amount)</label>
-                                    <input type="number" id="paidAmountInput" oninput="calculateBilling()" placeholder="0" class="w-full p-2 glass-input rounded-xl text-right font-bold text-slate-800 outline-none">
+                                    <input type="number" id="paidAmountInput" oninput="calculateBilling()" placeholder="0" class="w-full p-2.5 glass-input rounded-xl text-right font-bold text-slate-800 text-sm outline-none">
                                 </div>
 
                                 <div class="flex justify-between items-center pt-1 text-sm md:text-base font-bold">
@@ -413,7 +422,7 @@
                                 </div>
                             </div>
 
-                            <button onclick="openVoucherPreview()" class="w-full py-2.5 md:py-3 liquid-btn text-white font-bold rounded-xl shadow-md transition flex items-center justify-center gap-2 text-xs md:text-sm">
+                            <button onclick="openVoucherPreview()" class="w-full py-3 liquid-btn text-white font-bold rounded-xl shadow-lg transition flex items-center justify-center gap-2 text-sm mt-2">
                                 <i data-lucide="printer" class="w-4 h-4"></i> ဘောက်ချာစစ်ဆေး စာထုတ်မည်
                             </button>
                         </div>
@@ -988,7 +997,7 @@
 
     <!-- JAVASCRIPT LOGIC -->
     <script>
-       const firebaseConfig = {
+        const firebaseConfig = {
   apiKey: "AIzaSyBrLxzZSbaAtAk0KblgMvXsjxyQ2aa7ySs",
   authDomain: "akk-trading-pos.firebaseapp.com",
   databaseURL: "https://akk-trading-pos-default-rtdb.asia-southeast1.firebasedatabase.app",
@@ -1311,9 +1320,20 @@
             document.querySelectorAll('.sidebar-text').forEach(t => t.classList.toggle('hidden'));
         }
 
+        // FULL SCREEN OVERLAY TOGGLE FOR MOBILE CART
         function toggleMobileCart() {
             const cartSec = document.getElementById('cartSection');
-            cartSec.classList.toggle('hidden');
+            if (cartSec.style.display === 'flex') {
+                cartSec.style.display = 'none';
+            } else {
+                cartSec.style.display = 'flex';
+                cartSec.style.position = 'fixed';
+                cartSec.style.top = '0';
+                cartSec.style.left = '0';
+                cartSec.style.width = '100vw';
+                cartSec.style.height = '100vh';
+                cartSec.style.zIndex = '999999';
+            }
         }
 
         function switchTab(tabName) {
@@ -1713,7 +1733,7 @@
 
             if (!isReprintMode) {
                 pendingSaleData.items.forEach(item => {
-                    const cleanKey = String(item.id).replace(/[^a-zA-Z0-9]/g, '_');
+                    const cleanKey = String(item.id).trim().replace(/[.#$\/\[\]]/g, '_');
                     if (item.itemType === 'Paint') {
                         const prod = products.find(p => String(p.id) === String(item.id));
                         if (prod) {
@@ -1762,7 +1782,7 @@
                 updateSummaryCards();
 
                 const cartSec = document.getElementById('cartSection');
-                if (window.innerWidth < 768 && !cartSec.classList.contains('hidden')) {
+                if (cartSec.style.display === 'flex') {
                     toggleMobileCart();
                 }
             }
@@ -1935,7 +1955,7 @@
                 stock: stockQty
             };
 
-            const cleanKey = String(id).replace(/[^a-zA-Z0-9]/g, '_');
+            const cleanKey = String(id).trim().replace(/[.#$\/\[\]]/g, '_');
             if (db) {
                 db.ref('products/' + cleanKey).set(productData).then(() => {
                     logActivity('Inventory', `ဆေးပစ္စည်း [${productData.name}] (ID: ${id}) ကို FIFO စနစ်ဖြင့် ထည့်သွင်း/ပြင်ဆင်ခဲ့သည်။`);
@@ -1963,7 +1983,7 @@
                 stock: stockQty
             };
 
-            const cleanKey = String(id).replace(/[^a-zA-Z0-9]/g, '_');
+            const cleanKey = String(id).trim().replace(/[.#$\/\[\]]/g, '_');
             if (db) {
                 db.ref('otherGoods/' + cleanKey).set(otherData).then(() => {
                     logActivity('Inventory', `အခြားကုန်ပစ္စည်း [${otherData.name}] (ID: ${id}) ကို FIFO စနစ်ဖြင့် ထည့်သွင်း/ပြင်ဆင်ခဲ့သည်။`);
@@ -1993,7 +2013,7 @@
             const newBuyPrice = parseFloat(document.getElementById('restockNewBuyPrice').value) || 0;
             const addQty = parseInt(document.getElementById('restockAddQty').value) || 0;
             const restockDate = document.getElementById('restockDate').value || new Date().toISOString().split('T')[0];
-            const cleanKey = String(id).replace(/[^a-zA-Z0-9]/g, '_');
+            const cleanKey = String(id).trim().replace(/[.#$\/\[\]]/g, '_');
 
             if (type === 'Paint') {
                 const product = products.find(p => String(p.id) === String(id));
@@ -2019,16 +2039,34 @@
             showToast(`Stock +${addQty} (FIFO Batch) အသစ်ဖြည့်သွင်းပြီးပါပြီ!`, 'success');
         }
 
+        // FIXED DELETE PRODUCT FUNCTION WITH REALTIME FIREBASE SYNC
         function deleteProduct(id, type) {
-            const cleanKey = String(id).replace(/[^a-zA-Z0-9]/g, '_');
+            const cleanKey = String(id).trim().replace(/[.#$\/\[\]]/g, '_');
             showConfirm('ကုန်ပစ္စည်း ဖျက်ရန် သေချာပါသလား?', `(${id}) ကို စာရင်းထဲမှ လုံးဝ ဖျက်ပစ်ပါမည်။`, () => {
                 if (type === 'Paint') {
-                    if (db) db.ref('products/' + cleanKey).remove();
+                    if (db) {
+                        db.ref('products/' + cleanKey).remove().then(() => {
+                            showToast('ဆေးပစ္စည်း အား စာရင်းထဲမှ အောင်မြင်စွာ ဖျက်ပြီးပါပြီ', 'warning');
+                        }).catch((error) => {
+                            showToast('ဖျက်ဆီးရာတွင် အမှားအယွင်းရှိပါသည်: ' + error.message, 'error');
+                        });
+                    }
+                    products = products.filter(p => String(p.id).trim() !== String(id).trim());
+                    renderProductsTable();
+                    renderPosProducts();
                 } else {
-                    if (db) db.ref('otherGoods/' + cleanKey).remove();
+                    if (db) {
+                        db.ref('otherGoods/' + cleanKey).remove().then(() => {
+                            showToast('အခြားကုန်ပစ္စည်း အား စာရင်းထဲမှ အောင်မြင်စွာ ဖျက်ပြီးပါပြီ', 'warning');
+                        }).catch((error) => {
+                            showToast('ဖျက်ဆီးရာတွင် အမှားအယွင်းရှိပါသည်: ' + error.message, 'error');
+                        });
+                    }
+                    otherGoods = otherGoods.filter(og => String(og.id).trim() !== String(id).trim());
+                    renderOtherGoodsTable();
+                    renderPosProducts();
                 }
                 logActivity('Inventory Delete', `ကုန်ပစ္စည်း (ID: ${id}) ကို စနစ်ထဲမှ ဖျက်ဆီးခဲ့သည်။`);
-                showToast('ကုန်ပစ္စည်း အား စာရင်းထဲမှ ပယ်ဖျက်ပြီးပါပြီ', 'warning');
             });
         }
 
