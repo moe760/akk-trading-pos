@@ -13,6 +13,7 @@
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-database-compat.js"></script>
 
+    <!-- App Icon & Manifest Configuration -->
     <link rel="icon" type="image/png" href="./logo.png">
     <link rel="apple-touch-icon" href="./logo.png">
     <link rel="manifest" href="./manifest.json">
@@ -50,7 +51,6 @@
             border: 1px solid rgba(255, 255, 255, 0.2);
         }
 
-        /* POS Terminal Hover & Glow Effect */
         .glass-card {
             background: #ffffff;
             border: 1px solid rgba(226, 232, 240, 0.8);
@@ -104,7 +104,6 @@
             opacity: 1;
         }
 
-        /* Anti-Flash Mobile Cart Styles */
         #mobileCartModal {
             visibility: hidden;
             opacity: 0;
@@ -173,15 +172,15 @@
         <p id="loadingText" class="mt-4 font-bold text-sm tracking-wide text-emerald-300 animate-pulse">ဒေတာများ ရယူနေပါသည်...</p>
     </div>
 
-    <!-- CUSTOM TOAST NOTIFICATION CONTAINER -->
+    <!-- TOAST NOTIFICATION CONTAINER -->
     <div id="toastContainer" class="fixed top-3 right-3 left-3 md:left-auto z-[9999999] flex flex-col gap-2 pointer-events-none"></div>
 
-    <!-- LOGIN SCREEN MODAL -->
+    <!-- LOGIN SCREEN -->
     <div id="loginScreen" class="fixed inset-0 bg-slate-200 z-50 flex items-center justify-center p-4 overflow-y-auto">
         <div id="loginCard" class="login-glass-card rounded-3xl w-full max-w-sm md:max-w-md overflow-hidden relative z-10 my-auto border border-white">
             <div class="p-6 md:p-8 text-center space-y-3 relative border-b border-slate-200/60 bg-white">
                 <div class="inline-flex p-3 bg-emerald-500/10 rounded-2xl border border-emerald-400/30 shadow-md mb-1">
-                    <img src="logo.png" alt="AKK Logo" class="w-12 h-12 object-contain" onerror="this.onerror=null; this.src='https://via.placeholder.com/48?text=AKK';">
+                    <img src="./logo.png" alt="AKK Logo" class="w-12 h-12 object-contain" onerror="this.onerror=null; this.src='https://via.placeholder.com/48?text=AKK';">
                 </div>
                 <div>
                     <h2 class="text-2xl md:text-3xl font-black tracking-wider text-slate-800">AKK Trading</h2>
@@ -215,7 +214,7 @@
                 </button>
 
                 <div class="text-center pt-2">
-                    <span class="text-[10px] text-slate-400 font-medium">AKK Trading Store POS • Version 7.0</span>
+                    <span class="text-[10px] text-slate-400 font-medium">AKK Trading Store POS • Version 7.2</span>
                 </div>
             </form>
         </div>
@@ -224,12 +223,12 @@
     <!-- MAIN SYSTEM INTERFACE -->
     <div id="mainApp" class="flex-1 flex flex-col md:flex-row w-full h-full hidden overflow-hidden">
 
-        <!-- DESKTOP SIDEBAR NAVIGATION -->
+        <!-- DESKTOP SIDEBAR -->
         <aside id="sidebarNav" class="hidden md:flex w-64 glass-sidebar text-emerald-100 flex-col justify-between shrink-0 transition-all duration-300">
             <div>
                 <div id="sidebarHeader" class="p-4 text-white font-bold text-lg flex items-center justify-between border-b border-emerald-800/40 min-h-[70px]">
                     <div class="flex items-center gap-2.5 overflow-hidden">
-                        <img src="logo.png" alt="AKK Logo" class="w-8 h-8 rounded-xl object-contain bg-white/10 p-1 border border-emerald-400/35 shrink-0" onerror="this.onerror=null; this.src='https://via.placeholder.com/32?text=AKK';">
+                        <img src="./logo.png" alt="AKK Logo" class="w-8 h-8 rounded-xl object-contain bg-white/10 p-1 border border-emerald-400/35 shrink-0" onerror="this.onerror=null; this.src='https://via.placeholder.com/32?text=AKK';">
                         <div class="sidebar-text flex flex-col">
                             <span id="brandLogoText" class="font-black text-xl tracking-wide whitespace-nowrap text-emerald-400 leading-none drop-shadow">AKK Trading</span>
                             <span id="activeAdminBadge" class="text-[10px] text-emerald-300 font-semibold mt-1">Admin: -</span>
@@ -246,7 +245,6 @@
                         <span class="sidebar-text whitespace-nowrap text-sm">POS Terminal</span>
                     </button>
                     
-                    <!-- Restricted for Admin 2 and Admin 3 -->
                     <button onclick="switchTab('products')" id="tab-products" class="admin-only-nav desktop-tab-btn w-full flex items-center gap-3.5 px-3.5 py-3 rounded-2xl font-semibold hover:bg-white/10 transition-all duration-300 overflow-hidden">
                         <i data-lucide="paint-bucket" class="w-5 h-5 shrink-0"></i> 
                         <span class="sidebar-text whitespace-nowrap text-sm">ဆေးပစ္စည်းများ</span>
@@ -271,7 +269,7 @@
             </div>
             
             <div id="sidebarFooter" class="p-4 border-t border-emerald-800/40 flex items-center justify-between overflow-hidden">
-                <span class="sidebar-text text-xs text-emerald-400 font-bold whitespace-nowrap">AKK Trading v7.0</span>
+                <span class="sidebar-text text-xs text-emerald-400 font-bold whitespace-nowrap">AKK Trading v7.2</span>
                 <button onclick="handleLogout()" title="Logout" class="p-1.5 hover:bg-red-500/20 hover:text-red-300 rounded-xl text-emerald-400 transition">
                     <i data-lucide="log-out" class="w-5 h-5"></i>
                 </button>
@@ -284,7 +282,7 @@
             <!-- MOBILE TOP HEADER -->
             <div id="mobileHeader" class="md:hidden glass-sidebar text-white p-3 flex justify-between items-center shrink-0 border-b border-emerald-800/30 z-30">
                 <div class="flex items-center gap-2">
-                    <img src="logo.png" alt="AKK Logo" class="w-7 h-7 rounded-xl object-contain bg-white/10 p-0.5 border border-white/20" onerror="this.onerror=null; this.src='https://via.placeholder.com/28?text=AKK';">
+                    <img src="./logo.png" alt="AKK Logo" class="w-7 h-7 rounded-xl object-contain bg-white/10 p-0.5 border border-white/20" onerror="this.onerror=null; this.src='https://via.placeholder.com/28?text=AKK';">
                     <div class="flex flex-col">
                         <span class="font-extrabold text-base text-emerald-400 tracking-wide leading-none">AKK Trading</span>
                         <span id="activeAdminBadgeMobile" class="text-[9px] text-emerald-200">Admin: -</span>
@@ -304,22 +302,18 @@
             <section id="view-pos" class="tab-content flex-1 flex flex-col md:flex-row h-full overflow-hidden relative">
                 <div class="flex-1 p-3 md:p-6 flex flex-col h-full overflow-hidden">
                     
-                    <!-- SUMMARY CARD -->
                     <div class="wallet-card mb-3 p-4 rounded-3xl text-white shadow-xl relative overflow-hidden shrink-0">
                         <div class="absolute -right-6 -bottom-6 w-32 h-32 bg-white/10 rounded-full blur-2xl pointer-events-none"></div>
-                        
                         <div class="flex justify-between items-center mb-1">
                             <span class="text-xs text-emerald-200 font-semibold">စုစုပေါင်းရောင်းရငွေ (Total Revenue)</span>
-                            <span id="networkStatusBadge" class="px-2.5 py-0.5 bg-emerald-500/30 rounded-full text-[11px] font-bold border border-emerald-400/50 flex items-center gap-1 transition-all duration-300">
-                                <span id="statusDot" class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span> 
-                                <span id="statusText">Active</span>
+                            <span class="networkStatusBadge px-2.5 py-0.5 bg-emerald-500/30 rounded-full text-[11px] font-bold border border-emerald-400/50 flex items-center gap-1 transition-all duration-300">
+                                <span class="statusDot w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span> 
+                                <span class="statusText">Active</span>
                             </span>
                         </div>
-
                         <div class="flex items-baseline justify-between mb-3">
                             <h2 class="summaryRevText text-2xl md:text-3xl font-black tracking-tight">0 Ks</h2>
                         </div>
-
                         <div class="pt-2 border-t border-white/20 flex flex-row items-center justify-between gap-2 text-xs">
                             <div class="flex items-center gap-1.5">
                                 <span class="text-emerald-200 text-[11px]">ရရှိပြီးငွေ (Paid):</span> 
@@ -337,7 +331,6 @@
                         <h3 class="text-sm md:text-base font-bold text-slate-800">ကုန်ပစ္စည်းများ ရွေးချယ်ရန်</h3>
                         
                         <div class="flex items-center gap-2 w-full sm:w-auto">
-                            <!-- BRAND FILTER DROPDOWN -->
                             <select id="posBrandFilter" onchange="filterPosProducts()" class="flex-1 sm:flex-none p-2 glass-input rounded-xl text-xs font-semibold outline-none border-emerald-300">
                                 <option value="All">Brand အားလုံး</option>
                             </select>
@@ -355,13 +348,9 @@
                         </div>
                     </div>
 
-                    <!-- POS GRID -->
-                    <div id="posProductGrid" class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-2.5 md:gap-4 overflow-y-auto pr-1 flex-1 auto-rows-[160px] md:auto-rows-[180px]">
-                        <!-- Products injected here -->
-                    </div>
+                    <div id="posProductGrid" class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-2.5 md:gap-4 overflow-y-auto pr-1 flex-1 auto-rows-[160px] md:auto-rows-[180px]"></div>
                 </div>
 
-                <!-- FLOATING CART BUTTON FOR MOBILE -->
                 <div class="md:hidden fixed bottom-16 right-4 z-40">
                     <button onclick="openMobileCart()" class="liquid-btn text-white p-3.5 shadow-2xl flex items-center gap-2 font-bold text-xs border border-white/40 active:scale-95 transition-transform rounded-2xl">
                         <i data-lucide="shopping-bag" class="w-5 h-5"></i>
@@ -369,7 +358,6 @@
                     </button>
                 </div>
 
-                <!-- DESKTOP CART PANEL -->
                 <div id="cartSection" class="hidden md:flex w-[380px] lg:w-[400px] h-full flex-col shrink-0">
                     <div class="glass-panel w-full h-full flex flex-col shadow-2xl overflow-hidden border border-white/50 relative rounded-none">
                         <div class="p-3.5 md:p-4 border-b border-white/30 flex justify-between items-center bg-emerald-500/10 shrink-0">
@@ -400,9 +388,7 @@
                             </div>
                         </div>
 
-                        <div id="cartItemsList" class="flex-1 overflow-y-auto p-3 md:p-4 space-y-2.5 bg-slate-50/50">
-                            <!-- Cart items injected here -->
-                        </div>
+                        <div id="cartItemsList" class="flex-1 overflow-y-auto p-3 md:p-4 space-y-2.5 bg-slate-50/50"></div>
 
                         <div class="p-3.5 md:p-4 border-t border-white/40 bg-white/90 space-y-2.5 shrink-0 shadow-lg">
                             <div class="space-y-1.5 text-xs md:text-sm">
@@ -439,14 +425,15 @@
                 </div>
             </section>
 
-            <!-- TAB 2: PAINT PRODUCTS MANAGEMENT -->
+            <!-- TAB 2: PAINT PRODUCTS -->
             <section id="view-products" class="tab-content flex-1 p-3 md:p-6 overflow-y-auto hidden space-y-4 md:space-y-6">
                 <div class="wallet-card p-4 rounded-3xl text-white shadow-xl relative overflow-hidden shrink-0">
                     <div class="absolute -right-6 -bottom-6 w-32 h-32 bg-white/10 rounded-full blur-2xl pointer-events-none"></div>
                     <div class="flex justify-between items-center mb-1">
                         <span class="text-xs text-emerald-200 font-semibold">စုစုပေါင်းရောင်းရငွေ (Total Revenue)</span>
-                        <span class="px-2.5 py-0.5 bg-emerald-500/30 rounded-full text-[11px] font-bold border border-emerald-400/50 flex items-center gap-1">
-                            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span> Active
+                        <span class="networkStatusBadge px-2.5 py-0.5 bg-emerald-500/30 rounded-full text-[11px] font-bold border border-emerald-400/50 flex items-center gap-1 transition-all duration-300">
+                            <span class="statusDot w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span> 
+                            <span class="statusText">Active</span>
                         </span>
                     </div>
                     <div class="flex items-baseline justify-between mb-3">
@@ -467,7 +454,6 @@
 
                 <div class="flex flex-col sm:flex-row justify-between items-stretch sm:items-center gap-2">
                     <h1 class="text-lg md:text-2xl font-bold text-slate-800">ဆေးပစ္စည်းများ စီမံရန် (FIFO Costing)</h1>
-                    
                     <div class="flex items-center gap-2">
                         <select id="prodListCategoryFilter" onchange="renderProductsTable()" class="p-2 glass-input rounded-xl text-xs font-semibold outline-none">
                             <option value="All">အမျိုးအစား အားလုံး</option>
@@ -484,7 +470,6 @@
                         </button>
                     </div>
                 </div>
-
                 <div class="glass-panel rounded-2xl shadow-sm overflow-x-auto border border-white/50">
                     <table class="w-full text-left border-collapse min-w-[750px]">
                         <thead class="bg-white text-slate-700 text-xs uppercase font-bold border-b border-slate-200">
@@ -505,14 +490,15 @@
                 </div>
             </section>
 
-            <!-- TAB 3: OTHER GOODS MENU -->
+            <!-- TAB 3: OTHER GOODS -->
             <section id="view-othergoods" class="tab-content flex-1 p-3 md:p-6 overflow-y-auto hidden space-y-4 md:space-y-6">
                 <div class="wallet-card p-4 rounded-3xl text-white shadow-xl relative overflow-hidden shrink-0">
                     <div class="absolute -right-6 -bottom-6 w-32 h-32 bg-white/10 rounded-full blur-2xl pointer-events-none"></div>
                     <div class="flex justify-between items-center mb-1">
                         <span class="text-xs text-emerald-200 font-semibold">စုစုပေါင်းရောင်းရငွေ (Total Revenue)</span>
-                        <span class="px-2.5 py-0.5 bg-emerald-500/30 rounded-full text-[11px] font-bold border border-emerald-400/50 flex items-center gap-1">
-                            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>Active
+                        <span class="networkStatusBadge px-2.5 py-0.5 bg-emerald-500/30 rounded-full text-[11px] font-bold border border-emerald-400/50 flex items-center gap-1 transition-all duration-300">
+                            <span class="statusDot w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span> 
+                            <span class="statusText">Active</span>
                         </span>
                     </div>
                     <div class="flex items-baseline justify-between mb-3">
@@ -533,7 +519,6 @@
 
                 <div class="flex flex-col sm:flex-row justify-between items-stretch sm:items-center gap-2">
                     <h1 class="text-lg md:text-2xl font-bold text-slate-800">အခြားကုန်ပစ္စည်းများ စီမံရန် (FIFO Costing)</h1>
-                    
                     <div class="flex items-center gap-2">
                         <div class="relative flex-1 sm:w-56">
                             <i data-lucide="search" class="absolute left-2.5 top-2.5 text-slate-400 w-3.5 h-3.5"></i>
@@ -544,7 +529,6 @@
                         </button>
                     </div>
                 </div>
-
                 <div class="glass-panel rounded-2xl shadow-sm overflow-x-auto border border-white/50">
                     <table class="w-full text-left border-collapse min-w-[700px]">
                         <thead class="bg-white text-slate-700 text-xs uppercase font-bold border-b border-slate-200">
@@ -569,8 +553,9 @@
                     <div class="absolute -right-6 -bottom-6 w-32 h-32 bg-white/10 rounded-full blur-2xl pointer-events-none"></div>
                     <div class="flex justify-between items-center mb-1">
                         <span class="text-xs text-emerald-200 font-semibold">စုစုပေါင်းရောင်းရငွေ (Total Revenue)</span>
-                        <span class="px-2.5 py-0.5 bg-emerald-500/30 rounded-full text-[11px] font-bold border border-emerald-400/50 flex items-center gap-1">
-                            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span> Active
+                        <span class="networkStatusBadge px-2.5 py-0.5 bg-emerald-500/30 rounded-full text-[11px] font-bold border border-emerald-400/50 flex items-center gap-1 transition-all duration-300">
+                            <span class="statusDot w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span> 
+                            <span class="statusText">Active</span>
                         </span>
                     </div>
                     <div class="flex items-baseline justify-between mb-3">
@@ -591,7 +576,6 @@
 
                 <div class="flex flex-col sm:flex-row justify-between items-stretch sm:items-center gap-3">
                     <h1 class="text-lg md:text-2xl font-bold text-slate-800">အရောင်းမှတ်တမ်းများ</h1>
-
                     <div class="flex flex-row items-center gap-2 overflow-x-auto pb-1 shrink-0">
                         <div class="flex items-center gap-1 glass-panel p-1.5 rounded-xl border border-slate-200 text-xs shrink-0 bg-white">
                             <select id="salesStatusFilter" onchange="renderSalesTable()" class="font-bold border-none bg-transparent outline-none">
@@ -600,17 +584,14 @@
                                 <option value="Paid">ငွေကျေပြီးသူများ</option>
                             </select>
                         </div>
-
                         <div class="flex items-center gap-1 glass-panel p-1.5 rounded-xl border border-slate-200 text-xs shrink-0 bg-white">
                             <input type="month" id="salesMonthFilter" onchange="renderSalesTable()" class="font-bold border-none bg-transparent outline-none">
                         </div>
-                        
                         <button onclick="printMonthlyReport()" class="px-3 py-2 liquid-btn text-white text-xs font-bold rounded-xl shadow-sm flex items-center gap-1.5 transition shrink-0 whitespace-nowrap">
                             <i data-lucide="printer" class="w-3.5 h-3.5"></i> လချုပ်စာရင်းထုတ်မည်
                         </button>
                     </div>
                 </div>
-
                 <div class="glass-panel rounded-2xl shadow-sm overflow-x-auto border border-white/50">
                     <table class="w-full text-left border-collapse min-w-[920px]">
                         <thead class="bg-white text-slate-700 text-xs uppercase font-bold border-b border-slate-200">
@@ -636,8 +617,9 @@
                     <div class="absolute -right-6 -bottom-6 w-32 h-32 bg-white/10 rounded-full blur-2xl pointer-events-none"></div>
                     <div class="flex justify-between items-center mb-1">
                         <span class="text-xs text-emerald-200 font-semibold">စုစုပေါင်းရောင်းရငွေ (Total Revenue)</span>
-                        <span class="px-2.5 py-0.5 bg-emerald-500/30 rounded-full text-[11px] font-bold border border-emerald-400/50 flex items-center gap-1">
-                            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span> Active
+                        <span class="networkStatusBadge px-2.5 py-0.5 bg-emerald-500/30 rounded-full text-[11px] font-bold border border-emerald-400/50 flex items-center gap-1 transition-all duration-300">
+                            <span class="statusDot w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span> 
+                            <span class="statusText">Active</span>
                         </span>
                     </div>
                     <div class="flex items-baseline justify-between mb-3">
@@ -657,12 +639,11 @@
                 </div>
 
                 <div class="flex justify-between items-center">
-                    <h1 class="text-lg md:text-2xl font-bold text-slate-800">ပြုလုပ်ချက် မှတ်တမ်း</h1>
+                    <h1 class="text-lg md:text-2xl font-bold text-slate-800">ပြုလုပ်ချက်များ မှတ်တမ်း</h1>
                     <button onclick="clearLogsPrompt()" class="px-3 py-2 bg-red-600 hover:bg-red-700 text-white text-xs font-bold rounded-xl shadow-sm flex items-center gap-1.5">
-                        <i data-lucide="trash-2" class="w-3.5 h-3.5"></i> Delete Logs
+                        <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>Delete Logs
                     </button>
                 </div>
-
                 <div class="glass-panel rounded-2xl shadow-sm overflow-x-auto border border-white/50">
                     <table class="w-full text-left border-collapse min-w-[700px]">
                         <thead class="bg-white text-slate-700 text-xs uppercase font-bold border-b border-slate-200">
@@ -677,10 +658,9 @@
                     </table>
                 </div>
             </section>
-
         </main>
 
-        <!-- MOBILE BOTTOM NAVIGATION BAR -->
+        <!-- MOBILE BOTTOM NAV BAR -->
         <nav id="mobileNavBar" class="md:hidden fixed bottom-0 left-0 right-0 glass-sidebar border-t border-emerald-800/40 flex justify-around p-2 z-40 text-emerald-300 shadow-2xl">
             <button onclick="switchTab('pos')" id="m-tab-pos" class="mobile-nav-btn flex flex-col items-center justify-center gap-1 p-1.5 text-emerald-400 font-bold transition-all duration-300 w-full scale-105">
                 <div class="p-1.5 rounded-xl bg-emerald-500/25 border border-emerald-400/50 shadow-md ring-2 ring-emerald-400/20"><i data-lucide="shopping-cart" class="w-5 h-5"></i></div>
@@ -703,7 +683,6 @@
                 <span class="text-[10px] leading-tight">Logs</span>
             </button>
         </nav>
-
     </div>
 
     <!-- MOBILE CART MODAL -->
@@ -717,7 +696,6 @@
                     <i data-lucide="x" class="w-6 h-6"></i>
                 </button>
             </div>
-
             <div class="flex-1 overflow-y-auto p-3 space-y-3 bg-slate-100">
                 <div class="p-3 bg-white rounded-2xl shadow-sm space-y-2 text-xs">
                     <h4 class="font-bold text-slate-700 border-b pb-1">ဝယ်သူ အချက်အလက်များ</h4>
@@ -740,32 +718,26 @@
                         <input type="text" id="mPosCustomerAddress" placeholder="အမှတ် (၁၂)၊ လမ်း ၅၀၊ ရန်ကုန်" class="w-full p-2 border rounded-xl outline-none">
                     </div>
                 </div>
-
                 <div id="mobileCartItemsList" class="space-y-2"></div>
             </div>
-
             <div class="p-3.5 bg-white border-t border-slate-200 shrink-0 space-y-2.5 shadow-2xl">
                 <div class="flex justify-between font-extrabold text-base text-slate-800">
                     <span>စုစုပေါင်း ကျသင့်ငွေ</span>
                     <span id="mCartTotalDisplay" class="text-emerald-700">0 Ks</span>
                 </div>
-
                 <div class="grid grid-cols-3 gap-1.5">
                     <button type="button" onclick="setPaymentType('Cash')" class="m-pay-type-btn pay-type-btn py-2 text-xs font-semibold rounded-xl border liquid-btn text-white">Cash</button>
                     <button type="button" onclick="setPaymentType('KBZPay')" class="m-pay-type-btn pay-type-btn py-2 text-xs font-semibold rounded-xl border bg-slate-100 text-slate-700">KBZPay</button>
                     <button type="button" onclick="setPaymentType('Credit')" class="m-pay-type-btn pay-type-btn py-2 text-xs font-semibold rounded-xl border bg-slate-100 text-slate-700">အကြွေး</button>
                 </div>
-
                 <div class="flex justify-between items-center text-xs font-bold">
                     <span class="text-slate-700">ပေးချေငွေ (Paid):</span>
                     <input type="number" id="mPaidAmountInput" oninput="syncPaidAmount(this.value)" placeholder="0" class="w-36 p-2 border rounded-xl text-right font-bold text-slate-800 outline-none">
                 </div>
-
                 <div class="flex justify-between items-center text-sm font-bold">
                     <span class="text-slate-700">ကျန်ငွေ (Due):</span>
                     <span id="mDueAmountDisplay" class="text-emerald-600">0 Ks</span>
                 </div>
-
                 <button onclick="openVoucherPreview()" class="w-full py-3 liquid-btn text-white font-bold rounded-xl shadow-lg flex items-center justify-center gap-2 text-sm">
                     <i data-lucide="printer" class="w-4 h-4"></i> ဘောက်ချာစစ်ဆေး စာထုတ်မည်
                 </button>
@@ -773,15 +745,14 @@
         </div>
     </div>
 
-    <!-- PRINT AREA FOR MONTHLY SALES REPORT -->
+    <!-- MONTHLY REPORT PRINT AREA -->
     <div id="monthlyReportPrintArea" class="hidden p-8 text-xs font-sans">
         <div class="text-center border-b pb-4 mb-4 flex flex-col items-center">
-            <img src="logo.png" alt="AKK Logo" class="w-12 h-12 mb-1 object-contain" onerror="this.style.display='none';">
+            <img src="./logo.png" alt="AKK Logo" class="w-12 h-12 mb-1 object-contain" onerror="this.style.display='none';">
             <h1 class="text-2xl font-bold text-slate-900">AKK Trading</h1>
             <p class="text-sm font-semibold text-slate-600">လအလိုက် အရောင်းစာရင်းနှင့် အကြွေးစာရင်း အစီရင်ခံစာ</p>
             <p class="text-xs text-slate-500 mt-1">အစီရင်ခံစာလ: <span id="reportPrintMonth" class="font-bold text-slate-800"></span></p>
         </div>
-
         <div class="grid grid-cols-3 gap-4 border p-4 rounded-lg mb-6 text-center bg-slate-50">
             <div>
                 <span class="block text-slate-500 text-[11px] mb-0.5">စုစုပေါင်း ရောင်းရငွေ</span>
@@ -796,7 +767,6 @@
                 <span id="reportPrintDue" class="font-bold text-base text-red-700">0 Ks</span>
             </div>
         </div>
-
         <table class="w-full border-collapse border text-left">
             <thead>
                 <tr class="bg-slate-100 text-slate-800 font-bold">
@@ -811,14 +781,13 @@
             </thead>
             <tbody id="monthlyReportTableBody"></tbody>
         </table>
-
         <div class="mt-12 flex justify-between text-slate-500 text-[10px] pt-4 border-t">
             <span>ထုတ်ယူသည့်ရက်စွဲ: <span id="reportPrintDate"></span></span>
             <span>အတည်ပြုသူ လက်မှတ်: __________________</span>
         </div>
     </div>
 
-    <!-- MODAL: SETTINGS -->
+    <!-- SETTINGS MODAL -->
     <div id="settingsModal" class="fixed inset-0 custom-modal-backdrop flex items-center justify-center p-3 z-[99999]">
         <div class="glass-panel custom-modal-content rounded-3xl w-full max-w-sm shadow-2xl overflow-hidden border border-white/40 bg-white">
             <div class="p-4 border-b border-slate-200 flex justify-between items-center bg-slate-50">
@@ -852,7 +821,7 @@
         </div>
     </div>
 
-    <!-- CUSTOM CONFIRMATION MODAL -->
+    <!-- CONFIRMATION MODAL -->
     <div id="confirmModal" class="fixed inset-0 custom-modal-backdrop flex items-center justify-center p-4 z-[99999]">
         <div class="glass-panel custom-modal-content rounded-3xl w-full max-w-xs sm:max-w-sm shadow-2xl overflow-hidden p-5 text-center space-y-4 border border-white/40 bg-white">
             <div class="w-10 h-10 bg-red-500/15 text-red-600 rounded-full flex items-center justify-center mx-auto border border-red-500/30">
@@ -1098,13 +1067,12 @@
         <div class="bg-white custom-modal-content rounded-3xl w-full max-w-xs shadow-2xl overflow-hidden p-4 text-center space-y-3 border border-slate-200">
             <div id="printableArea" class="text-left bg-slate-50 p-3 rounded-2xl text-xs space-y-2 border border-slate-200">
                 <div class="text-center pb-2 border-b border-slate-200 flex flex-col items-center">
-                    <img src="logo.png" alt="AKK Logo" class="w-10 h-10 mb-1 object-contain" onerror="this.style.display='none';">
+                    <img src="./logo.png" alt="AKK Logo" class="w-10 h-10 mb-1 object-contain" onerror="this.src='https://via.placeholder.com/40?text=AKK';">
                     <h2 class="text-sm font-bold text-slate-900">AKK Trading</h2>
                     <p class="text-[9px] text-slate-500">Paint & Hardware Materials Store</p>
                 </div>
                 <div id="receiptContent" class="space-y-1 pt-1 text-[11px]"></div>
             </div>
-
             <div class="flex flex-col gap-2 no-print">
                 <div class="flex gap-2">
                     <button onclick="executePrintOnly()" class="flex-1 py-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-xl text-xs flex items-center justify-center gap-1.5 shadow-sm">
@@ -1172,6 +1140,12 @@
             document.getElementById('salesMonthFilter').value = currentMonth;
 
             if (db) {
+                db.ref('settings/admins').once('value', (snapshot) => {
+                    if (!snapshot.exists()) {
+                        db.ref('settings/admins').set(defaultAdmins);
+                    }
+                });
+
                 db.ref('.info/connected').on('value', (snap) => {
                     const isConnected = snap.val();
                     updateNetworkStatusUI(isConnected);
@@ -1193,21 +1167,20 @@
         });
 
         function updateNetworkStatusUI(isConnected) {
-            const badge = document.getElementById('networkStatusBadge');
-            const dot = document.getElementById('statusDot');
-            const text = document.getElementById('statusText');
-
-            if (!badge || !dot || !text) return;
-
-            if (isConnected) {
-                badge.className = "px-2.5 py-0.5 bg-emerald-500/30 rounded-full text-[11px] font-bold border border-emerald-400/50 flex items-center gap-1 transition-all duration-300";
-                dot.className = "w-2 h-2 rounded-full bg-emerald-400 animate-pulse";
-                text.innerText = "Active";
-            } else {
-                badge.className = "px-2.5 py-0.5 bg-red-500/30 rounded-full text-[11px] font-bold border border-red-400/50 flex items-center gap-1 transition-all duration-300";
-                dot.className = "w-2 h-2 rounded-full bg-red-400";
-                text.innerText = "Offline";
-            }
+            const badges = document.querySelectorAll('.networkStatusBadge');
+            badges.forEach(badge => {
+                const dot = badge.querySelector('.statusDot');
+                const text = badge.querySelector('.statusText');
+                if (isConnected) {
+                    badge.className = "networkStatusBadge px-2.5 py-0.5 bg-emerald-500/30 rounded-full text-[11px] font-bold border border-emerald-400/50 flex items-center gap-1 transition-all duration-300";
+                    if (dot) dot.className = "statusDot w-2 h-2 rounded-full bg-emerald-400 animate-pulse";
+                    if (text) text.innerText = "Active";
+                } else {
+                    badge.className = "networkStatusBadge px-2.5 py-0.5 bg-red-500/30 rounded-full text-[11px] font-bold border border-red-400/50 flex items-center gap-1 transition-all duration-300";
+                    if (dot) dot.className = "statusDot w-2 h-2 rounded-full bg-red-400";
+                    if (text) text.innerText = "Offline";
+                }
+            });
         }
 
         function showLoading(msg = "ဒေတာများ ရယူနေပါသည်...") {
@@ -1223,17 +1196,13 @@
             const overlay = document.getElementById('loadingOverlay');
             if (overlay) {
                 overlay.classList.add('opacity-0', 'pointer-events-none');
-                setTimeout(() => {
-                    overlay.classList.add('hidden');
-                }, 300);
+                setTimeout(() => { overlay.classList.add('hidden'); }, 300);
             }
         }
 
         function checkAllLoaded() {
             loadedCount++;
-            if (loadedCount >= totalListeners) {
-                hideLoading();
-            }
+            if (loadedCount >= totalListeners) { hideLoading(); }
         }
 
         function updateAdminBadge() {
@@ -1244,14 +1213,11 @@
             if(mobileBadge) mobileBadge.innerText = `Admin: ${currentAdmin}`;
         }
 
-        /* Role Access Control for Admin 2 & 3 */
         function applyRolePermissions() {
             currentAdmin = localStorage.getItem('akk_active_admin') || 'admin1';
             const restrictedNavs = document.querySelectorAll('.admin-only-nav');
-
             if (currentAdmin === 'admin2' || currentAdmin === 'admin3') {
                 restrictedNavs.forEach(el => el.classList.add('hidden'));
-                switchTab('pos');
             } else {
                 restrictedNavs.forEach(el => el.classList.remove('hidden'));
             }
@@ -1259,15 +1225,8 @@
 
         function logActivity(type, action) {
             const timestamp = new Date().toLocaleString();
-            const logItem = {
-                timestamp: timestamp,
-                admin: currentAdmin,
-                type: type,
-                action: action
-            };
-            if (db) {
-                db.ref('adminLogs').push(logItem);
-            }
+            const logItem = { timestamp: timestamp, admin: currentAdmin, type: type, action: action };
+            if (db) { db.ref('adminLogs').push(logItem); }
         }
 
         function handleLogin(e) {
@@ -1275,27 +1234,40 @@
             const u = document.getElementById('loginUser').value.trim().toLowerCase();
             const p = document.getElementById('loginPass').value.trim();
 
-            const savedAdmins = JSON.parse(localStorage.getItem('akk_admin_credentials')) || defaultAdmins;
-
-            if (savedAdmins[u] && savedAdmins[u].pass === p) {
-                sessionStorage.setItem('isLoggedIn', 'true');
-                localStorage.setItem('akk_active_admin', u);
-                currentAdmin = u;
-
-                document.getElementById('loginScreen').classList.add('hidden');
-                document.getElementById('mainApp').classList.remove('hidden');
-                updateAdminBadge();
-                applyRolePermissions();
-                
-                logActivity('Authentication', 'စနစ်အတွင်းသို့ Login ဝင်ရောက်ခဲ့သည်။');
-                showToast(`မင်္ဂလာပါ ${u}! အောင်မြင်စွာ ဝင်ရောက်လိုက်ပါပြီ!`, 'success');
-                initApp();
-            } else {
-                showToast('Admin အမည် သို့မဟုတ် Password မှားယွင်းနေပါသည်။', 'error');
-                const card = document.getElementById('loginCard');
-                card.classList.add('animate-shake');
-                setTimeout(() => card.classList.remove('animate-shake'), 400);
+            if (!db) {
+                showToast('Database ချိတ်ဆက်မှု မရှိပါ!', 'error');
+                return;
             }
+
+            showLoading("အကောင့်ဝင်ရောက်မှုကို စစ်ဆေးနေပါသည်...");
+
+            db.ref('settings/admins/' + u).once('value').then((snapshot) => {
+                hideLoading();
+                const adminData = snapshot.val();
+
+                if (adminData && adminData.pass === p) {
+                    sessionStorage.setItem('isLoggedIn', 'true');
+                    localStorage.setItem('akk_active_admin', u);
+                    currentAdmin = u;
+
+                    document.getElementById('loginScreen').classList.add('hidden');
+                    document.getElementById('mainApp').classList.remove('hidden');
+                    updateAdminBadge();
+                    applyRolePermissions();
+                    
+                    logActivity('Authentication', 'စနစ်အတွင်းသို့ Login ဝင်ရောက်ခဲ့သည်။');
+                    showToast(`မင်္ဂလာပါ ${u}! အောင်မြင်စွာ ဝင်ရောက်လိုက်ပါပြီ!`, 'success');
+                    initApp();
+                } else {
+                    showToast('Admin အမည် သို့မဟုတ် Password မှားယွင်းနေပါသည်။', 'error');
+                    const card = document.getElementById('loginCard');
+                    card.classList.add('animate-shake');
+                    setTimeout(() => card.classList.remove('animate-shake'), 400);
+                }
+            }).catch(() => {
+                hideLoading();
+                showToast('Database ချိတ်ဆက်ရာတွင် အမှားအယွင်းရှိသည်', 'error');
+            });
         }
 
         function handleLogout() {
@@ -1309,9 +1281,6 @@
         }
 
         function openSettingsModal() {
-            if(!localStorage.getItem('akk_admin_credentials')) {
-                localStorage.setItem('akk_admin_credentials', JSON.stringify(defaultAdmins));
-            }
             document.getElementById('settingAdminSelect').value = currentAdmin;
             document.getElementById('settingNewPassword').value = '';
             document.getElementById('settingConfirmPassword').value = '';
@@ -1329,17 +1298,15 @@
                 return;
             }
 
-            let savedAdmins = JSON.parse(localStorage.getItem('akk_admin_credentials')) || defaultAdmins;
-            savedAdmins[selectedAdmin].pass = newP;
-            localStorage.setItem('akk_admin_credentials', JSON.stringify(savedAdmins));
-
             if (db) {
-                db.ref('settings/admins/' + selectedAdmin).set({ pass: newP });
+                db.ref('settings/admins/' + selectedAdmin).update({ pass: newP }).then(() => {
+                    logActivity('Security', `${selectedAdmin} ၏ လျှို့ဝှက်နံပါတ်အား ပြောင်းလဲခဲ့သည်။`);
+                    closeModal('settingsModal');
+                    showToast(`${selectedAdmin} Password အောင်မြင်စွာ ပြောင်းလဲပြီးပါပြီ!`, 'success');
+                }).catch(() => {
+                    showToast('Password ပြောင်းလဲခြင်း မအောင်မြင်ပါ', 'error');
+                });
             }
-
-            logActivity('Security', `${selectedAdmin} ၏ လျှို့ဝှက်နံပါတ်အား ပြောင်းလဲခဲ့သည်။`);
-            closeModal('settingsModal');
-            showToast(`${selectedAdmin} Password အောင်မြင်စွာ ပြောင်းလဲပြီးပါပြီ!`, 'success');
         }
 
         function initApp() {
@@ -1400,7 +1367,6 @@
         function populateBrandDropdown() {
             const brandSelect = document.getElementById('posBrandFilter');
             if(!brandSelect) return;
-
             const brands = new Set();
             products.forEach(p => { if (p.brand) brands.add(p.brand.trim()); });
             otherGoods.forEach(og => { if (og.brand) brands.add(og.brand.trim()); else brands.add('အခြား'); });
@@ -1441,10 +1407,8 @@
                 type === 'error' ? 'bg-red-600/95' : type === 'warning' ? 'bg-amber-600/95' : type === 'info' ? 'bg-blue-600/95' : 'bg-emerald-600/95'
             }`;
             toast.innerHTML = `<i data-lucide="${type === 'error' ? 'alert-circle' : type === 'warning' ? 'alert-triangle' : type === 'info' ? 'info' : 'check-circle'}" class="w-4 h-4 shrink-0"></i> <span>${message}</span>`;
-            
             container.appendChild(toast);
             lucide.createIcons();
-
             setTimeout(() => toast.classList.remove('translate-y-2', 'opacity-0'), 10);
             setTimeout(() => {
                 toast.classList.add('opacity-0', 'translate-y-2');
@@ -1456,17 +1420,14 @@
             const modal = document.getElementById('confirmModal');
             document.getElementById('confirmModalTitle').innerText = title;
             document.getElementById('confirmModalMessage').innerText = message;
-            
             modal.classList.add('active');
             const okBtn = document.getElementById('confirmOkBtn');
             const cancelBtn = document.getElementById('confirmCancelBtn');
-
             const cleanup = () => {
                 modal.classList.remove('active');
                 okBtn.onclick = null;
                 cancelBtn.onclick = null;
             };
-
             okBtn.onclick = () => { cleanup(); onConfirm(); };
             cancelBtn.onclick = () => { cleanup(); };
         }
@@ -1478,7 +1439,6 @@
             document.querySelectorAll('.sidebar-text').forEach(t => t.classList.toggle('hidden'));
         }
 
-        /* Anti-Flash Mobile Cart Modal Logic */
         function openMobileCart() {
             const modal = document.getElementById('mobileCartModal');
             if (modal) {
@@ -1487,7 +1447,6 @@
                 document.getElementById('mPosCustomerPhone').value = document.getElementById('posCustomerPhone').value;
                 document.getElementById('mPosCustomerAddress').value = document.getElementById('posCustomerAddress').value;
                 document.getElementById('mPaidAmountInput').value = document.getElementById('paidAmountInput').value;
-
                 modal.classList.remove('hidden');
                 void modal.offsetWidth;
                 modal.classList.add('active-modal');
@@ -1502,9 +1461,7 @@
                 document.getElementById('posCustomerName').value = document.getElementById('mPosCustomerName').value;
                 document.getElementById('posCustomerPhone').value = document.getElementById('mPosCustomerPhone').value;
                 document.getElementById('posCustomerAddress').value = document.getElementById('mPosCustomerAddress').value;
-
                 modal.classList.remove('active-modal');
-                
                 setTimeout(() => {
                     modal.classList.add('hidden');
                     document.body.style.overflow = '';
@@ -1519,7 +1476,6 @@
 
         function switchTab(tabName) {
             closeMobileCart();
-
             if ((currentAdmin === 'admin2' || currentAdmin === 'admin3') && tabName !== 'pos') {
                 showToast('ယခု Admin အကောင့်သည် POS Terminal ကိုသာ ကြည့်ရှုခွင့်ရှိသည်!', 'warning');
                 return;
@@ -1528,28 +1484,22 @@
             ['pos', 'products', 'othergoods', 'sales', 'logs'].forEach(tab => {
                 const el = document.getElementById(`view-${tab}`);
                 if (el) el.classList.add('hidden');
-                
                 const btn = document.getElementById(`tab-${tab}`);
                 if (btn) {
                     btn.classList.remove('liquid-btn', 'text-white');
                     btn.classList.add('hover:bg-white/10');
                 }
-
                 const mBtn = document.getElementById(`m-tab-${tab}`);
                 if (mBtn) {
                     mBtn.classList.remove('text-emerald-400', 'font-bold', 'scale-105');
                     mBtn.classList.add('text-emerald-300/70', 'font-semibold');
                     const iconWrapper = mBtn.querySelector('div');
-                    if(iconWrapper) {
-                        iconWrapper.className = "p-1 rounded-xl bg-transparent border border-transparent";
-                    }
+                    if(iconWrapper) iconWrapper.className = "p-1 rounded-xl bg-transparent border border-transparent";
                 }
             });
 
             const targetView = document.getElementById(`view-${tabName}`);
-            if (targetView) {
-                targetView.classList.remove('hidden');
-            }
+            if (targetView) targetView.classList.remove('hidden');
             
             const activeBtn = document.getElementById(`tab-${tabName}`);
             if (activeBtn) {
@@ -1562,32 +1512,22 @@
                 activeMobileBtn.classList.remove('text-emerald-300/70', 'font-semibold');
                 activeMobileBtn.classList.add('text-emerald-400', 'font-bold', 'scale-105');
                 const iconWrapper = activeMobileBtn.querySelector('div');
-                if(iconWrapper) {
-                    iconWrapper.className = "p-1.5 rounded-xl bg-emerald-500/25 border border-emerald-400/50 shadow-md ring-2 ring-emerald-400/20";
-                }
+                if(iconWrapper) iconWrapper.className = "p-1.5 rounded-xl bg-emerald-500/25 border border-emerald-400/50 shadow-md ring-2 ring-emerald-400/20";
             }
-
             lucide.createIcons();
         }
 
-        function openModal(id) { 
-            const modal = document.getElementById(id);
-            if(modal) modal.classList.add('active'); 
-        }
-        function closeModal(id) { 
-            const modal = document.getElementById(id);
-            if(modal) modal.classList.remove('active'); 
-        }
+        function openModal(id) { const modal = document.getElementById(id); if(modal) modal.classList.add('active'); }
+        function closeModal(id) { const modal = document.getElementById(id); if(modal) modal.classList.remove('active'); }
 
         function renderLogsTable() {
             const tbody = document.getElementById('logsTableBody');
+            if(!tbody) return;
             tbody.innerHTML = '';
-
             if (adminLogs.length === 0) {
                 tbody.innerHTML = `<tr><td colspan="4" class="p-6 text-center text-slate-400 text-xs">Admin မှတ်တမ်း မရှိသေးပါ။</td></tr>`;
                 return;
             }
-
             adminLogs.forEach(log => {
                 tbody.innerHTML += `
                     <tr class="hover:bg-slate-50 transition">
@@ -1611,14 +1551,12 @@
         function updateSummaryCards() {
             const currentMonth = document.getElementById('salesMonthFilter').value || new Date().toISOString().slice(0, 7);
             const filteredSales = salesHistory.filter(s => s.date && s.date.startsWith(currentMonth));
-
             let totalRev = 0, totalPaid = 0, totalDue = 0;
             filteredSales.forEach(s => {
                 totalRev += s.total;
                 totalPaid += s.paid;
                 totalDue += s.due;
             });
-
             document.querySelectorAll('.summaryRevText').forEach(el => el.innerText = `${totalRev.toLocaleString()} Ks`);
             document.querySelectorAll('.summaryPaidText').forEach(el => el.innerText = `${totalPaid.toLocaleString()} Ks`);
             document.querySelectorAll('.summaryDueText').forEach(el => el.innerText = `${totalDue.toLocaleString()} Ks`);
@@ -1627,21 +1565,17 @@
         function printMonthlyReport() {
             const selectedMonth = document.getElementById('salesMonthFilter').value;
             let filteredSales = salesHistory.filter(s => s.date && s.date.startsWith(selectedMonth));
-
             if (filteredSales.length === 0) {
                 showToast('ယခု ရွေးချယ်ထားသော စစ်ထုတ်မှုတွင် အရောင်းစာရင်း မရှိပါ', 'warning');
                 return;
             }
-
             let totalRev = 0, totalPaid = 0, totalDue = 0;
             const tbody = document.getElementById('monthlyReportTableBody');
             tbody.innerHTML = '';
-
             filteredSales.forEach(s => {
                 totalRev += s.total;
                 totalPaid += s.paid;
                 totalDue += s.due;
-
                 tbody.innerHTML += `
                     <tr>
                         <td class="border p-2 font-bold">${s.id}</td>
@@ -1654,7 +1588,6 @@
                     </tr>
                 `;
             });
-
             document.getElementById('reportPrintMonth').innerText = selectedMonth;
             document.getElementById('reportPrintTotal').innerText = `${totalRev.toLocaleString()} Ks`;
             document.getElementById('reportPrintPaid').innerText = `${totalPaid.toLocaleString()} Ks`;
@@ -1662,22 +1595,20 @@
             document.getElementById('reportPrintDate').innerText = new Date().toLocaleDateString();
 
             logActivity('Report', `${selectedMonth} လအတွက် အရောင်းအစီရင်ခံစာ ထုတ်ယူခဲ့သည်။`);
-
             document.body.classList.add('print-report');
             document.body.classList.remove('print-voucher');
             window.print();
             document.body.classList.remove('print-report');
         }
 
-        /* Grouping Products by BRAND + NAME + SIZE */
         function renderPosProducts() {
             const grid = document.getElementById('posProductGrid');
+            if(!grid) return;
             const searchVal = document.getElementById('posSearchInput').value.toLowerCase();
             const catVal = document.getElementById('posCategoryFilter').value;
             const brandVal = document.getElementById('posBrandFilter').value;
 
             grid.innerHTML = '';
-            
             const rawCombined = [
                 ...products.map(p => ({ ...p, itemType: 'Paint' })),
                 ...otherGoods.map(og => ({ ...og, itemType: 'OtherGoods', category: 'အထွေထွေကုန်', brand: og.brand || 'အခြား', finish: 'Standard', color: '-' }))
@@ -1688,16 +1619,10 @@
                 const brandKey = (item.brand || 'အခြား').trim().toLowerCase();
                 const nameKey = item.name.trim().toLowerCase();
                 const sizeKey = (item.size || '').trim().toLowerCase();
-                
-                // Key explicitly incorporates Brand, Name, and Size to separate different brands
                 const groupKey = `${brandKey}_${nameKey}_${sizeKey}`;
                 
                 if (!groupedMap.has(groupKey)) {
-                    groupedMap.set(groupKey, {
-                        ...item,
-                        stock: parseInt(item.stock) || 0,
-                        allIds: [item.id]
-                    });
+                    groupedMap.set(groupKey, { ...item, stock: parseInt(item.stock) || 0, allIds: [item.id] });
                 } else {
                     const existing = groupedMap.get(groupKey);
                     existing.stock += parseInt(item.stock) || 0;
@@ -1706,7 +1631,6 @@
             });
 
             const combinedList = Array.from(groupedMap.values());
-
             const filtered = combinedList.filter(p => {
                 const matchesSearch = p.name.toLowerCase().includes(searchVal) || p.allIds.some(id => String(id).toLowerCase().includes(searchVal)) || (p.brand && p.brand.toLowerCase().includes(searchVal));
                 const matchesCategory = catVal === 'All' || p.itemType === catVal;
@@ -1766,20 +1690,15 @@
 
         function addToCart(productId, itemType) {
             let product = itemType === 'Paint' ? products.find(p => String(p.id) === String(productId)) : otherGoods.find(og => String(og.id) === String(productId));
-
             const currentStock = parseInt(product?.stock) || 0;
             if (!product || currentStock <= 0) {
                 showToast('ကုန်ပစ္စည်း လက်ကျန်မရှိတော့ပါ!', 'warning');
                 return;
             }
-
             const cartItem = cart.find(item => String(item.id) === String(productId));
             if (cartItem) {
-                if (cartItem.qty < currentStock) {
-                    cartItem.qty++;
-                } else {
-                    showToast(`လက်ရှိ လက်ကျန် Stock (${currentStock} ခု) ထက် ပို၍ယူ၍ မရပါ!`, 'warning');
-                }
+                if (cartItem.qty < currentStock) { cartItem.qty++; }
+                else { showToast(`လက်ရှိ လက်ကျန် Stock (${currentStock} ခု) ထက် ပို၍ယူ၍ မရပါ!`, 'warning'); }
             } else {
                 cart.push({ ...product, stock: currentStock, itemType, qty: 1 });
             }
@@ -1803,9 +1722,7 @@
             const cartItem = cart.find(item => String(item.id) === String(id));
             if (cartItem) {
                 let newQty = parseInt(val);
-                if (isNaN(newQty) || newQty <= 0) {
-                    newQty = 1;
-                }
+                if (isNaN(newQty) || newQty <= 0) { newQty = 1; }
                 if (newQty > cartItem.stock) {
                     showToast(`လက်ရှိ လက်ကျန် Stock (${cartItem.stock} ခု) ထက် ပို၍မရပါ!`, 'warning');
                     newQty = cartItem.stock;
@@ -1817,11 +1734,9 @@
 
         function renderCart() {
             const lists = [document.getElementById('cartItemsList'), document.getElementById('mobileCartItemsList')];
-            
             lists.forEach(list => {
                 if (!list) return;
                 list.innerHTML = '';
-                
                 if (cart.length === 0) {
                     list.innerHTML = `<div class="h-full flex flex-col items-center justify-center text-slate-400 text-xs py-12">
                         <i data-lucide="shopping-cart" class="w-12 h-12 mb-3 stroke-1"></i> ခြင်းတောင်းထဲတွင် ပစ္စည်းမရှိသေးပါ
@@ -1848,7 +1763,6 @@
                     });
                 }
             });
-
             document.getElementById('cartItemCount').innerText = `${cart.length} ခု`;
             document.getElementById('mobileCartCount').innerText = `${cart.length}`;
             calculateBilling();
@@ -1861,7 +1775,6 @@
                 btn.classList.remove('liquid-btn', 'text-white', 'border-emerald-600');
                 btn.classList.add('bg-white', 'text-slate-700', 'border-slate-200');
             });
-
             if (type === 'Cash') {
                 document.querySelectorAll('#payBtnCash, .m-pay-type-btn:nth-child(1)').forEach(b => {
                     b.classList.add('liquid-btn', 'text-white', 'border-emerald-600');
@@ -1878,7 +1791,6 @@
                     b.classList.remove('bg-white', 'text-slate-700', 'border-slate-200');
                 });
             }
-            
             if (type === 'Credit') {
                 document.getElementById('paidAmountInput').value = 0;
                 document.getElementById('mPaidAmountInput').value = 0;
@@ -1893,7 +1805,6 @@
 
             document.getElementById('cartTotalDisplay').innerText = `${total.toLocaleString()} Ks`;
             document.getElementById('dueAmountDisplay').innerText = `${due.toLocaleString()} Ks`;
-            
             const mTotal = document.getElementById('mCartTotalDisplay');
             const mDue = document.getElementById('mDueAmountDisplay');
             if(mTotal) mTotal.innerText = `${total.toLocaleString()} Ks`;
@@ -1905,7 +1816,6 @@
                 showToast('ခြင်းတောင်းထဲသို့ ကုန်ပစ္စည်း အရင်ထည့်ပါ!', 'warning');
                 return;
             }
-
             const custName = document.getElementById('posCustomerName').value.trim() || document.getElementById('mPosCustomerName').value.trim() || 'Walk-in Customer';
             const custPhone = document.getElementById('posCustomerPhone').value.trim() || document.getElementById('mPosCustomerPhone').value.trim() || '-';
             const custAddress = document.getElementById('posCustomerAddress').value.trim() || document.getElementById('mPosCustomerAddress').value.trim() || '-';
@@ -1929,7 +1839,6 @@
                 items: [...cart],
                 createdByAdmin: currentAdmin
             };
-
             renderVoucherModalContent(pendingSaleData);
             openModal('receiptModal');
             lucide.createIcons();
@@ -1960,9 +1869,7 @@
                 renderVoucherModalContent(sale);
                 openModal('receiptModal');
                 lucide.createIcons();
-            } else {
-                showToast('ရှာမတွေ့ပါ!', 'error');
-            }
+            } else { showToast('ရှာမတွေ့ပါ!', 'error'); }
         }
 
         function deductFifoBatches(batches, qtyToSell) {
@@ -1994,7 +1901,6 @@
 
         function executeSaveOnly() {
             if (!pendingSaleData) return;
-
             if (!isReprintMode) {
                 pendingSaleData.items.forEach(item => {
                     const cleanKey = String(item.id).trim().replace(/[.#$\/\[\]]/g, '_');
@@ -2014,7 +1920,6 @@
                         }
                     }
                 });
-
                 salesHistory.unshift(pendingSaleData);
                 if (db) db.ref('salesHistory/' + String(pendingSaleData.id)).set(pendingSaleData);
 
@@ -2026,7 +1931,6 @@
             }
 
             closeModal('receiptModal');
-
             if (!isReprintMode) {
                 cart = [];
                 document.getElementById('posCustomerName').value = '';
@@ -2037,14 +1941,12 @@
                 document.getElementById('mPosCustomerPhone').value = '';
                 document.getElementById('mPosCustomerAddress').value = '';
                 document.getElementById('mPaidAmountInput').value = '';
-                
                 renderCart();
                 renderPosProducts();
                 renderProductsTable();
                 renderOtherGoodsTable();
                 renderSalesTable();
                 updateSummaryCards();
-
                 closeMobileCart();
             }
             pendingSaleData = null;
@@ -2059,21 +1961,19 @@
 
         function renderProductsTable() {
             const tbody = document.getElementById('productsTableBody');
+            if(!tbody) return;
             const searchVal = document.getElementById('prodListSearchInput').value.toLowerCase();
             const catVal = document.getElementById('prodListCategoryFilter').value;
-
             tbody.innerHTML = '';
             const filtered = products.filter(p => {
                 const matchesSearch = p.name.toLowerCase().includes(searchVal) || String(p.id).toLowerCase().includes(searchVal);
                 const matchesCategory = catVal === 'All' || p.category === catVal;
                 return matchesSearch && matchesCategory;
             });
-
             if(filtered.length === 0) {
                 tbody.innerHTML = `<tr><td colspan="9" class="p-6 text-center text-slate-400 text-xs">ဆေးပစ္စည်း မရှိပါ။</td></tr>`;
                 return;
             }
-
             filtered.forEach(p => {
                 const stockVal = parseInt(p.stock) || 0;
                 const effectiveBuyPrice = getEffectiveBuyPrice(p);
@@ -2106,16 +2006,14 @@
 
         function renderOtherGoodsTable() {
             const tbody = document.getElementById('otherGoodsTableBody');
+            if(!tbody) return;
             const searchVal = document.getElementById('otherGoodsSearchInput').value.toLowerCase();
-
             tbody.innerHTML = '';
             const filtered = otherGoods.filter(og => og.name.toLowerCase().includes(searchVal) || String(og.id).toLowerCase().includes(searchVal));
-
             if(filtered.length === 0) {
                 tbody.innerHTML = `<tr><td colspan="7" class="p-6 text-center text-slate-400 text-xs">အခြားကုန်ပစ္စည်း မရှိပါ။</td></tr>`;
                 return;
             }
-
             filtered.forEach(og => {
                 const stockVal = parseInt(og.stock) || 0;
                 const effectiveBuyPrice = getEffectiveBuyPrice(og);
@@ -2172,7 +2070,6 @@
                 document.getElementById('pSellPrice').value = p.sellPrice;
                 document.getElementById('pStock').value = p.stock;
                 document.getElementById('pDate').value = p.createdDate || new Date().toISOString().split('T')[0];
-
                 document.getElementById('productModalTitle').innerText = 'ဆေးပစ္စည်း ပြင်ဆင်ရန် (' + p.id + ')';
                 openModal('addProductModal');
             }
@@ -2187,7 +2084,6 @@
                 document.getElementById('ogSellPrice').value = og.sellPrice;
                 document.getElementById('ogStock').value = og.stock;
                 document.getElementById('ogDate').value = og.createdDate || new Date().toISOString().split('T')[0];
-
                 document.getElementById('otherGoodsModalTitle').innerText = 'အခြားကုန်ပစ္စည်း ပြင်ဆင်ရန် (' + og.id + ')';
                 openModal('addOtherGoodsModal');
             }
@@ -2197,7 +2093,6 @@
             e.preventDefault();
             const rawId = document.getElementById('pId').value.trim();
             const id = rawId ? (rawId.startsWith('#') ? rawId : '#' + rawId) : ('#' + Math.floor(10000 + Math.random() * 90000));
-            
             const buyPrice = parseFloat(document.getElementById('pBuyPrice').value) || 0;
             const stockQty = parseInt(document.getElementById('pStock').value) || 0;
             const entryDate = document.getElementById('pDate').value || new Date().toISOString().split('T')[0];
@@ -2230,7 +2125,6 @@
             e.preventDefault();
             const rawId = document.getElementById('ogId').value.trim();
             const id = rawId ? (rawId.startsWith('#') ? rawId : '#' + rawId) : ('#' + Math.floor(10000 + Math.random() * 90000));
-            
             const buyPrice = parseFloat(document.getElementById('ogBuyPrice').value) || 0;
             const stockQty = parseInt(document.getElementById('ogStock').value) || 0;
             const entryDate = document.getElementById('ogDate').value || new Date().toISOString().split('T')[0];
@@ -2295,7 +2189,6 @@
                     logActivity('Stock Restock', `အခြားကုန်ပစ္စည်း [${og.name}] (ID: ${id}) သို့ ဝယ်စျေး ${newBuyPrice} ဖြင့် Stock +${addQty} (FIFO Batch) ဖြည့်သွင်းခဲ့သည်။`);
                 }
             }
-
             closeModal('restockModal');
             showToast(`Stock +${addQty} (FIFO Batch) အသစ်ဖြည့်သွင်းပြီးပါပြီ!`, 'success');
         }
@@ -2321,22 +2214,19 @@
 
         function renderSalesTable() {
             const tbody = document.getElementById('salesTableBody');
+            if(!tbody) return;
             const selectedMonth = document.getElementById('salesMonthFilter').value;
             const statusFilter = document.getElementById('salesStatusFilter').value;
-
             tbody.innerHTML = '';
             let filteredSales = salesHistory.filter(s => s.date && s.date.startsWith(selectedMonth));
-
             if (statusFilter === 'Due') filteredSales = filteredSales.filter(s => s.due > 0);
             else if (statusFilter === 'Paid') filteredSales = filteredSales.filter(s => s.due === 0);
 
             updateSummaryCards();
-
             if (filteredSales.length === 0) {
                 tbody.innerHTML = `<tr><td colspan="8" class="p-6 text-center text-slate-400 text-xs">ယခု ရွေးချယ်ထားသော စစ်ထုတ်မှုတွင် အရောင်းမှတ်တမ်း မရှိသေးပါ</td></tr>`;
                 return;
             }
-
             filteredSales.forEach(s => {
                 const safeId = String(s.id);
                 const actionContent = s.due > 0 
@@ -2364,12 +2254,8 @@
                             <div class="flex items-center justify-center gap-1.5 flex-nowrap">
                                 <span class="inline-block min-w-[65px] text-center">${actionContent}</span>
                                 <button onclick="openEditSaleModal('${safeId}')" class="px-2 py-1 bg-amber-500/20 text-amber-800 hover:bg-amber-500/30 rounded-lg text-xs font-semibold shrink-0 border border-amber-500/30">ပြင်</button>
-                                <button onclick="reprintSingleVoucher('${safeId}')" class="p-1.5 bg-blue-500/20 text-blue-700 hover:bg-blue-500/30 rounded-lg transition shrink-0 border border-blue-500/30" title="Print">
-                                    <i data-lucide="printer" class="w-3.5 h-3.5"></i>
-                                </button>
-                                <button onclick="deleteSaleRecord('${safeId}')" class="p-1.5 bg-red-500/15 text-red-600 hover:bg-red-500/25 rounded-lg transition shrink-0 border border-red-500/30" title="ဖျက်">
-                                    <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
-                                </button>
+                                <button onclick="reprintSingleVoucher('${safeId}')" class="p-1.5 bg-blue-500/20 text-blue-700 hover:bg-blue-500/30 rounded-lg transition shrink-0 border border-blue-500/30" title="Print"><i data-lucide="printer" class="w-3.5 h-3.5"></i></button>
+                                <button onclick="deleteSaleRecord('${safeId}')" class="p-1.5 bg-red-500/15 text-red-600 hover:bg-red-500/25 rounded-lg transition shrink-0 border border-red-500/30" title="ဖျက်"><i data-lucide="trash-2" class="w-3.5 h-3.5"></i></button>
                             </div>
                         </td>
                     </tr>
@@ -2401,17 +2287,13 @@
             e.preventDefault();
             const saleId = document.getElementById('paySaleId').value;
             const payAmount = parseFloat(document.getElementById('payAmount').value) || 0;
-
             const sale = salesHistory.find(s => String(s.id) === String(saleId));
             if (sale && payAmount > 0) {
                 const actualPay = Math.min(payAmount, sale.due);
                 sale.paid += actualPay;
                 sale.due -= actualPay;
-
                 if (db) db.ref('salesHistory/' + String(sale.id)).set(sale);
-
                 logActivity('Debt Collection', `ဝယ်သူ [${sale.customerName}] ၏ Invoice [${sale.id}] မှ အကြွေးဆပ်ငွေ ${actualPay.toLocaleString()} Ks လက်ခံရရှိခဲ့သည်။`);
-
                 renderSalesTable();
                 closeModal('salePaymentModal');
                 showToast('အကြွေးပေးချေမှု အောင်မြင်စွာ မှတ်တမ်းတင်ပြီးပါပြီ!', 'success');
@@ -2435,7 +2317,6 @@
             e.preventDefault();
             const saleId = document.getElementById('editSaleId').value;
             const sale = salesHistory.find(s => String(s.id) === String(saleId));
-
             if (sale) {
                 sale.customerName = document.getElementById('editCustName').value.trim();
                 sale.customerPhone = document.getElementById('editCustPhone').value.trim();
@@ -2444,9 +2325,7 @@
                 sale.paid = Math.min(newPaid, sale.total);
                 sale.due = Math.max(0, sale.total - sale.paid);
                 sale.paymentType = document.getElementById('editPaymentType').value;
-
                 if (db) db.ref('salesHistory/' + String(sale.id)).set(sale);
-
                 logActivity('Sales Update', `Invoice [${sale.id}] ၏ အချက်အလက်များကို ပြင်ဆင်ခဲ့သည်။`);
                 closeModal('editSaleModal');
                 renderSalesTable();
